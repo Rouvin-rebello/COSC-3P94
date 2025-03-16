@@ -31,10 +31,10 @@
                 <div class="dropdown">
                     <div class="dropdown-section">
                         <h3>Tools</h3>
-                        <a href="#"><i class="fas fa-chart-line"></i> Market Trends</a>
-                        <a href="#"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
-                        <a href="#"><i class="fas fa-home"></i> Home Loan Calculator</a>
-                        <a href="#"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+                        <a href="#" onclick="toggleMarketTrends()"><i class="fas fa-chart-line"></i> Market Trends</a>
+                        <a href="#" onclick="toggleMortgage()"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+                        <a href="#" onclick="toggleLoan()"><i class="fas fa-home"></i> Home Loan Calculator</a>
+                        <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
                     </div>
                     <div class="dropdown-section">
                         <h3>Accessibility</h3>
@@ -46,142 +46,153 @@
             </div>
         </div>
     </div>
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Enter location or keywords...">
-        <div class="filters-container">
-            <select class="filter-select">
-                <option value="">Purpose</option>
-                <option value="sale">For Sale</option>
-                <option value="rent">For Rent</option>
-            </select>
-            <select class="filter-select">
-                <option value="">Beds</option>
-                <option value="1">1+ Bed</option>
-                <option value="2">2+ Beds</option>
-                <option value="3">3+ Beds</option>
-                <option value="4">4+ Beds</option>
-            </select>
-            <select class="filter-select">
-                <option value="">Baths</option>
-                <option value="1">1+ Bath</option>
-                <option value="2">2+ Baths</option>
-                <option value="3">3+ Baths</option>
-            </select>
-            <select class="filter-select">
-                <option value="">Price Range</option>
-                <option value="100k">$0 - $100k</option>
-                <option value="200k">$100k - $200k</option>
-                <option value="300k">$200k - $300k</option>
-                <option value="400k">$300k+</option>
-            </select>
-            <div class="advanced-filters">
-                <button class="filter-select">Advanced Filters</button>
-                <div class="advanced-filters-content">
-                    <div class="advanced-filter-item">
-                        <input type="checkbox" id="garage">
-                        <label for="garage">Garage</label>
-                    </div>
-                    <div class="advanced-filter-item">
-                        <input type="checkbox" id="pool">
-                        <label for="pool">Pool</label>
-                    </div>
-                    <div class="advanced-filter-item">
-                        <input type="checkbox" id="furnished">
-                        <label for="furnished">Furnished</label>
-                    </div>
-                    <div class="advanced-filter-item">
-                        <input type="checkbox" id="garden">
-                        <label for="garden">Garden</label>
+    <div class="main-content">
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Enter location or keywords...">
+            <div class="filters-container">
+                <select class="filter-select">
+                    <option value="">Purpose</option>
+                    <option value="sale">For Sale</option>
+                    <option value="rent">For Rent</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Beds</option>
+                    <option value="1">1 Bed</option>
+                    <option value="2">2 Beds</option>
+                    <option value="3">3 Beds</option>
+                    <option value="4">4+ Beds</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Baths</option>
+                    <option value="1">1 Bath</option>
+                    <option value="2">2 Baths</option>
+                    <option value="3">3+ Baths</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Price Range</option>
+                    <option value="100k">$0 - $100k</option>
+                    <option value="200k">$100k - $200k</option>
+                    <option value="300k">$200k - $300k</option>
+                    <option value="400k">$300k+</option>
+                </select>
+                <div class="advanced-filters">
+                    <button class="filter-select">Advanced Filters</button>
+                    <div class="advanced-filters-content">
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="garage">
+                            <label for="garage">Garage</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="pool">
+                            <label for="pool">Pool</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="furnished">
+                            <label for="furnished">Furnished</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="garden">
+                            <label for="garden">Garden</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="schools">
+                            <label for="schools">Near schools</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="busStops">
+                            <label for="busStops">Near bus stops</label>
+                        </div>
+                        
                     </div>
                 </div>
+                <button class="search-button">Search</button>
             </div>
-            <button class="search-button">Search</button>
         </div>
-    </div>
-    
-    <div class="listings-container">
-        <div class="listings-grid">
-            <div class="listing-card" onclick="viewListing('1', '599000', '3', '2', '2100', '123 Main Street, Toronto, ON', 'For Sale', 'https://picsum.photos/400/300')">
-                <img src="https://picsum.photos/400/300" alt="House" class="listing-image">
-                <div class="listing-info">
-                    <div class="listing-price">$599,000</div>
-                    <div class="listing-details">
-                        <span><i class="fas fa-bed"></i> 3 beds</span>
-                        <span><i class="fas fa-bath"></i> 2 baths</span>
-                        <span><i class="fas fa-ruler-combined"></i> 2,100 sqft</span>
+        
+        <div class="listings-container">
+            <div class="listings-grid">
+                <div class="listing-card" onclick="viewListing('1', '599000', '3', '2', '2100', '123 Main Street, Toronto, ON', 'For Sale', 'https://picsum.photos/400/300')">
+                    <img src="https://picsum.photos/400/300" alt="House" class="listing-image">
+                    <div class="listing-info">
+                        <div class="listing-price">$599,000</div>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 3 beds</span>
+                            <span><i class="fas fa-bath"></i> 2 baths</span>
+                            <span><i class="fas fa-ruler-combined"></i> 2,100 sqft</span>
+                        </div>
+                        <div class="listing-address">123 Main Street, Toronto, ON</div>
+                        <div class="listing-type">For Sale</div>
                     </div>
-                    <div class="listing-address">123 Main Street, Toronto, ON</div>
-                    <div class="listing-type">For Sale</div>
                 </div>
-            </div>
 
-            <div class="listing-card" onclick="viewListing('2', '2400', '2', '1', '1200', '456 Park Ave, Vancouver, BC', 'For Rent', 'https://picsum.photos/400/301')">
-                <img src="https://picsum.photos/400/301" alt="House" class="listing-image">
-                <div class="listing-info">
-                    <div class="listing-price">$2,400/mo</div>
-                    <div class="listing-details">
-                        <span><i class="fas fa-bed"></i> 2 beds</span>
-                        <span><i class="fas fa-bath"></i> 1 bath</span>
-                        <span><i class="fas fa-ruler-combined"></i> 1,200 sqft</span>
+                <div class="listing-card" onclick="viewListing('2', '2400', '2', '1', '1200', '456 Park Ave, Vancouver, BC', 'For Rent', 'https://picsum.photos/400/301')">
+                    <img src="https://picsum.photos/400/301" alt="House" class="listing-image">
+                    <div class="listing-info">
+                        <div class="listing-price">$2,400/mo</div>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 2 beds</span>
+                            <span><i class="fas fa-bath"></i> 1 bath</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1,200 sqft</span>
+                        </div>
+                        <div class="listing-address">456 Park Ave, Vancouver, BC</div>
+                        <div class="listing-type">For Rent</div>
                     </div>
-                    <div class="listing-address">456 Park Ave, Vancouver, BC</div>
-                    <div class="listing-type">For Rent</div>
                 </div>
-            </div>
 
-            <div class="listing-card" onclick="viewListing('3', '899000', '4', '3', '2800', '789 Lake Drive, Ottawa, ON', 'For Sale', 'https://picsum.photos/400/302')">
-                <img src="https://picsum.photos/400/302" alt="House" class="listing-image">
-                <div class="listing-info">
-                    <div class="listing-price">$899,000</div>
-                    <div class="listing-details">
-                        <span><i class="fas fa-bed"></i> 4 beds</span>
-                        <span><i class="fas fa-bath"></i> 3 baths</span>
-                        <span><i class="fas fa-ruler-combined"></i> 2,800 sqft</span>
+                <div class="listing-card" onclick="viewListing('3', '899000', '4', '3', '2800', '789 Lake Drive, Ottawa, ON', 'For Sale', 'https://picsum.photos/400/302')">
+                    <img src="https://picsum.photos/400/302" alt="House" class="listing-image">
+                    <div class="listing-info">
+                        <div class="listing-price">$899,000</div>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 4 beds</span>
+                            <span><i class="fas fa-bath"></i> 3 baths</span>
+                            <span><i class="fas fa-ruler-combined"></i> 2,800 sqft</span>
+                        </div>
+                        <div class="listing-address">789 Lake Drive, Ottawa, ON</div>
+                        <div class="listing-type">For Sale</div>
                     </div>
-                    <div class="listing-address">789 Lake Drive, Ottawa, ON</div>
-                    <div class="listing-type">For Sale</div>
                 </div>
-            </div>
 
-            <div class="listing-card" onclick="viewListing('4', '449000', '2', '1', '1500', '321 Queen Street, Montreal, QC', 'For Sale', 'https://picsum.photos/400/303')">
-                <img src="https://picsum.photos/400/303" alt="House" class="listing-image">
-                <div class="listing-info">
-                    <div class="listing-price">$449,000</div>
-                    <div class="listing-details">
-                        <span><i class="fas fa-bed"></i> 2 beds</span>
-                        <span><i class="fas fa-bath"></i> 1 bath</span>
-                        <span><i class="fas fa-ruler-combined"></i> 1,500 sqft</span>
+                <div class="listing-card" onclick="viewListing('4', '449000', '2', '1', '1500', '321 Queen Street, Montreal, QC', 'For Sale', 'https://picsum.photos/400/303')">
+                    <img src="https://picsum.photos/400/303" alt="House" class="listing-image">
+                    <div class="listing-info">
+                        <div class="listing-price">$449,000</div>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 2 beds</span>
+                            <span><i class="fas fa-bath"></i> 1 bath</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1,500 sqft</span>
+                        </div>
+                        <div class="listing-address">321 Queen Street, Montreal, QC</div>
+                        <div class="listing-type">For Sale</div>
                     </div>
-                    <div class="listing-address">321 Queen Street, Montreal, QC</div>
-                    <div class="listing-type">For Sale</div>
                 </div>
-            </div>
 
-            <div class="listing-card" onclick="viewListing('5', '3200', '3', '2', '1800', '567 King Road, Calgary, AB', 'For Rent', 'https://picsum.photos/400/304')">
-                <img src="https://picsum.photos/400/304" alt="House" class="listing-image">
-                <div class="listing-info">
-                    <div class="listing-price">$3,200/mo</div>
-                    <div class="listing-details">
-                        <span><i class="fas fa-bed"></i> 3 beds</span>
-                        <span><i class="fas fa-bath"></i> 2 baths</span>
-                        <span><i class="fas fa-ruler-combined"></i> 1,800 sqft</span>
+                <div class="listing-card" onclick="viewListing('5', '3200', '3', '2', '1800', '567 King Road, Calgary, AB', 'For Rent', 'https://picsum.photos/400/304')">
+                    <img src="https://picsum.photos/400/304" alt="House" class="listing-image">
+                    <div class="listing-info">
+                        <div class="listing-price">$3,200/mo</div>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 3 beds</span>
+                            <span><i class="fas fa-bath"></i> 2 baths</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1,800 sqft</span>
+                        </div>
+                        <div class="listing-address">567 King Road, Calgary, AB</div>
+                        <div class="listing-type">For Rent</div>
                     </div>
-                    <div class="listing-address">567 King Road, Calgary, AB</div>
-                    <div class="listing-type">For Rent</div>
                 </div>
-            </div>
 
-            <div class="listing-card" onclick="viewListing('6', '750000', '3', '2', '2200', '890 Beach Avenue, Halifax, NS', 'For Sale', 'https://picsum.photos/400/305')">
-                <img src="https://picsum.photos/400/305" alt="House" class="listing-image">
-                <div class="listing-info">
-                    <div class="listing-price">$750,000</div>
-                    <div class="listing-details">
-                        <span><i class="fas fa-bed"></i> 3 beds</span>
-                        <span><i class="fas fa-bath"></i> 2 baths</span>
-                        <span><i class="fas fa-ruler-combined"></i> 2,200 sqft</span>
+                <div class="listing-card" onclick="viewListing('6', '750000', '3', '2', '2200', '890 Beach Avenue, Halifax, NS', 'For Sale', 'https://picsum.photos/400/305')">
+                    <img src="https://picsum.photos/400/305" alt="House" class="listing-image">
+                    <div class="listing-info">
+                        <div class="listing-price">$750,000</div>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 3 beds</span>
+                            <span><i class="fas fa-bath"></i> 2 baths</span>
+                            <span><i class="fas fa-ruler-combined"></i> 2,200 sqft</span>
+                        </div>
+                        <div class="listing-address">890 Beach Avenue, Halifax, NS</div>
+                        <div class="listing-type">For Sale</div>
                     </div>
-                    <div class="listing-address">890 Beach Avenue, Halifax, NS</div>
-                    <div class="listing-type">For Sale</div>
                 </div>
             </div>
         </div>
@@ -189,27 +200,24 @@
 
     <div class="footer">
         <div class="contact-info">
-            <div>Email: realtor@estate10.com</div>
-            <div>Phone: (123) 456-7890</div>
+            <div><i class="fas fa-envelope"></i> estate10support@gmail.com</div>
+            <div><i class="fas fa-phone"></i> 905-444-ESTATE</div>
         </div>
-        <div class="chatbot-icon" onclick="toggleChat()">
-            <i class="fas fa-comment-dots"></i>
-        </div>
-    </div>
     
-    <div class="chatbot-window" id="chatWindow">
-        <div class="chatbot-header">
-            <span>Chat Assistant</span>
-            <i class="fas fa-times" onclick="toggleChat()" style="cursor: pointer;"></i>
+        <div class="footer-content">
+            <div>© Estate-10. All rights reserved</div>
         </div>
-        <div class="chatbot-messages" id="chatMessages">
-            <!-- Messages will appear here -->
-        </div>
-        <div class="chatbot-input">
-            <input type="text" placeholder="Type your message..." id="chatInput">
-            <button onclick="sendMessage()">Send</button>
+    
+        <div class="social-links">
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
         </div>
     </div>
+    <div class="backdrop" id="backdrop"></div>
 
     <div class="login-modal" id="loginModal">
         <div class="login-content">
@@ -224,53 +232,181 @@
                     <input type="password" id="password" required>
                 </div>
                 <div class="login-buttons">
-                    <button type="submit" class="login-submit">Login</button>
                     <button type="button" class="login-close" onclick="toggleModal()">Close</button>
+                    <button type="submit" class="login-submit">Login</button>
+
+                </div>
+            </form>
+            <div class="signup-link">
+                <span>Don't have an account? <a href="#" onclick="toggleSignupModal()">Sign Up</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="signup-modal" id="signupModal">
+        <div class="signup-content">
+            <h2>Sign Up for Estate-10</h2>
+            <form class="signup-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="signup-buttons">
+                    <button type="button" class="signup-close" onclick="toggleSignupModal()">Close</button>
+
+                    <button type="submit" class="signup-submit">Sign Up</button>
                 </div>
             </form>
         </div>
     </div>
+    
+    <!-- Chat Buttons (Fixed Bottom Right) -->
+    <div class="chat-buttons">
+        <button class="chat-btn" onclick="toggleChat('chatbotWindow')">
+            <i class="fas fa-robot"></i> Chatbot
+        </button>
+        <button class="chat-btn realtor" onclick="toggleChat('realtorChatWindow')">
+            <i class="fas fa-user-tie"></i> Chat with a Realtor
+        </button>
+    </div>
+
+    <!-- Chatbot Window -->
+    <div class="chat-window" id="chatbotWindow">
+        <div class="chat-header">
+            <span>Chatbot</span>
+            <i class="fas fa-times" onclick="toggleChat('chatbotWindow')"></i>
+        </div>
+        <div class="chat-messages" id="chatbotMessages"></div>
+        <div class="chat-input">
+            <input type="text" placeholder="Ask me anything..." id="chatbotInput">
+            <button onclick="sendChatbotMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Realtor Chat Window -->
+    <div class="chat-window" id="realtorChatWindow">
+        <div class="chat-header">
+            <span>Chat with a Realtor</span>
+            <i class="fas fa-times" onclick="toggleChat('realtorChatWindow')"></i>
+        </div>
+        <div class="chat-messages">
+            <p>A realtor will be with you shortly...</p>
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your message..." id="realtorInput">
+            <button onclick="sendRealtorMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Backdrop for Blur Effect -->
+    <div class="backdrop" id="backdrop" onclick="closeAllChats()"></div>
 
     <script>
-        function toggleChat() {
-            const chatWindow = document.getElementById('chatWindow');
-            if (chatWindow.classList.contains('show')) {
-                chatWindow.classList.remove('show');
+        document.addEventListener("DOMContentLoaded", function () {
+        const menuButton = document.querySelector(".options-icon");
+        const dropdownMenu = document.querySelector(".dropdown");
+        const body = document.body;
+
+        menuButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevent immediate close
+            dropdownMenu.classList.toggle("show");
+            body.classList.toggle("menu-open");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove("show");
+                body.classList.remove("menu-open");
+            }
+        });
+
+        
+        });
+
+
+        function toggleChat(chatId) {
+        const chatWindow = document.getElementById(chatId);
+        const backdrop = document.getElementById("backdrop");
+
+            if (chatWindow.classList.contains("show")) {
+                chatWindow.classList.remove("show");
+                backdrop.classList.remove("show-backdrop");
             } else {
-                chatWindow.classList.add('show');
+                closeAllChats(); // Close any other open chats first
+                chatWindow.classList.add("show");
+                backdrop.classList.add("show-backdrop");
             }
         }
 
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const messages = document.getElementById('chatMessages');
-            if (input.value.trim()) {
-                const message = document.createElement('div');
-                message.style.marginBottom = '10px';
-                message.textContent = 'You: ' + input.value;
-                messages.appendChild(message);
-                input.value = '';
-                // Simulate bot response
-                setTimeout(() => {
-                    const response = document.createElement('div');
-                    response.style.marginBottom = '10px';
-                    response.textContent = 'Bot: Hello! How can I help you today?';
-                    messages.appendChild(response);
-                    messages.scrollTop = messages.scrollHeight;
-                }, 1000);
-            }
+    function closeAllChats() {
+        document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+        document.getElementById("backdrop").classList.remove("show-backdrop");
+    }
+
+    function sendChatbotMessage() {
+        const input = document.getElementById("chatbotInput");
+        const messages = document.getElementById("chatbotMessages");
+        if (input.value.trim()) {
+            messages.innerHTML += `<p>You: ${input.value}</p>`;
+            input.value = "";
+            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
         }
+    }
+
+    function sendRealtorMessage() {
+        const input = document.getElementById("realtorInput");
+        if (input.value.trim()) {
+            alert("Message sent to Realtor: " + input.value);
+            input.value = "";
+        }
+    }
+
 
         function toggleModal() {
-            const modal = document.getElementById('loginModal');
-            modal.classList.toggle('show-modal');
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close signup modal if open
+            signupModal.classList.remove('show-modal');
+
+            // Toggle login modal
+            if (loginModal.classList.contains('show-modal')) {
+                loginModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                loginModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
         }
 
-        function viewListing(id, price, beds, baths, sqft, address, type, image) {
-            const params = new URLSearchParams({
-                id, price, beds, baths, sqft, address, type, image
-            });
-            window.location.href = `view-listing.html?${params.toString()}`;
+        function toggleSignupModal() {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close login modal if open
+            loginModal.classList.remove('show-modal');
+
+            // Toggle signup modal
+            if (signupModal.classList.contains('show-modal')) {
+                signupModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                signupModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('loginModal').classList.remove('show-modal');
+            document.getElementById('signupModal').classList.remove('show-modal');
+            document.getElementById('backdrop').classList.remove('show-backdrop');
         }
 
         function handleLogin(event) {
@@ -279,23 +415,44 @@
             const password = document.getElementById('password').value;
 
             if (email === 'cosc3p94@gmail.com' && password === '12345') {
-                // Hide login button, show profile icon
                 document.getElementById('loginButton').style.display = 'none';
                 document.getElementById('profileButton').style.display = 'block';
-                toggleModal();
-                // Clear form
+                closeAllModals();
                 event.target.reset();
             } else {
                 alert('Invalid credentials!');
             }
         }
 
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('Sign-up successful!');
+            closeAllModals();
+            event.target.reset();
+        }
+
+        function toggleMarketTrends() {
+            alert('Market Trends feature coming soon!');
+        }
+
+        function toggleMortgage() {
+            alert('Mortgage Calculator feature coming soon!');
+        }
+        
+        function toggleLoan() {
+            alert('Home Loan feature coming soon!');
+        }
+
+        function toggleROI() {
+            alert('ROI Calculator feature coming soon!');
+        }
+
         function toggleTextSize() {
-            document.body.classList.toggle('large-text');
+            alert('Text scaling feature coming soon!');
         }
 
         function toggleContrast() {
-            document.body.classList.toggle('high-contrast');
+            alert('High contrast feature coming soon!');
         }
 
         function toggleVoiceNav() {
