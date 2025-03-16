@@ -264,41 +264,24 @@
         </div>
     </div>
     
-    <!-- Chat Buttons (Fixed Bottom Right) -->
-    <div class="chat-buttons">
-        <button class="chat-btn" onclick="toggleChat('chatbotWindow')">
-            <i class="fas fa-robot"></i> Chatbot
-        </button>
-        <button class="chat-btn realtor" onclick="toggleChat('realtorChatWindow')">
-            <i class="fas fa-user-tie"></i> Chat with a Realtor
-        </button>
-    </div>
+   <!-- Chat Buttons (Fixed Bottom Right) -->
+   <div class="chat-buttons">
+    <button class="chat-btn" onclick="toggleChat('chatbotWindow')">
+        <i class="fas fa-user-tie"></i> Chat with a Realtor
+    </button>
+
+</div>
 
     <!-- Chatbot Window -->
     <div class="chat-window" id="chatbotWindow">
         <div class="chat-header">
-            <span>Chatbot</span>
+            <span>Realtor Chat</span>
             <i class="fas fa-times" onclick="toggleChat('chatbotWindow')"></i>
         </div>
         <div class="chat-messages" id="chatbotMessages"></div>
         <div class="chat-input">
             <input type="text" placeholder="Ask me anything..." id="chatbotInput">
             <button onclick="sendChatbotMessage()">Send</button>
-        </div>
-    </div>
-
-    <!-- Realtor Chat Window -->
-    <div class="chat-window" id="realtorChatWindow">
-        <div class="chat-header">
-            <span>Chat with a Realtor</span>
-            <i class="fas fa-times" onclick="toggleChat('realtorChatWindow')"></i>
-        </div>
-        <div class="chat-messages">
-            <p>A realtor will be with you shortly...</p>
-        </div>
-        <div class="chat-input">
-            <input type="text" placeholder="Type your message..." id="realtorInput">
-            <button onclick="sendRealtorMessage()">Send</button>
         </div>
     </div>
 
