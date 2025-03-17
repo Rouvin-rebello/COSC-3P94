@@ -2,6 +2,9 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header */
@@ -168,11 +171,29 @@ body {
     background: #453C4F;
 }
 
+/* Sort Container */
+.sort-container {
+    padding: 0 0 15px 0;
+    display: flex;
+    justify-content: flex;
+}
+
+.sort-select {
+    width: auto;
+    min-width: 180px;
+    background-color: white;
+    border: 1px solid #5A4B60;
+    color: #5A4B60;
+}
+
+.sort-select:hover {
+    background-color: #f5f5f5;
+}
 
 /* Footer */
 .footer {
     background-color: rgba(196, 177, 229, 0.8); /* Light purple background */
-    color: #333;
+    color: #C4B1E5;
     padding: 15px 30px; /* Increased padding for better spacing */
     width: 100%;
     display: flex;
@@ -183,6 +204,13 @@ body {
     position: relative;
     bottom: 0;
     margin-top: 50px;
+    margin-top: auto;
+    background-color: #C4B1E5;
+    color: #5A4B60;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Ensuring equal spacing between footer sections */
@@ -198,6 +226,10 @@ body {
     gap: 20px; /* Adds space between email and phone */
 }
 
+.contact-info div {
+    margin: 5px 0;
+}
+
 /* Centering the copyright text */
 .footer-content {
     justify-content: center;
@@ -210,6 +242,15 @@ body {
     gap: 15px; /* Space between Instagram and Facebook icons */
 }
 
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer .social-links a {
+    margin-left: 15px;
+}
+
 /* Social Media Icons */
 .social-links a {
     font-size: 20px;
@@ -220,8 +261,6 @@ body {
 .social-links a:hover {
     color: #453C4F;
 }
-
-
 
 /* Backdrop overlay */
 .backdrop {
@@ -422,7 +461,6 @@ body.menu-open {
 .popup.show {
     display: block;
 }
-
 
 /* Floating Chat Icon */
 .chatbot-icon {
@@ -661,8 +699,6 @@ body.menu-open {
     display: block;
 }
 
-
-
 /* Ensures page content pushes footer to the bottom */
 html, body {
     height: 100%;
@@ -673,11 +709,37 @@ html, body {
 .main-content {
     flex: 1;
     padding-bottom: 100px; /* Add padding to the bottom to accommodate the footer */
-
-    
 }
 
+/* Map Container */
+.map-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 700px;  /* Increased from 500px */
+    margin: 20px auto;
+    padding: 0 20px;
+}
 
+#propertyMap {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.map-info-window {
+    padding: 10px;
+}
+
+.map-info-window h3 {
+    color: #5A4B60;
+    margin: 0 0 5px 0;
+}
+
+.map-info-window p {
+    margin: 5px 0;
+    color: #666;
+}
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
@@ -690,6 +752,131 @@ html, body {
         flex-direction: column;
         text-align: center;
         padding: 10px;
+    }
+}
+
+/* Map and Listings Layout */
+.map-listings-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.listings-sidebar {
+    flex: 0 0 400px;
+    overflow-y: auto;
+    max-height: 700px;  /* Increased from 500px to match map height */
+    padding-right: 10px;
+}
+
+.map-container {
+    flex: 1;
+    height: 700px;  /* Increased from 500px */
+}
+
+/* Listing Cards in Sidebar */
+.listings-sidebar .listing-card {
+    margin-bottom: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    border: 1px solid #E8E0F0; /* Add subtle border in theme color */
+    transition: all 0.2s ease;
+    display: flex;  /* Change to horizontal layout */
+    height: 150px;  /* Fixed height for consistency */
+}
+
+.listings-sidebar .listing-card:hover {
+    border-color: #C4B1E5; /* Change border color on hover */
+    box-shadow: 0 4px 8px rgba(90, 75, 96, 0.15);
+    transform: translateY(-2px);
+}
+
+.listings-sidebar .listing-image {
+    width: 200px;  /* Fixed width for image */
+    height: 150px;  /* Match card height */
+    object-fit: cover;
+    flex-shrink: 0;  /* Prevent image from shrinking */
+}
+
+.listings-sidebar .listing-info {
+    padding: 10px;
+    flex-grow: 1;  /* Allow info section to grow */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.listings-sidebar .listing-info h3 {
+    margin: 0 0 5px 0;
+    color: #5A4B60;
+    font-size: 1rem;
+}
+
+.listings-sidebar .listing-price {
+    font-size: 1.2rem;
+    margin: 0 0 5px 0;
+}
+
+.listings-sidebar .listing-address {
+    font-size: 0.9rem;
+    margin: 0 0 5px 0;
+}
+
+.listings-sidebar .listing-details {
+    display: flex;
+    gap: 10px;
+    color: #666;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.listings-sidebar .listing-details span {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 968px) {
+    .map-listings-container {
+        flex-direction: column;
+    }
+
+    .listings-sidebar {
+        flex: none;
+        width: 100%;
+        max-height: none;
+    }
+
+    .map-container {
+        height: 500px;  /* Keep mobile height slightly shorter */
+    }
+}
+
+@media (max-width: 768px) {
+    .listings-sidebar .listing-card {
+        height: 120px;  /* Even more compact on mobile */
+    }
+
+    .listings-sidebar .listing-image {
+        width: 160px;
+        height: 120px;
+    }
+
+    .listings-sidebar .listing-info h3 {
+        font-size: 0.9rem;
+    }
+
+    .listings-sidebar .listing-price {
+        font-size: 1.1rem;
+    }
+
+    .listings-sidebar .listing-details {
+        font-size: 0.8rem;
     }
 }
 

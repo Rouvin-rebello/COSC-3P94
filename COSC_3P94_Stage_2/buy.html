@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estate-10</title>
+
+    <!-- Link to your custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-house"></i>
+            Estate-10
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy</a>
+            <a href="sell.html">Sell</a>
+        </div>
+        <div class="right-section">
+            <a href="#" class="signup-login" onclick="toggleModal(); return false;" id="loginButton">Signup / Login</a>
+            <a href="#" class="profile-icon" style="display: none;" id="profileButton">
+                <i class="fas fa-user-circle"></i>
+            </a>
+            <div class="options">
+                <i class="fas fa-bars options-icon"></i>
+                <div class="dropdown">
+                    <div class="dropdown-section">
+                        <h3>Tools</h3>
+                        <a href="#" onclick="toggleMarketTrends()"><i class="fas fa-chart-line"></i> Market Trends</a>
+                        <a href="#" onclick="toggleMortgage()"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+                        <a href="#" onclick="toggleLoan()"><i class="fas fa-home"></i> Home Loan Calculator</a>
+                        <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <h3>Accessibility</h3>
+                        <a href="#" onclick="toggleTextSize()"><i class="fas fa-text-height"></i> Text Scaling</a>
+                        <a href="#" onclick="toggleContrast()"><i class="fas fa-adjust"></i> High Contrast</a>
+                        <a href="#" onclick="toggleVoiceNav()"><i class="fas fa-microphone"></i> Voice Navigation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Enter location or keywords...">
+            <div class="filters-container">
+                <select class="filter-select">
+                    <option value="">Purpose</option>
+                    <option value="sale">For Sale</option>
+                    <option value="rent">For Rent</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Property Type</option>
+                    <option value="house">House</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="condo">Condo</option>
+                    <option value="townhouse">Townhouse</option>
+                    <option value="duplex">Duplex</option>
+                    <option value="land">Land</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Beds</option>
+                    <option value="1">1 Bed</option>
+                    <option value="2">2 Beds</option>
+                    <option value="3">3 Beds</option>
+                    <option value="4">4+ Beds</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Baths</option>
+                    <option value="1">1 Bath</option>
+                    <option value="2">2 Baths</option>
+                    <option value="3">3+ Baths</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Price Range</option>
+                    <option value="100k">$0 - $100k</option>
+                    <option value="200k">$100k - $200k</option>
+                    <option value="300k">$200k - $300k</option>
+                    <option value="400k">$300k+</option>
+                </select>
+                <div class="advanced-filters">
+                    <button class="filter-select">Advanced Filters</button>
+                    <div class="advanced-filters-content">
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="garage">
+                            <label for="garage">Garage</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="pool">
+                            <label for="pool">Pool</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="furnished">
+                            <label for="furnished">Furnished</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="garden">
+                            <label for="garden">Garden</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="schools">
+                            <label for="schools">Near schools</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="busStops">
+                            <label for="busStops">Near bus stops</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="search-button">Search</button>
+            </div>
+        </div>
+        
+        <!-- Map and Listings Container -->
+        <div class="map-listings-container">
+            <div class="listings-sidebar">
+                <div class="sort-container">
+                    <select class="filter-select">
+                        <option value="">Sort By</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="date-new">Newest First</option>
+                        <option value="date-old">Oldest First</option>
+                    </select>
+                </div>
+                <div class="listing-card" onclick="viewListing('1', '1500', '2', '1', '1200', '123 Main St, St. Catharines')">
+                    <img src="https://picsum.photos/400/300" alt="Modern Apartment" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Modern Apartment</h3>
+                        <p class="listing-price">$1,500/month</p>
+                        <p class="listing-address">123 Main St, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 2</span>
+                            <span><i class="fas fa-bath"></i> 1</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1,200 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card" onclick="viewListing('2', '2200', '3', '2', '1800', '456 Oak Ave, St. Catharines')">
+                    <img src="https://picsum.photos/400/301" alt="Family House" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Family House</h3>
+                        <p class="listing-price">$2,200/month</p>
+                        <p class="listing-address">456 Oak Ave, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 3</span>
+                            <span><i class="fas fa-bath"></i> 2</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1,800 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card" onclick="viewListing('3', '1800', '2', '2', '1400', '789 Pine St, St. Catharines')">
+                    <img src="https://picsum.photos/400/302" alt="Downtown Condo" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Downtown Condo</h3>
+                        <p class="listing-price">$1,800/month</p>
+                        <p class="listing-address">789 Pine St, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 2</span>
+                            <span><i class="fas fa-bath"></i> 2</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1,400 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card" onclick="viewListing('4', '2500', '4', '3', '2200', '321 Elm St, St. Catharines')">
+                    <img src="https://picsum.photos/400/303" alt="Spacious House" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Spacious House</h3>
+                        <p class="listing-price">$2,500/month</p>
+                        <p class="listing-address">321 Elm St, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 4</span>
+                            <span><i class="fas fa-bath"></i> 3</span>
+                            <span><i class="fas fa-ruler-combined"></i> 2,200 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card" onclick="viewListing('5', '1600', '1', '1', '900', '567 Lake St, St. Catharines')">
+                    <img src="https://picsum.photos/400/304" alt="Studio Apartment" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Studio Apartment</h3>
+                        <p class="listing-price">$1,600/month</p>
+                        <p class="listing-address">567 Lake St, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 1</span>
+                            <span><i class="fas fa-bath"></i> 1</span>
+                            <span><i class="fas fa-ruler-combined"></i> 900 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="map-container">
+                <div id="propertyMap"></div>
+            </div>
+        </div>     
+    </div>
+
+
+    <div class="footer">
+        <div class="contact-info">
+            <div><i class="fas fa-envelope"></i> estate10support@gmail.com</div>
+            <div><i class="fas fa-phone"></i> 905-444-ESTATE</div>
+        </div>
+    
+        <div class="footer-content">
+            <div>© Estate-10. All rights reserved</div>
+        </div>
+    
+        <div class="social-links">
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2>Login to Estate-10</h2>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="login-buttons">
+                    <button type="button" class="login-close" onclick="toggleModal()">Close</button>
+                    <button type="submit" class="login-submit">Login</button>
+
+                </div>
+            </form>
+            <div class="signup-link">
+                <span>Don't have an account? <a href="#" onclick="toggleSignupModal()">Sign Up</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="signup-modal" id="signupModal">
+        <div class="signup-content">
+            <h2>Sign Up for Estate-10</h2>
+            <form class="signup-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="signup-buttons">
+                    <button type="button" class="signup-close" onclick="toggleSignupModal()">Close</button>
+
+                    <button type="submit" class="signup-submit">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+   <!-- Chat Buttons (Fixed Bottom Right) -->
+   <div class="chat-buttons">
+    <button class="chat-btn" onclick="toggleChat('chatbotWindow')">
+        <i class="fas fa-user-tie"></i> Chat with a Realtor
+    </button>
+
+</div>
+
+    <!-- Chatbot Window -->
+    <div class="chat-window" id="chatbotWindow">
+        <div class="chat-header">
+            <span>Realtor Chat</span>
+            <i class="fas fa-times" onclick="toggleChat('chatbotWindow')"></i>
+        </div>
+        <div class="chat-messages" id="chatbotMessages"></div>
+        <div class="chat-input">
+            <input type="text" placeholder="Ask me anything..." id="chatbotInput">
+            <button onclick="sendChatbotMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Backdrop for Blur Effect -->
+    <div class="backdrop" id="backdrop" onclick="closeAllChats()"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const menuButton = document.querySelector(".options-icon");
+        const dropdownMenu = document.querySelector(".dropdown");
+        const body = document.body;
+
+        menuButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevent immediate close
+            dropdownMenu.classList.toggle("show");
+            body.classList.toggle("menu-open");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove("show");
+                body.classList.remove("menu-open");
+            }
+        });
+
+        
+        });
+
+
+        function toggleChat(chatId) {
+        const chatWindow = document.getElementById(chatId);
+        const backdrop = document.getElementById("backdrop");
+
+            if (chatWindow.classList.contains("show")) {
+                chatWindow.classList.remove("show");
+                backdrop.classList.remove("show-backdrop");
+            } else {
+                closeAllChats(); // Close any other open chats first
+                chatWindow.classList.add("show");
+                backdrop.classList.add("show-backdrop");
+            }
+        }
+
+    function closeAllChats() {
+        document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+        document.getElementById("backdrop").classList.remove("show-backdrop");
+    }
+
+    function sendChatbotMessage() {
+        const input = document.getElementById("chatbotInput");
+        const messages = document.getElementById("chatbotMessages");
+        if (input.value.trim()) {
+            messages.innerHTML += `<p>You: ${input.value}</p>`;
+            input.value = "";
+            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
+        }
+    }
+
+    function sendRealtorMessage() {
+        const input = document.getElementById("realtorInput");
+        if (input.value.trim()) {
+            alert("Message sent to Realtor: " + input.value);
+            input.value = "";
+        }
+    }
+
+
+        function toggleModal() {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close signup modal if open
+            signupModal.classList.remove('show-modal');
+
+            // Toggle login modal
+            if (loginModal.classList.contains('show-modal')) {
+                loginModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                loginModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function toggleSignupModal() {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close login modal if open
+            loginModal.classList.remove('show-modal');
+
+            // Toggle signup modal
+            if (signupModal.classList.contains('show-modal')) {
+                signupModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                signupModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('loginModal').classList.remove('show-modal');
+            document.getElementById('signupModal').classList.remove('show-modal');
+            document.getElementById('backdrop').classList.remove('show-backdrop');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === 'cosc3p94@gmail.com' && password === '12345') {
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('profileButton').style.display = 'block';
+                closeAllModals();
+                event.target.reset();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('Sign-up successful!');
+            closeAllModals();
+            event.target.reset();
+        }
+
+        function toggleMarketTrends() {
+            alert('Market Trends feature coming soon!');
+        }
+
+        function toggleMortgage() {
+            alert('Mortgage Calculator feature coming soon!');
+        }
+        
+        function toggleLoan() {
+            alert('Home Loan feature coming soon!');
+        }
+
+        function toggleROI() {
+            alert('ROI Calculator feature coming soon!');
+        }
+
+        function toggleTextSize() {
+            alert('Text scaling feature coming soon!');
+        }
+
+        function toggleContrast() {
+            alert('High contrast feature coming soon!');
+        }
+
+        function toggleVoiceNav() {
+            alert('Voice navigation feature coming soon!');
+        }
+
+        function handleSignout() {
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('profileButton').style.display = 'none';
+        }
+    </script>
+    <!-- Add Google Maps script before the closing body tag -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap" async defer></script>
+    <script>
+        // Initialize the map
+        function initMap() {
+            try {
+                const map = new google.maps.Map(document.getElementById("propertyMap"), {
+                    center: { lat: 43.1167, lng: -79.2494 }, // St. Catharines coordinates
+                    zoom: 13,
+                    styles: [
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels",
+                            "stylers": [{ "visibility": "off" }]
+                        }
+                    ]
+                });
+
+                // Example property markers - Replace with real data
+                const properties = [
+                    {
+                        position: { lat: 43.1157, lng: -79.2496 },
+                        title: "Modern Apartment",
+                        price: "$250,000",
+                        type: "For Sale"
+                    },
+                    {
+                        position: { lat: 43.1187, lng: -79.2454 },
+                        title: "Family House",
+                        price: "$350,000",
+                        type: "For Sale"
+                    }
+                ];
+
+                // Add markers for each property
+                properties.forEach(property => {
+                    const marker = new google.maps.Marker({
+                        position: property.position,
+                        map: map,
+                        title: property.title
+                    });
+
+                    // Add info window for each marker
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: `
+                            <div class="map-info-window">
+                                <h3>${property.title}</h3>
+                                <p>${property.price}</p>
+                                <p>${property.type}</p>
+                            </div>
+                        `
+                    });
+
+                    marker.addListener("click", () => {
+                        infoWindow.open(map, marker);
+                    });
+                });
+            } catch (error) {
+                console.error("Error initializing map:", error);
+                document.getElementById("propertyMap").innerHTML = 
+                    '<div style="text-align: center; padding: 20px;">Unable to load map. Please try again later.</div>';
+            }
+        }
+
+        // Handle Google Maps loading error
+        window.gm_authFailure = function() {
+            document.getElementById("propertyMap").innerHTML = 
+                '<div style="text-align: center; padding: 20px;">Unable to load map. Please check API key.</div>';
+        };
+    </script>
+</body>
+</html>
