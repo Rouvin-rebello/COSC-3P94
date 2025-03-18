@@ -110,7 +110,7 @@
         
         <div class="listings-container">
             <div class="listings-grid">
-                <div class="listing-card" onclick="viewListing('1', '599000', '3', '2', '2100', '123 Main Street, Toronto, ON', 'For Sale', 'https://picsum.photos/400/300')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=599000&beds=3&baths=2&sqft=2100&address=123 Main Street, Toronto, ON&type=For Sale&img=https://picsum.photos/400/300'">
                     <img src="https://picsum.photos/400/300" alt="House" class="listing-image">
                     <div class="listing-info">
                         <div class="listing-price">$599,000</div>
@@ -124,7 +124,7 @@
                     </div>
                 </div>
 
-                <div class="listing-card" onclick="viewListing('2', '2400', '2', '1', '1200', '456 Park Ave, Vancouver, BC', 'For Rent', 'https://picsum.photos/400/301')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2400&beds=2&baths=1&sqft=1200&address=456 Park Ave, Vancouver, BC&type=For Rent&img=https://picsum.photos/400/301'">
                     <img src="https://picsum.photos/400/301" alt="House" class="listing-image">
                     <div class="listing-info">
                         <div class="listing-price">$2,400/mo</div>
@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                <div class="listing-card" onclick="viewListing('3', '899000', '4', '3', '2800', '789 Lake Drive, Ottawa, ON', 'For Sale', 'https://picsum.photos/400/302')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=3&price=899000&beds=4&baths=3&sqft=2800&address=789 Lake Drive, Ottawa, ON&type=For Sale&img=https://picsum.photos/400/302'">
                     <img src="https://picsum.photos/400/302" alt="House" class="listing-image">
                     <div class="listing-info">
                         <div class="listing-price">$899,000</div>
@@ -152,7 +152,7 @@
                     </div>
                 </div>
 
-                <div class="listing-card" onclick="viewListing('4', '449000', '2', '1', '1500', '321 Queen Street, Montreal, QC', 'For Sale', 'https://picsum.photos/400/303')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=4&price=449000&beds=2&baths=1&sqft=1500&address=321 Queen Street, Montreal, QC&type=For Sale&img=https://picsum.photos/400/303'">
                     <img src="https://picsum.photos/400/303" alt="House" class="listing-image">
                     <div class="listing-info">
                         <div class="listing-price">$449,000</div>
@@ -166,7 +166,7 @@
                     </div>
                 </div>
 
-                <div class="listing-card" onclick="viewListing('5', '3200', '3', '2', '1800', '567 King Road, Calgary, AB', 'For Rent', 'https://picsum.photos/400/304')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=5&price=3200&beds=3&baths=2&sqft=1800&address=567 King Road, Calgary, AB&type=For Rent&img=https://picsum.photos/400/304'">
                     <img src="https://picsum.photos/400/304" alt="House" class="listing-image">
                     <div class="listing-info">
                         <div class="listing-price">$3,200/mo</div>
@@ -180,7 +180,7 @@
                     </div>
                 </div>
 
-                <div class="listing-card" onclick="viewListing('6', '750000', '3', '2', '2200', '890 Beach Avenue, Halifax, NS', 'For Sale', 'https://picsum.photos/400/305')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=6&price=750000&beds=3&baths=2&sqft=2200&address=890 Beach Avenue, Halifax, NS&type=For Sale&img=https://picsum.photos/400/305'">
                     <img src="https://picsum.photos/400/305" alt="House" class="listing-image">
                     <div class="listing-info">
                         <div class="listing-price">$750,000</div>
@@ -284,9 +284,6 @@
         </div>
     </div>
 
-    <!-- Backdrop for Blur Effect -->
-    <div class="backdrop" id="backdrop" onclick="closeAllChats()"></div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
         const menuButton = document.querySelector(".options-icon");
@@ -312,23 +309,18 @@
 
 
         function toggleChat(chatId) {
-        const chatWindow = document.getElementById(chatId);
-        const backdrop = document.getElementById("backdrop");
-
+            const chatWindow = document.getElementById(chatId);
             if (chatWindow.classList.contains("show")) {
                 chatWindow.classList.remove("show");
-                backdrop.classList.remove("show-backdrop");
             } else {
                 closeAllChats(); // Close any other open chats first
                 chatWindow.classList.add("show");
-                backdrop.classList.add("show-backdrop");
             }
         }
 
-    function closeAllChats() {
-        document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
-        document.getElementById("backdrop").classList.remove("show-backdrop");
-    }
+        function closeAllChats() {
+            document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+        }
 
     function sendChatbotMessage() {
         const input = document.getElementById("chatbotInput");

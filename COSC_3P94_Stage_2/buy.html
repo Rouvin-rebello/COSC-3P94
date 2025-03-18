@@ -129,7 +129,7 @@
                         <option value="date-old">Oldest First</option>
                     </select>
                 </div>
-                <div class="listing-card" onclick="viewListing('1', '1500', '2', '1', '1200', '123 Main St, St. Catharines')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=1500&beds=2&baths=1&sqft=1200&address=123 Main St, St. Catharines&type=For Rent&img=https://picsum.photos/400/300'">
                     <img src="https://picsum.photos/400/300" alt="Modern Apartment" class="listing-image">
                     <div class="listing-info">
                         <h3>Modern Apartment</h3>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="listing-card" onclick="viewListing('2', '2200', '3', '2', '1800', '456 Oak Ave, St. Catharines')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
                     <img src="https://picsum.photos/400/301" alt="Family House" class="listing-image">
                     <div class="listing-info">
                         <h3>Family House</h3>
@@ -317,22 +317,17 @@
 
 
         function toggleChat(chatId) {
-        const chatWindow = document.getElementById(chatId);
-        const backdrop = document.getElementById("backdrop");
-
+            const chatWindow = document.getElementById(chatId);
             if (chatWindow.classList.contains("show")) {
                 chatWindow.classList.remove("show");
-                backdrop.classList.remove("show-backdrop");
             } else {
                 closeAllChats(); // Close any other open chats first
                 chatWindow.classList.add("show");
-                backdrop.classList.add("show-backdrop");
             }
         }
 
     function closeAllChats() {
         document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
-        document.getElementById("backdrop").classList.remove("show-backdrop");
     }
 
     function sendChatbotMessage() {
@@ -478,11 +473,36 @@
                         type: "For Sale"
                     },
                     {
-                        position: { lat: 43.1187, lng: -79.2454 },
+                        position: { lat: 43.1050, lng: -79.2450 },
                         title: "Family House",
                         price: "$350,000",
                         type: "For Sale"
-                    }
+                    },
+                    {
+                        position: { lat: 43.1197, lng: -79.2810 },
+                        title: "Modern Apartment",
+                        price: "$250,000",
+                        type: "For Sale"
+                    },
+                    {
+                        position: { lat: 43.1299, lng: -79.1956 },
+                        title: "Modern Apartment",
+                        price: "$250,000",
+                        type: "For Sale"
+                    },
+                    {
+                        position: { lat: 43.1299, lng: -79.1956 },
+                        title: "Modern Apartment",
+                        price: "$250,000",
+                        type: "For Sale"
+                    },
+                    {
+                        position: { lat: 43.1399, lng: -79.2910 },
+                        title: "Modern Apartment",
+                        price: "$250,000",
+                        type: "For Sale"
+                    },
+
                 ];
 
                 // Add markers for each property

@@ -47,8 +47,143 @@
         </div>
     </div>
     
-        
-        
+    <div class="listing-details-container">
+        <div class="left-column">
+            <div class="listing-gallery">
+                <div class="main-display">
+                    <img src="https://picsum.photos/800/500" alt="Main Property Image" class="main-image active">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="nav-arrow prev" onclick="previousImage()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="nav-arrow next" onclick="nextImage()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="image-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
+                </div>
+                <div class="thumbnail-gallery">
+                    <img src="https://picsum.photos/150/150?random=1" alt="Thumbnail 1" class="thumb" onclick="switchMedia(this.src, 'image')">
+                    <img src="https://picsum.photos/150/150?random=2" alt="Thumbnail 2" class="thumb" onclick="switchMedia(this.src, 'image')">
+                    <div class="video-thumb" onclick="switchMedia(null, 'video')">
+                        <img src="https://picsum.photos/150/150?random=4" alt="Video Tour">
+                        <div class="play-overlay">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                    </div>
+                    <div class="virtual-tour-thumb" onclick="launch360Tour()">
+                        <div class="tour-overlay">
+                            <i class="fas fa-vr-cardboard"></i>
+                            <span>360° Tour</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="contact-card">
+                <h3>Property Analytics</h3>
+                <div class="analytics-grid">
+                    <div class="analytics-item">
+                        <span class="analytics-label">Total Views</span>
+                        <span class="analytics-value">127</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Days on Market</span>
+                        <span class="analytics-value">15</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Price History</span>
+                        <span class="analytics-value">-2.3%</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Similar Listings</span>
+                        <span class="analytics-value">12</span>
+                    </div>
+                </div>
+            </div>    
+
+            <div class="contact-card">
+                <h3>Contact</h3>
+                <div class="contact-buttons">
+                    <button class="contact-btn secondary">
+                        <i class="fas fa-envelope"></i> Email Seller
+                    </button>
+                    <button class="contact-btn primary">
+                        <i class="fas fa-envelope"></i> Email Realtor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="property-header">
+                <div class="header-main">
+                    <h1 class="address">123 Lakeside Avenue</h1>
+                    <p class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        St. Catharines, ON L2T 1A1
+                    </p>
+                </div>
+                <div class="header-price">
+                    <div class="price-tag">
+                        $849,999
+                        <i class="fas fa-info-circle" title="Market Value"></i>
+                    </div>
+                    <div class="price-details">
+                        <span><i class="fas fa-chart-area"></i>$340/sqft</span>
+                        <span><i class="fas fa-clock"></i>Listed 2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-section">
+                <div class="property-description">
+                    <h2>Property Description</h2>
+                    <p>Beautiful detached home in a prime location. This stunning property features an open concept layout, modern kitchen with stainless steel appliances, and hardwood floors throughout. The primary bedroom includes an ensuite bathroom and walk-in closet.</p>
+                </div>
+            </div>
+            <div class="property-highlights">
+                <div class="highlight-item">
+                    <i class="fas fa-bed"></i>
+                    <span>4 Bedrooms</span>
+                </div>
+                <div class="highlight-item">
+                    <i class="fas fa-bath"></i>
+                    <span>3 Bathrooms</span>
+                </div>
+                <div class="highlight-item">
+                    <i class="fas fa-car"></i>
+                    <span>2 Car Garage</span>
+                </div>
+            </div>
+
+            <div class="property-section">
+                <h2>Features & Amenities</h2>
+                <div class="features-grid">
+                    <div class="feature-item"><i class="fas fa-check"></i>Central Air</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Hardwood Floors</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Finished Basement</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Stainless Appliances</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Walk-in Closet</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Fenced Yard</div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
 
     <div class="footer">
         <div class="contact-info">
@@ -159,6 +294,7 @@
 
         
         });
+
 
         function toggleChat(chatId) {
             const chatWindow = document.getElementById(chatId);
