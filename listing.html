@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estate-10</title>
+
+    <!-- Link to your custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-house"></i>
+            Estate-10
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy</a>
+            <a href="sell.html">Sell</a>
+        </div>
+        <div class="right-section">
+            <a href="#" class="signup-login" onclick="toggleModal(); return false;" id="loginButton">Signup / Login</a>
+            <a href="#" class="profile-icon" style="display: none;" id="profileButton">
+                <i class="fas fa-user-circle"></i>
+            </a>
+            <div class="options">
+                <i class="fas fa-bars options-icon"></i>
+                <div class="dropdown">
+                    <div class="dropdown-section">
+                        <h3>Tools</h3>
+                        <a href="#" onclick="toggleMarketTrends()"><i class="fas fa-chart-line"></i> Market Trends</a>
+                        <a href="#" onclick="toggleMortgage()"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+                        <a href="#" onclick="toggleLoan()"><i class="fas fa-home"></i> Home Loan Calculator</a>
+                        <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <h3>Accessibility</h3>
+                        <a href="#" onclick="toggleTextSize()"><i class="fas fa-text-height"></i> Text Scaling</a>
+                        <a href="#" onclick="toggleContrast()"><i class="fas fa-adjust"></i> High Contrast</a>
+                        <a href="#" onclick="toggleVoiceNav()"><i class="fas fa-microphone"></i> Voice Navigation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="listing-details-container">
+        <div class="left-column">
+            <div class="listing-gallery">
+                <div class="main-display">
+                    <img src="https://picsum.photos/800/500" alt="Main Property Image" class="main-image active">
+                    <div class="video-container" onclick="handleVideoClick()">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    <button class="nav-arrow prev" onclick="previousImage()">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="nav-arrow next" onclick="nextImage()">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="image-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
+                </div>
+                <div class="thumbnail-gallery">
+                    <img src="https://picsum.photos/150/150?random=1" alt="Thumbnail 1" class="thumb" onclick="switchMedia(this.src, 'image')">
+                    <img src="https://picsum.photos/150/150?random=2" alt="Thumbnail 2" class="thumb" onclick="switchMedia(this.src, 'image')">
+                    <div class="video-thumb" onclick="switchMedia(null, 'video')">
+                        <img src="https://picsum.photos/150/150?random=4" alt="Video Tour">
+                        <div class="play-overlay">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                    </div>
+                    <div class="virtual-tour-thumb" onclick="launch360Tour()">
+                        <div class="tour-overlay">
+                            <i class="fas fa-vr-cardboard"></i>
+                            <span>360° Tour</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="contact-card">
+                <h3>Property Analytics</h3>
+                <div class="analytics-grid">
+                    <div class="analytics-item">
+                        <span class="analytics-label">Total Views</span>
+                        <span class="analytics-value">127</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Days on Market</span>
+                        <span class="analytics-value">15</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Price History</span>
+                        <span class="analytics-value">-2.3%</span>
+                    </div>
+                    <div class="analytics-item">
+                        <span class="analytics-label">Similar Listings</span>
+                        <span class="analytics-value">12</span>
+                    </div>
+                </div>
+            </div>    
+
+            <div class="contact-card">
+                <h3>Contact</h3>
+                <div class="contact-buttons">
+                    <button class="contact-btn secondary" onclick="emailSeller()">
+                        <i class="fas fa-envelope"></i> Email Seller
+                    </button>
+                    <button class="contact-btn primary" onclick="emailRealtor()">
+                        <i class="fas fa-envelope"></i> Email Realtor
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="right-column">
+            <div class="property-header">
+                <div class="header-main">
+                    <h1 class="address">123 Lakeside Avenue</h1>
+                    <p class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        St. Catharines, ON L2T 1A1
+                    </p>
+                </div>
+                <div class="header-price">
+                    <div class="price-tag">
+                        $849,999
+                        <i class="fas fa-info-circle" title="Market Value"></i>
+                    </div>
+                    <div class="price-details">
+                        <span><i class="fas fa-chart-area"></i>$340/sqft</span>
+                        <span><i class="fas fa-clock"></i>Listed 2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="property-section">
+                <div class="property-description">
+                    <h2>Property Description</h2>
+                    <p>Beautiful detached home in a prime location. This stunning property features an open concept layout, modern kitchen with stainless steel appliances, and hardwood floors throughout. The primary bedroom includes an ensuite bathroom and walk-in closet.</p>
+                </div>
+            </div>
+            <div class="property-highlights">
+                <div class="highlight-item">
+                    <i class="fas fa-bed"></i>
+                    <span>4 Bedrooms</span>
+                </div>
+                <div class="highlight-item">
+                    <i class="fas fa-bath"></i>
+                    <span>3 Bathrooms</span>
+                </div>
+                <div class="highlight-item">
+                    <i class="fas fa-car"></i>
+                    <span>2 Car Garage</span>
+                </div>
+            </div>
+
+            <div class="property-section">
+                <h2>Features & Amenities</h2>
+                <div class="features-grid">
+                    <div class="feature-item"><i class="fas fa-check"></i>Central Air</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Hardwood Floors</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Finished Basement</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Stainless Appliances</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Walk-in Closet</div>
+                    <div class="feature-item"><i class="fas fa-check"></i>Fenced Yard</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="reviews-section">
+        <h2>Community Reviews</h2>
+        <div class="reviews-summary">
+            <div class="average-rating">
+                <span class="rating-number">4.5</span>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="total-reviews">12 reviews</span>
+            </div>
+            <button class="write-review-btn" onclick="toggleReviewForm()">
+                <i class="fas fa-pen"></i> Write a Review
+            </button>
+        </div>
+
+        <div class="review-form" id="reviewForm">
+            <h3>Write Your Review</h3>
+            <form onsubmit="submitReview(event)">
+                <div class="star-rating">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+                <textarea placeholder="Share your experience with this property..." required></textarea>
+                <div class="form-buttons">
+                    <button type="button" onclick="toggleReviewForm()">Cancel</button>
+                    <button type="submit">Submit Review</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="reviews-list">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="reviewer-name">John Doe</span>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="review-text">Great property! The neighborhood is quiet and the house is well maintained.</p>
+                <span class="review-date">Posted 2 days ago</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="contact-info">
+            <div><i class="fas fa-envelope"></i> estate10support@gmail.com</div>
+            <div><i class="fas fa-phone"></i> 905-444-ESTATE</div>
+        </div>
+    
+        <div class="footer-content">
+            <div>© Estate-10. All rights reserved</div>
+        </div>
+    
+        <div class="social-links">
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2>Login to Estate-10</h2>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="login-buttons">
+                    <button type="button" class="login-close" onclick="toggleModal()">Close</button>
+                    <button type="submit" class="login-submit">Login</button>
+
+                </div>
+            </form>
+            <div class="signup-link">
+                <span>Don't have an account? <a href="#" onclick="toggleSignupModal()">Sign Up</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="signup-modal" id="signupModal">
+        <div class="signup-content">
+            <h2>Sign Up for Estate-10</h2>
+            <form class="signup-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="signup-buttons">
+                    <button type="button" class="signup-close" onclick="toggleSignupModal()">Close</button>
+
+                    <button type="submit" class="signup-submit">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+   <!-- Chat Buttons (Fixed Bottom Right) -->
+   <div class="chat-buttons">
+    <button class="chat-btn" onclick="toggleChat('chatbotWindow')">
+        <i class="fas fa-user-tie"></i> Chat with a Realtor
+    </button>
+
+</div>
+
+    <!-- Chatbot Window -->
+    <div class="chat-window" id="chatbotWindow">
+        <div class="chat-header">
+            <span>Realtor Chat</span>
+            <i class="fas fa-times" onclick="toggleChat('chatbotWindow')"></i>
+        </div>
+        <div class="chat-messages" id="chatbotMessages"></div>
+        <div class="chat-input">
+            <input type="text" placeholder="Ask me anything..." id="chatbotInput">
+            <button onclick="sendChatbotMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const menuButton = document.querySelector(".options-icon");
+        const dropdownMenu = document.querySelector(".dropdown");
+        const body = document.body;
+
+        menuButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevent immediate close
+            dropdownMenu.classList.toggle("show");
+            body.classList.toggle("menu-open");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove("show");
+                body.classList.remove("menu-open");
+            }
+        });
+
+        
+        });
+
+
+        function toggleChat(chatId) {
+            const chatWindow = document.getElementById(chatId);
+            if (chatWindow.classList.contains("show")) {
+                chatWindow.classList.remove("show");
+            } else {
+                closeAllChats(); // Close any other open chats first
+                chatWindow.classList.add("show");
+            }
+        }
+
+        function closeAllChats() {
+            document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+        }
+
+    function sendChatbotMessage() {
+        const input = document.getElementById("chatbotInput");
+        const messages = document.getElementById("chatbotMessages");
+        if (input.value.trim()) {
+            messages.innerHTML += `<p>You: ${input.value}</p>`;
+            input.value = "";
+            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
+        }
+    }
+
+    function sendRealtorMessage() {
+        const input = document.getElementById("realtorInput");
+        if (input.value.trim()) {
+            alert("Message sent to Realtor: " + input.value);
+            input.value = "";
+        }
+    }
+
+
+        function toggleModal() {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close signup modal if open
+            signupModal.classList.remove('show-modal');
+
+            // Toggle login modal
+            if (loginModal.classList.contains('show-modal')) {
+                loginModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                loginModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function toggleSignupModal() {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close login modal if open
+            loginModal.classList.remove('show-modal');
+
+            // Toggle signup modal
+            if (signupModal.classList.contains('show-modal')) {
+                signupModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                signupModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('loginModal').classList.remove('show-modal');
+            document.getElementById('signupModal').classList.remove('show-modal');
+            document.getElementById('backdrop').classList.remove('show-backdrop');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === 'cosc3p94@gmail.com' && password === '12345') {
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('profileButton').style.display = 'block';
+                closeAllModals();
+                event.target.reset();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('Sign-up successful!');
+            closeAllModals();
+            event.target.reset();
+        }
+
+        function toggleMarketTrends() {
+            alert('Market Trends feature coming soon!');
+        }
+
+        function toggleMortgage() {
+            alert('Mortgage Calculator feature coming soon!');
+        }
+        
+        function toggleLoan() {
+            alert('Home Loan feature coming soon!');
+        }
+
+        function toggleROI() {
+            alert('ROI Calculator feature coming soon!');
+        }
+
+        function toggleTextSize() {
+            alert('Text scaling feature coming soon!');
+        }
+
+        function toggleContrast() {
+            alert('High contrast feature coming soon!');
+        }
+
+        function toggleVoiceNav() {
+            alert('Voice navigation feature coming soon!');
+        }
+
+        function handleSignout() {
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('profileButton').style.display = 'none';
+        }
+
+        function toggleReviewForm() {
+            const form = document.getElementById('reviewForm');
+            form.classList.toggle('show');
+        }
+
+        function submitReview(event) {
+            event.preventDefault();
+            const form = event.target;
+            const rating = form.querySelector('.star-rating').getAttribute('data-selected');
+            const review = form.querySelector('textarea').value;
+            
+            // Add new review card
+            const reviewsList = document.querySelector('.reviews-list');
+            const newReview = document.createElement('div');
+            newReview.className = 'review-card';
+            newReview.innerHTML = `
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="reviewer-name">You</span>
+                    </div>
+                    <div class="review-rating">
+                        ${Array(parseInt(rating)).fill('<i class="fas fa-star"></i>').join('')}
+                    </div>
+                </div>
+                <p class="review-text">${review}</p>
+                <span class="review-date">Just now</span>
+            `;
+            reviewsList.insertBefore(newReview, reviewsList.firstChild);
+            
+            // Clear and close form
+            form.reset();
+            toggleReviewForm();
+        }
+
+        // Star rating functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star-rating i');
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const rating = this.getAttribute('data-rating');
+                    highlightStars(rating);
+                });
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    this.parentElement.setAttribute('data-selected', rating);
+                });
+            });
+            
+            const starContainer = document.querySelector('.star-rating');
+            starContainer.addEventListener('mouseleave', function() {
+                const selected = this.getAttribute('data-selected');
+                if (selected) {
+                    highlightStars(selected);
+                } else {
+                    clearStars();
+                }
+            });
+        });
+
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('.star-rating i');
+            stars.forEach(star => {
+                const starRating = star.getAttribute('data-rating');
+                star.className = starRating <= rating ? 'fas fa-star' : 'far fa-star';
+            });
+        }
+
+        function clearStars() {
+            const stars = document.querySelectorAll('.star-rating i');
+            stars.forEach(star => {
+                star.className = 'far fa-star';
+            });
+        }
+
+        function handleVideoClick() {
+            alert("Video is now playing");
+        }
+
+        // Gallery functionality
+        let currentImageIndex = 0;
+        const images = [
+            'https://picsum.photos/800/500',
+            'https://picsum.photos/800/500?random=1',
+            'https://picsum.photos/800/500?random=2',
+            'https://picsum.photos/800/500?random=3'
+        ];
+
+        function previousImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateMainImage();
+            updateIndicators();
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateMainImage();
+            updateIndicators();
+        }
+
+        function updateMainImage() {
+            const mainImage = document.querySelector('.main-image');
+            mainImage.src = images[currentImageIndex];
+            mainImage.classList.add('active');
+            document.querySelector('.video-container').style.display = 'none';
+        }
+
+        function updateIndicators() {
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentImageIndex);
+            });
+        }
+
+        function switchMedia(src, type) {
+            const mainImage = document.querySelector('.main-image');
+            const videoContainer = document.querySelector('.video-container');
+            
+            if (type === 'image') {
+                mainImage.src = src;
+                mainImage.style.display = 'block';
+                videoContainer.style.display = 'none';
+            } else if (type === 'video') {
+                mainImage.style.display = 'none';
+                videoContainer.style.display = 'block';
+            }
+        }
+
+        function launch360Tour() {
+            alert('360° Virtual Tour will launch in a new window');
+            // Implement actual 360 tour functionality here
+        }
+
+        // Add event listeners for keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                previousImage();
+            } else if (e.key === 'ArrowRight') {
+                nextImage();
+            }
+        });
+
+        function emailSeller() {
+            alert("Sending email to seller...");
+        }
+
+        function emailRealtor() {
+            alert("Sending email to realtor...");
+        }
+
+    </script>
+</body>
+</html>
