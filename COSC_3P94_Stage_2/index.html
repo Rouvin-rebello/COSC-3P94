@@ -7,6 +7,7 @@
 
     <!-- Link to your custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index-styles.css">
     <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -48,63 +49,9 @@
     </div>
     <div class="main-content">
         <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Enter location or keywords...">
-            <div class="filters-container">
-                <select class="filter-select">
-                    <option value="">Purpose</option>
-                    <option value="sale">For Sale</option>
-                    <option value="rent">For Rent</option>
-                </select>
-                <select class="filter-select">
-                    <option value="">Beds</option>
-                    <option value="1">1 Bed</option>
-                    <option value="2">2 Beds</option>
-                    <option value="3">3 Beds</option>
-                    <option value="4">4+ Beds</option>
-                </select>
-                <select class="filter-select">
-                    <option value="">Baths</option>
-                    <option value="1">1 Bath</option>
-                    <option value="2">2 Baths</option>
-                    <option value="3">3+ Baths</option>
-                </select>
-                <select class="filter-select">
-                    <option value="">Price Range</option>
-                    <option value="100k">$0 - $100k</option>
-                    <option value="200k">$100k - $200k</option>
-                    <option value="300k">$200k - $300k</option>
-                    <option value="400k">$300k+</option>
-                </select>
-                <div class="advanced-filters">
-                    <button class="filter-select">Advanced Filters</button>
-                    <div class="advanced-filters-content">
-                        <div class="advanced-filter-item">
-                            <input type="checkbox" id="garage">
-                            <label for="garage">Garage</label>
-                        </div>
-                        <div class="advanced-filter-item">
-                            <input type="checkbox" id="pool">
-                            <label for="pool">Pool</label>
-                        </div>
-                        <div class="advanced-filter-item">
-                            <input type="checkbox" id="furnished">
-                            <label for="furnished">Furnished</label>
-                        </div>
-                        <div class="advanced-filter-item">
-                            <input type="checkbox" id="garden">
-                            <label for="garden">Garden</label>
-                        </div>
-                        <div class="advanced-filter-item">
-                            <input type="checkbox" id="schools">
-                            <label for="schools">Near schools</label>
-                        </div>
-                        <div class="advanced-filter-item">
-                            <input type="checkbox" id="busStops">
-                            <label for="busStops">Near bus stops</label>
-                        </div>
-                    </div>
-                </div>
-                <button class="search-button">Search</button>
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-bar" placeholder="Enter Address or City" id="searchInput" placeholder="Enter Address or City" onkeypress="handleKeyPress(event)">
             </div>
         </div>
         
@@ -436,6 +383,24 @@
         function handleSignout() {
             document.getElementById('loginButton').style.display = 'block';
             document.getElementById('profileButton').style.display = 'none';
+        }
+        
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('searchInput').value;
+            if (searchQuery.trim()) {
+                window.location.href = 'buy.html';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const searchQuery = document.getElementById('searchInput').value;
+                if (searchQuery.trim()) {
+                    window.location.href = 'buy.html';
+                }
+            }
         }
     </script>
 </body>

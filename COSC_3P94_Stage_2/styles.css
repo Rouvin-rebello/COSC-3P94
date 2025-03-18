@@ -492,11 +492,27 @@ body.menu-open {
     gap: 15px;
 }
 
-/* Search Bar */
-.search-bar {
+.search-wrapper {
+    position: relative;
     width: 80%;
     max-width: 800px;
-    padding: 12px 24px;
+    margin: 0 auto;
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #5A4B60;
+    font-size: 1.2rem;
+    z-index: 1;
+}
+
+/* Search Bar */
+.search-bar {
+    width: 100%;
+    padding: 12px 24px 12px 50px;
     border: 2px solid #5A4B60;
     border-radius: 50px;
     font-size: 16px;

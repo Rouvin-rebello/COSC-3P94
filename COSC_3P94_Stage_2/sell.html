@@ -478,6 +478,135 @@
             }
         }
 
+        .view-drafts {
+            background-color: #8A7B99;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .view-drafts:hover {
+            background-color: #6B5D77;
+        }
+
+        .drafts-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .drafts-modal.show-modal {
+            display: block;
+        }
+
+        .drafts-list {
+            margin-top: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .draft-item {
+            padding: 1rem;
+            border: 1px solid #E0D5E8;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .draft-item:hover {
+            background: #f8f5fb;
+        }
+
+        /* Update form buttons layout */
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .form-buttons button {
+            min-width: 120px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .view-drafts {
+            margin-right: auto;  /* Push other buttons to the right */
+            background-color: #8A7B99;
+            color: white;
+            border: none;
+        }
+
+        .save-draft {
+            background-color: #C4B1E5;
+            color: #5A4B60;
+            border: 1px solid #B29ED9;
+        }
+
+        .submit-listing {
+            background-color: #5A4B60 !important;
+            color: white !important;
+            border: none;
+            font-weight: 500;
+        }
+
+        .view-drafts:hover {
+            background-color: #776888;
+            transform: translateY(-1px);
+        }
+
+        .save-draft:hover {
+            background-color: #B29ED9;
+            transform: translateY(-1px);
+        }
+
+        .submit-listing:hover {
+            background-color: #453C4F !important;
+            transform: translateY(-1px);
+        }
+
+        /* Add icons to buttons */
+        .view-drafts::before {
+            content: '\f07c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        .save-draft::before {
+            content: '\f0c7';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        .submit-listing::before {
+            content: '\f061';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
     </style>
 </head>
 <body>
@@ -720,11 +849,23 @@
                 <!-- Submit Buttons -->
                 <div class="form-section-card">
                     <div class="form-buttons">
-                        <button type="button" class="save-draft" onclick="saveDraft()">Save as Draft</button>
+                        <button type="button" class="view-drafts" onclick="viewDrafts()">View Drafts</button>
+                        <button type="button" class="save-draft" onclick="saveDraft()">Save Draft</button>
                         <button type="submit" class="submit-listing">List Property</button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Drafts Modal -->
+    <div class="drafts-modal" id="draftsModal">
+        <h3>Saved Drafts</h3>
+        <div class="drafts-list" id="draftsList">
+            <!-- Drafts will be loaded here -->
+        </div>
+        <div class="form-buttons">
+            <button type="button" class="save-draft" onclick="closeDraftsModal()">Close</button>
         </div>
     </div>
 
@@ -1084,33 +1225,94 @@
             description: document.getElementById('description').value,
             sellerName: document.getElementById('sellerName').value,
             sellerPhone: document.getElementById('sellerPhone').value,
-            sellerEmail: document.getElementById('sellerEmail').value,
-            preferredContact: document.getElementById('preferredContact').value,
-            bestTime: document.getElementById('bestTime').value
+            sellerEmail: document.getElementById('sellerEmail').value
         };
 
-        // Save to localStorage
-        localStorage.setItem('propertyDraft', JSON.stringify(formData));
-        
-        // Show success message
-        alert('Draft saved successfully! You can resume later.');
+        const draftKey = `propertyDraft_${Date.now()}`;
+        localStorage.setItem(draftKey, JSON.stringify(formData));
+        alert('Draft saved successfully!');
     }
 
-    // Load draft when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        const savedDraft = localStorage.getItem('propertyDraft');
-        if (savedDraft) {
-            const loadDraft = confirm('Would you like to load your saved draft?');
-            if (loadDraft) {
-                const formData = JSON.parse(savedDraft);
-                Object.keys(formData).forEach(key => {
-                    if (document.getElementById(key)) {
-                        document.getElementById(key).value = formData[key];
-                    }
-                });
+    function viewDrafts() {
+        const draftsModal = document.getElementById('draftsModal');
+        const draftsList = document.getElementById('draftsList');
+        const backdrop = document.getElementById('backdrop');
+        
+        // Clear existing drafts
+        draftsList.innerHTML = '';
+        
+        // Load all drafts from localStorage
+        const drafts = getAllDrafts();
+        
+        if (drafts.length === 0) {
+            draftsList.innerHTML = '<p>No saved drafts found.</p>';
+        } else {
+            drafts.forEach((draft, index) => {
+                const draftItem = document.createElement('div');
+                draftItem.className = 'draft-item';
+                draftItem.innerHTML = `
+                    <div>
+                        <strong>${draft.title || 'Untitled Draft'}</strong><br>
+                        <small>Property Type: ${draft.propertyType || 'Not specified'}</small>
+                    </div>
+                    <div>
+                        <button onclick="loadDraft(${index})" class="save-draft">Load</button>
+                        <button onclick="deleteDraft(${index})" class="view-drafts">Delete</button>
+                    </div>
+                `;
+                draftsList.appendChild(draftItem);
+            });
+        }
+        
+        draftsModal.classList.add('show-modal');
+        backdrop.classList.add('show-backdrop');
+    }
+
+    function closeDraftsModal() {
+        const draftsModal = document.getElementById('draftsModal');
+        const backdrop = document.getElementById('backdrop');
+        draftsModal.classList.remove('show-modal');
+        backdrop.classList.remove('show-backdrop');
+    }
+
+    function getAllDrafts() {
+        const drafts = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('propertyDraft_')) {
+                try {
+                    drafts.push(JSON.parse(localStorage.getItem(key)));
+                } catch (e) {
+                    console.error('Error parsing draft:', e);
+                }
             }
         }
-    });
+        return drafts;
+    }
+
+    function loadDraft(index) {
+        const drafts = getAllDrafts();
+        if (drafts[index]) {
+            const formData = drafts[index];
+            Object.keys(formData).forEach(key => {
+                if (document.getElementById(key)) {
+                    document.getElementById(key).value = formData[key];
+                }
+            });
+            closeDraftsModal();
+        }
+    }
+
+    function deleteDraft(index) {
+        if (confirm('Are you sure you want to delete this draft?')) {
+            const drafts = getAllDrafts();
+            if (drafts[index]) {
+                const keys = Object.keys(localStorage).filter(key => key.startsWith('propertyDraft_'));
+                localStorage.removeItem(keys[index]);
+                viewDrafts(); // Refresh the drafts list
+            }
+        }
+    }
     </script>
 </body>
 </html>
