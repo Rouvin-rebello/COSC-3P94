@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Add Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #propertyMap {
+            height: 100%;
+            width: 100%;
+            min-height: 400px;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -446,87 +456,62 @@
             document.getElementById('profileButton').style.display = 'none';
         }
     </script>
-    <!-- Add Google Maps script before the closing body tag -->
-    <script src="" async defer></script>
+    <!-- Remove the Google Maps script and replace with this new script -->
     <script>
         // Initialize the map
         function initMap() {
             try {
-                const map = new google.maps.Map(document.getElementById("propertyMap"), {
-                    center: { lat: 43.1167, lng: -79.2494 }, // St. Catharines coordinates
-                    zoom: 13,
-                    styles: [
-                        {
-                            "featureType": "poi",
-                            "elementType": "labels",
-                            "stylers": [{ "visibility": "off" }]
-                        }
-                    ]
-                });
+                const map = L.map('propertyMap').setView([43.1167, -79.2494], 13);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
 
-                // Example property markers - Replace with real data
+                // Example property markers
                 const properties = [
                     {
-                        position: { lat: 43.1157, lng: -79.2496 },
+                        position: [43.1157, -79.2496],
                         title: "Modern Apartment",
                         price: "$250,000",
                         type: "For Sale"
                     },
                     {
-                        position: { lat: 43.1050, lng: -79.2450 },
+                        position: [43.1050, -79.2450],
                         title: "Family House",
                         price: "$350,000",
                         type: "For Sale"
                     },
                     {
-                        position: { lat: 43.1197, lng: -79.2810 },
+                        position: [43.1197, -79.2810],
                         title: "Modern Apartment",
                         price: "$250,000",
                         type: "For Sale"
                     },
                     {
-                        position: { lat: 43.1299, lng: -79.1956 },
+                        position: [43.1299, -79.1956],
                         title: "Modern Apartment",
                         price: "$250,000",
                         type: "For Sale"
                     },
                     {
-                        position: { lat: 43.1299, lng: -79.1956 },
+                        position: [43.1399, -79.2910],
                         title: "Modern Apartment",
                         price: "$250,000",
                         type: "For Sale"
-                    },
-                    {
-                        position: { lat: 43.1399, lng: -79.2910 },
-                        title: "Modern Apartment",
-                        price: "$250,000",
-                        type: "For Sale"
-                    },
-
+                    }
                 ];
 
                 // Add markers for each property
                 properties.forEach(property => {
-                    const marker = new google.maps.Marker({
-                        position: property.position,
-                        map: map,
-                        title: property.title
-                    });
-
-                    // Add info window for each marker
-                    const infoWindow = new google.maps.InfoWindow({
-                        content: `
-                            <div class="map-info-window">
-                                <h3>${property.title}</h3>
-                                <p>${property.price}</p>
-                                <p>${property.type}</p>
-                            </div>
-                        `
-                    });
-
-                    marker.addListener("click", () => {
-                        infoWindow.open(map, marker);
-                    });
+                    const marker = L.marker(property.position).addTo(map);
+                    
+                    marker.bindPopup(`
+                        <div class="map-info-window">
+                            <h3>${property.title}</h3>
+                            <p>${property.price}</p>
+                            <p>${property.type}</p>
+                        </div>
+                    `);
                 });
             } catch (error) {
                 console.error("Error initializing map:", error);
@@ -535,11 +520,8 @@
             }
         }
 
-        // Handle Google Maps loading error
-        window.gm_authFailure = function() {
-            document.getElementById("propertyMap").innerHTML = 
-                '<div style="text-align: center; padding: 20px;">Unable to load map. Please check API key.</div>';
-        };
+        // Call initMap when the document is ready
+        document.addEventListener('DOMContentLoaded', initMap);
     </script>
 </body>
 </html>
