@@ -18,6 +18,19 @@
             width: 100%;
             min-height: 400px;
         }
+        /* Add these new styles */
+        .advanced-filters {
+            position: relative;
+        }
+        .advanced-filters-content {
+            position: absolute;
+            z-index: 1000;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -133,6 +146,7 @@
                 <div class="sort-container">
                     <select class="filter-select">
                         <option value="">Sort By</option>
+                        <option value="price-asc">Most Popular</option>
                         <option value="price-asc">Price: Low to High</option>
                         <option value="price-desc">Price: High to Low</option>
                         <option value="date-new">Newest First</option>
@@ -165,7 +179,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="listing-card" onclick="viewListing('3', '1800', '2', '2', '1400', '789 Pine St, St. Catharines')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
                     <img src="https://picsum.photos/400/302" alt="Downtown Condo" class="listing-image">
                     <div class="listing-info">
                         <h3>Downtown Condo</h3>
@@ -178,7 +192,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="listing-card" onclick="viewListing('4', '2500', '4', '3', '2200', '321 Elm St, St. Catharines')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
                     <img src="https://picsum.photos/400/303" alt="Spacious House" class="listing-image">
                     <div class="listing-info">
                         <h3>Spacious House</h3>
@@ -191,7 +205,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="listing-card" onclick="viewListing('5', '1600', '1', '1', '900', '567 Lake St, St. Catharines')">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
                     <img src="https://picsum.photos/400/304" alt="Studio Apartment" class="listing-image">
                     <div class="listing-info">
                         <h3>Studio Apartment</h3>

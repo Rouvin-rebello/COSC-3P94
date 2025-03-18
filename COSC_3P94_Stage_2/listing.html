@@ -127,6 +127,7 @@
             </div>
         </div>
 
+
         <div class="right-column">
             <div class="property-header">
                 <div class="header-main">
@@ -180,8 +181,64 @@
                     <div class="feature-item"><i class="fas fa-check"></i>Fenced Yard</div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            
+    <div class="reviews-section">
+        <h2>Community Reviews</h2>
+        <div class="reviews-summary">
+            <div class="average-rating">
+                <span class="rating-number">4.5</span>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="total-reviews">12 reviews</span>
+            </div>
+            <button class="write-review-btn" onclick="toggleReviewForm()">
+                <i class="fas fa-pen"></i> Write a Review
+            </button>
+        </div>
+
+        <div class="review-form" id="reviewForm">
+            <h3>Write Your Review</h3>
+            <form onsubmit="submitReview(event)">
+                <div class="star-rating">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+                <textarea placeholder="Share your experience with this property..." required></textarea>
+                <div class="form-buttons">
+                    <button type="button" onclick="toggleReviewForm()">Cancel</button>
+                    <button type="submit">Submit Review</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="reviews-list">
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="reviewer-name">John Doe</span>
+                    </div>
+                    <div class="review-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="review-text">Great property! The neighborhood is quiet and the house is well maintained.</p>
+                <span class="review-date">Posted 2 days ago</span>
+            </div>
         </div>
     </div>
 
@@ -424,6 +481,81 @@
         function handleSignout() {
             document.getElementById('loginButton').style.display = 'block';
             document.getElementById('profileButton').style.display = 'none';
+        }
+
+        function toggleReviewForm() {
+            const form = document.getElementById('reviewForm');
+            form.classList.toggle('show');
+        }
+
+        function submitReview(event) {
+            event.preventDefault();
+            const form = event.target;
+            const rating = form.querySelector('.star-rating').getAttribute('data-selected');
+            const review = form.querySelector('textarea').value;
+            
+            // Add new review card
+            const reviewsList = document.querySelector('.reviews-list');
+            const newReview = document.createElement('div');
+            newReview.className = 'review-card';
+            newReview.innerHTML = `
+                <div class="review-header">
+                    <div class="reviewer-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="reviewer-name">You</span>
+                    </div>
+                    <div class="review-rating">
+                        ${Array(parseInt(rating)).fill('<i class="fas fa-star"></i>').join('')}
+                    </div>
+                </div>
+                <p class="review-text">${review}</p>
+                <span class="review-date">Just now</span>
+            `;
+            reviewsList.insertBefore(newReview, reviewsList.firstChild);
+            
+            // Clear and close form
+            form.reset();
+            toggleReviewForm();
+        }
+
+        // Star rating functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star-rating i');
+            stars.forEach(star => {
+                star.addEventListener('mouseover', function() {
+                    const rating = this.getAttribute('data-rating');
+                    highlightStars(rating);
+                });
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-rating');
+                    this.parentElement.setAttribute('data-selected', rating);
+                });
+            });
+            
+            const starContainer = document.querySelector('.star-rating');
+            starContainer.addEventListener('mouseleave', function() {
+                const selected = this.getAttribute('data-selected');
+                if (selected) {
+                    highlightStars(selected);
+                } else {
+                    clearStars();
+                }
+            });
+        });
+
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('.star-rating i');
+            stars.forEach(star => {
+                const starRating = star.getAttribute('data-rating');
+                star.className = starRating <= rating ? 'fas fa-star' : 'far fa-star';
+            });
+        }
+
+        function clearStars() {
+            const stars = document.querySelectorAll('.star-rating i');
+            stars.forEach(star => {
+                star.className = 'far fa-star';
+            });
         }
     </script>
 </body>
