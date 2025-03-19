@@ -48,101 +48,91 @@
         </div>
     </div>
     <div class="main-content">
-        <div class="search-container">
-            <div class="search-wrapper">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" class="search-bar" placeholder="Enter Address or City" id="searchInput" placeholder="Enter Address or City" onkeypress="handleKeyPress(event)">
-            </div>
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-bar" placeholder="Enter Address or City" id="searchInput" onkeypress="handleKeyPress(event)">
         </div>
-        
+    </div>
+
+    <!-- Featured Listings -->
+    <div class="section">
+        <h2 class="section-title">Featured Listings</h2>
         <div class="listings-container">
             <div class="listings-grid">
-                <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=599000&beds=3&baths=2&sqft=2100&address=123 Main Street, Toronto, ON&type=For Sale&img=https://picsum.photos/400/300'">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=599000'">
                     <img src="https://picsum.photos/400/300" alt="House" class="listing-image">
                     <div class="listing-info">
                         <div class="listing-price">$599,000</div>
                         <div class="listing-details">
                             <span><i class="fas fa-bed"></i> 3 beds</span>
                             <span><i class="fas fa-bath"></i> 2 baths</span>
-                            <span><i class="fas fa-ruler-combined"></i> 2,100 sqft</span>
                         </div>
                         <div class="listing-address">123 Main Street, Toronto, ON</div>
-                        <div class="listing-type">For Sale</div>
                     </div>
                 </div>
 
-                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2400&beds=2&baths=1&sqft=1200&address=456 Park Ave, Vancouver, BC&type=For Rent&img=https://picsum.photos/400/301'">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=899000'">
                     <img src="https://picsum.photos/400/301" alt="House" class="listing-image">
-                    <div class="listing-info">
-                        <div class="listing-price">$2,400/mo</div>
-                        <div class="listing-details">
-                            <span><i class="fas fa-bed"></i> 2 beds</span>
-                            <span><i class="fas fa-bath"></i> 1 bath</span>
-                            <span><i class="fas fa-ruler-combined"></i> 1,200 sqft</span>
-                        </div>
-                        <div class="listing-address">456 Park Ave, Vancouver, BC</div>
-                        <div class="listing-type">For Rent</div>
-                    </div>
-                </div>
-
-                <div class="listing-card" onclick="window.location.href='listing.html?id=3&price=899000&beds=4&baths=3&sqft=2800&address=789 Lake Drive, Ottawa, ON&type=For Sale&img=https://picsum.photos/400/302'">
-                    <img src="https://picsum.photos/400/302" alt="House" class="listing-image">
                     <div class="listing-info">
                         <div class="listing-price">$899,000</div>
                         <div class="listing-details">
                             <span><i class="fas fa-bed"></i> 4 beds</span>
                             <span><i class="fas fa-bath"></i> 3 baths</span>
-                            <span><i class="fas fa-ruler-combined"></i> 2,800 sqft</span>
                         </div>
                         <div class="listing-address">789 Lake Drive, Ottawa, ON</div>
-                        <div class="listing-type">For Sale</div>
-                    </div>
-                </div>
-
-                <div class="listing-card" onclick="window.location.href='listing.html?id=4&price=449000&beds=2&baths=1&sqft=1500&address=321 Queen Street, Montreal, QC&type=For Sale&img=https://picsum.photos/400/303'">
-                    <img src="https://picsum.photos/400/303" alt="House" class="listing-image">
-                    <div class="listing-info">
-                        <div class="listing-price">$449,000</div>
-                        <div class="listing-details">
-                            <span><i class="fas fa-bed"></i> 2 beds</span>
-                            <span><i class="fas fa-bath"></i> 1 bath</span>
-                            <span><i class="fas fa-ruler-combined"></i> 1,500 sqft</span>
-                        </div>
-                        <div class="listing-address">321 Queen Street, Montreal, QC</div>
-                        <div class="listing-type">For Sale</div>
-                    </div>
-                </div>
-
-                <div class="listing-card" onclick="window.location.href='listing.html?id=5&price=3200&beds=3&baths=2&sqft=1800&address=567 King Road, Calgary, AB&type=For Rent&img=https://picsum.photos/400/304'">
-                    <img src="https://picsum.photos/400/304" alt="House" class="listing-image">
-                    <div class="listing-info">
-                        <div class="listing-price">$3,200/mo</div>
-                        <div class="listing-details">
-                            <span><i class="fas fa-bed"></i> 3 beds</span>
-                            <span><i class="fas fa-bath"></i> 2 baths</span>
-                            <span><i class="fas fa-ruler-combined"></i> 1,800 sqft</span>
-                        </div>
-                        <div class="listing-address">567 King Road, Calgary, AB</div>
-                        <div class="listing-type">For Rent</div>
-                    </div>
-                </div>
-
-                <div class="listing-card" onclick="window.location.href='listing.html?id=6&price=750000&beds=3&baths=2&sqft=2200&address=890 Beach Avenue, Halifax, NS&type=For Sale&img=https://picsum.photos/400/305'">
-                    <img src="https://picsum.photos/400/305" alt="House" class="listing-image">
-                    <div class="listing-info">
-                        <div class="listing-price">$750,000</div>
-                        <div class="listing-details">
-                            <span><i class="fas fa-bed"></i> 3 beds</span>
-                            <span><i class="fas fa-bath"></i> 2 baths</span>
-                            <span><i class="fas fa-ruler-combined"></i> 2,200 sqft</span>
-                        </div>
-                        <div class="listing-address">890 Beach Avenue, Halifax, NS</div>
-                        <div class="listing-type">For Sale</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Saved Listings -->
+    <div class="section">
+        <h2 class="section-title">Saved Listings</h2>
+        <div class="listings-container">
+            <div class="listings-grid">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=3&price=750000'">
+                    <img src="https://picsum.photos/400/302" alt="House" class="listing-image">
+                    <div class="listing-info">
+                        <div class="listing-price">$750,000</div>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 3 beds</span>
+                            <span><i class="fas fa-bath"></i> 2 baths</span>
+                        </div>
+                        <div class="listing-address">890 Beach Avenue, Halifax, NS</div>
+                    </div>
+                </div>
+
+                <div class="listing-card" onclick="window.location.href='listing.html?id=4&price=3200'">
+                    <img src="https://picsum.photos/400/303" alt="House" class="listing-image">
+                    <div class="listing-info">
+                        <div class="listing-price">$3,200/mo</div>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 3 beds</span>
+                            <span><i class="fas fa-bath"></i> 2 baths</span>
+                        </div>
+                        <div class="listing-address">567 King Road, Calgary, AB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collections -->
+    <div class="section">
+        <h2 class="section-title">Collections</h2>
+        <div class="collections-container">
+            <div class="collection-card" onclick="showCollectionAlert('Favorites')">Favorites</div>
+            <div class="collection-card" onclick="showCollectionAlert('Investment Properties')">Investment Properties</div>
+            <div class="collection-card" onclick="showCollectionAlert('Dream Homes')">Dream Homes</div>
+            <div class="collection-card" onclick="showCollectionAlert('Watchlist')">Watchlist</div>
+        </div>
+        
+        </div>
+    </div>
+</div>
 
     <div class="footer">
         <div class="contact-info">
@@ -402,6 +392,10 @@
                 }
             }
         }
+        function showCollectionAlert(collectionName) {
+    alert(`No listings in "${collectionName}" collection.`);
+}
+
     </script>
 </body>
 </html>

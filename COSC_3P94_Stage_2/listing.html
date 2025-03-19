@@ -131,6 +131,29 @@
         <div class="right-column">
             <div class="property-header">
                 <div class="header-main">
+                    <div class="listing-actions">
+                        <!-- Save Listing Button -->
+                        <button id="saveListingBtn" class="save-listing-btn" onclick="toggleSaveListing()">
+                            <i class="far fa-heart"></i> Save Listing
+                        </button>
+                    
+                        <!-- Add to Collection Dropdown -->
+                        <div class="collection-dropdown">
+                            <button class="collection-btn" onclick="toggleCollectionDropdown()">
+                                <i class="fas fa-folder-plus"></i> Add to Collection
+                            </button>
+                            <div id="collectionMenu" class="collection-menu">
+                                <p>Select a collection:</p>
+                                <ul>
+                                    <li onclick="addToCollection('Favorites')">Favorites</li>
+                                    <li onclick="addToCollection('Investment Properties')">Investment Properties</li>
+                                    <li onclick="addToCollection('Dream Homes')">Dream Homes</li>
+                                    <li onclick="addToCollection('Watchlist')">Watchlist</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                   
                     <h1 class="address">123 Lakeside Avenue</h1>
                     <p class="location">
                         <i class="fas fa-map-marker-alt"></i>
@@ -632,6 +655,59 @@
         function emailRealtor() {
             alert("Sending email to realtor...");
         }
+        function toggleSaveListing() {
+        const saveBtn = document.getElementById("saveListingBtn");
+        const icon = saveBtn.querySelector("i");
+
+        saveBtn.classList.toggle("saved"); // Toggle saved state
+        if (saveBtn.classList.contains("saved")) {
+            icon.classList.remove("far");
+            icon.classList.add("fas"); // Filled heart
+            saveBtn.innerHTML = '<i class="fas fa-heart"></i> Saved!';
+        } else {
+            icon.classList.remove("fas");
+            icon.classList.add("far"); // Outline heart
+            saveBtn.innerHTML = '<i class="far fa-heart"></i> Save Listing';
+        }
+    }
+    // Toggle Save Listing
+function toggleSaveListing() {
+    const saveBtn = document.getElementById("saveListingBtn");
+    const icon = saveBtn.querySelector("i");
+
+    saveBtn.classList.toggle("saved"); // Toggle saved state
+    if (saveBtn.classList.contains("saved")) {
+        icon.classList.remove("far");
+        icon.classList.add("fas"); // Filled heart
+        saveBtn.innerHTML = '<i class="fas fa-heart"></i> Saved!';
+    } else {
+        icon.classList.remove("fas");
+        icon.classList.add("far"); // Outline heart
+        saveBtn.innerHTML = '<i class="far fa-heart"></i> Save Listing';
+    }
+}
+
+// Toggle Collection Dropdown
+function toggleCollectionDropdown() {
+    const menu = document.getElementById("collectionMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Add Listing to Collection
+function addToCollection(collectionName) {
+    alert(`Listing added to "${collectionName}"`);
+    toggleCollectionDropdown(); // Close menu after selecting
+}
+
+// Close dropdown when clicking outside
+document.addEventListener("click", function (event) {
+    const dropdown = document.querySelector(".collection-dropdown");
+    if (!dropdown.contains(event.target)) {
+        document.getElementById("collectionMenu").style.display = "none";
+    }
+});
+
+
 
     </script>
 </body>
