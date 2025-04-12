@@ -72,25 +72,32 @@
 .listing-card {
     background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     overflow: hidden;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
     width: 120%;
 }
 
 .listing-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .listing-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px 4px 0 0;
 }
 
 .listing-info {
     padding: 15px;
+    border-top: 1px solid #e0e0e0;
+    background: #fff;
+    border-radius: 0 0 4px 4px;
 }
 
 .listing-price {
@@ -131,10 +138,14 @@
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s ease;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .collection-card:hover {
     background: #453C4F;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 /* Save Button inside the Listing Info */
 /* Save Button Styling */
@@ -223,4 +234,10 @@
     padding: 0 10px;
     color: #666;
     font-size: 14px;
+}
+
+/* Enhanced dropdown menus */
+.dropdown, .profile-dropdown {
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }

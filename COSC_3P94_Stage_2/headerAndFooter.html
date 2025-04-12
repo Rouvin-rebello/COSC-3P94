@@ -24,8 +24,22 @@
         </div>
         <div class="right-section">
             <a href="#" class="signup-login" onclick="toggleModal(); return false;" id="loginButton">Signup / Login</a>
-            <a href="#" class="profile-icon" style="display: none;" id="profileButton">
+            <a href="#" class="profile-icon" style="display: none; color: #5A4B60;" id="profileButton" onclick="toggleProfileDropdown(event); return false;">
                 <i class="fas fa-user-circle"></i>
+                <div class="profile-dropdown" id="profileDropdown" style="display: none; position: absolute; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 4px; padding: 10px; right: 45px; top: 40px;">
+                    <div style="padding: 8px; cursor: pointer;" onclick="document.getElementById('savedListingsSection').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-heart"></i> Saved Listings
+                    </div>
+                    <div style="padding: 8px; cursor: pointer;" onclick="document.getElementById('collectionsSection').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-folder"></i> Collections
+                    </div>
+                    <div style="padding: 8px; cursor: pointer;" onclick="window.location.href='my-listings.html'">
+                        <i class="fas fa-list"></i> My Listings
+                    </div>
+                    <div style="padding: 8px; cursor: pointer;" onclick="handleSignout()">
+                        <i class="fas fa-sign-out-alt"></i> Sign Out
+                    </div>
+                </div>
             </a>
             <div class="options">
                 <i class="fas fa-bars options-icon"></i>
@@ -38,6 +52,11 @@
                         <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
                     </div>
                     <div class="dropdown-section">
+                        <h3>More information</h3>
+                        <a href="realtors.html"><i class="fas fa-user-tie"></i> Realtors</a>
+                        <a href="resources.html"><i class="fas fa-book"></i> Resources</a>
+                    </div>
+                    <div class="dropdown-section">
                         <h3>Accessibility</h3>
                         <a href="#" onclick="toggleTextSize()"><i class="fas fa-text-height"></i> Text Scaling</a>
                         <a href="#" onclick="toggleContrast()"><i class="fas fa-adjust"></i> High Contrast</a>
@@ -47,9 +66,30 @@
             </div>
         </div>
     </div>
-    
-        
-        
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <div class="footer">
         <div class="contact-info">
@@ -173,25 +213,31 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-        const menuButton = document.querySelector(".options-icon");
-        const dropdownMenu = document.querySelector(".dropdown");
-        const body = document.body;
+            const menuButton = document.querySelector(".options-icon");
+            const dropdownMenu = document.querySelector(".dropdown");
+            const body = document.body;
 
-        menuButton.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevent immediate close
-            dropdownMenu.classList.toggle("show");
-            body.classList.toggle("menu-open");
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", function (event) {
-            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.remove("show");
+            function closeAllDropdowns() {
+                document.getElementById('profileDropdown').style.display = 'none';
+                dropdownMenu.style.display = 'none';
                 body.classList.remove("menu-open");
             }
-        });
 
-        
+            menuButton.addEventListener("click", function (event) {
+                event.stopPropagation();
+                const isOpen = dropdownMenu.style.display === 'block';
+                closeAllDropdowns();
+                if (!isOpen) {
+                    dropdownMenu.style.display = 'block';
+                    body.classList.add("menu-open");
+                }
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    closeAllDropdowns();
+                }
+            });
         });
 
         function toggleChat(chatId) {
@@ -277,6 +323,8 @@
             if (email === 'cosc3p94@gmail.com' && password === '12345') {
                 document.getElementById('loginButton').style.display = 'none';
                 document.getElementById('profileButton').style.display = 'block';
+                document.getElementById('collectionsSection').style.display = 'block';
+                document.getElementById('savedListingsSection').style.display = 'block';
                 closeAllModals();
                 event.target.reset();
             } else {
@@ -322,11 +370,59 @@
         function handleSignout() {
             document.getElementById('loginButton').style.display = 'block';
             document.getElementById('profileButton').style.display = 'none';
+            document.getElementById('collectionsSection').style.display = 'none';
+            document.getElementById('savedListingsSection').style.display = 'none';
+        }
+        
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('searchInput').value;
+            if (searchQuery.trim()) {
+                window.location.href = 'buy.html';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const searchQuery = document.getElementById('searchInput').value;
+                if (searchQuery.trim()) {
+                    window.location.href = 'buy.html';
+                }
+            }
+        }
+        function showCollectionAlert(collectionName) {
+            alert(`No listings in "${collectionName}" collection.`);
         }
 
         function socialLogin(provider) {
             alert(`${provider} login coming soon!`);
         }
+
+        function toggleProfileDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('profileDropdown');
+            const dropdownMenu = document.querySelector(".dropdown");
+            const isOpen = dropdown.style.display === 'block';
+            
+            // Close both dropdowns
+            dropdown.style.display = 'none';
+            dropdownMenu.style.display = 'none';
+            document.body.classList.remove("menu-open");
+            
+            // Open profile dropdown if it was closed
+            if (!isOpen) {
+                dropdown.style.display = 'block';
+            }
+        }
+
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown && !event.target.closest('.profile-icon')) {
+                dropdown.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
