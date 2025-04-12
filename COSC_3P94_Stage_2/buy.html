@@ -32,6 +32,48 @@
             border-radius: 4px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
+        .property-popup .leaflet-popup-content {
+            margin: 0;
+            padding: 10px;
+        }
+        .map-info-window {
+            padding: 5px;
+        }
+        .map-info-window h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        .map-info-window .price {
+            color: #5A4B60;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .map-info-window .property-details {
+            display: flex;
+            gap: 10px;
+            margin: 5px 0;
+        }
+        .map-info-window .features {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        .map-info-window .features span {
+            display: block;
+            margin: 2px 0;
+        }
+        .view-listing {
+            background: #5A4B60;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .view-listing:hover {
+            background: #1a365d;
+        }
     </style>
 </head>
 <body>
@@ -41,8 +83,8 @@
             Estate-10
         </a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
             <a href="buy.html">Buy</a>
+            <a href="rent.html">Rent</a>
             <a href="sell.html">Sell</a>
         </div>
         <div class="right-section">
@@ -551,31 +593,61 @@
                         position: [43.1157, -79.2496],
                         title: "Modern Apartment",
                         price: "$250,000",
-                        type: "For Sale"
+                        type: "For Sale",
+                        beds: 2,
+                        baths: 1,
+                        sqft: "1,200",
+                        features: ["Central Air", "Hardwood Floors"],
+                        id: 1,
+                        image: "https://picsum.photos/400/300"
                     },
                     {
                         position: [43.1050, -79.2450],
                         title: "Family House",
                         price: "$350,000",
-                        type: "For Sale"
+                        type: "For Sale",
+                        beds: 3,
+                        baths: 2,
+                        sqft: "1,800",
+                        features: ["Garage", "Pool"],
+                        id: 2,
+                        image: "https://picsum.photos/400/301"
                     },
                     {
                         position: [43.1197, -79.2810],
                         title: "Modern Apartment",
                         price: "$250,000",
-                        type: "For Sale"
+                        type: "For Sale",
+                        beds: 2,
+                        baths: 1,
+                        sqft: "1,200",
+                        features: ["Central Air", "Hardwood Floors"],
+                        id: 3,
+                        image: "https://picsum.photos/400/302"
                     },
                     {
                         position: [43.1299, -79.1956],
                         title: "Modern Apartment",
                         price: "$250,000",
-                        type: "For Sale"
+                        type: "For Sale",
+                        beds: 2,
+                        baths: 1,
+                        sqft: "1,200",
+                        features: ["Central Air", "Hardwood Floors"],
+                        id: 4,
+                        image: "https://picsum.photos/400/303"
                     },
                     {
                         position: [43.1399, -79.2910],
                         title: "Modern Apartment",
                         price: "$250,000",
-                        type: "For Sale"
+                        type: "For Sale",
+                        beds: 2,
+                        baths: 1,
+                        sqft: "1,200",
+                        features: ["Central Air", "Hardwood Floors"],
+                        id: 5,
+                        image: "https://picsum.photos/400/304"
                     }
                 ];
 
@@ -583,13 +655,39 @@
                 properties.forEach(property => {
                     const marker = L.marker(property.position).addTo(map);
                     
-                    marker.bindPopup(`
+                    // Create popup content with property details
+                    const popupContent = `
                         <div class="map-info-window">
+                            <img src="${property.image}" alt="${property.title}" style="width:100%;max-width:200px;display:block;margin-bottom:8px;">
                             <h3>${property.title}</h3>
-                            <p>${property.price}</p>
-                            <p>${property.type}</p>
+                            <p class="price">${property.price}</p>
+                            <div class="property-details">
+                                <span><i class="fas fa-bed"></i> ${property.beds}</span>
+                                <span><i class="fas fa-bath"></i> ${property.baths}</span>
+                                <span><i class="fas fa-ruler-combined"></i> ${property.sqft} sq ft</span>
+                            </div>
+                            <div class="features">
+                                ${property.features.map(f => `<span><i class="fas fa-check"></i> ${f}</span>`).join('')}
+                            </div>
+                            <button onclick="window.location.href='listing.html?id=${property.id}'" class="view-listing">View Listing</button>
                         </div>
-                    `);
+                    `;
+
+                    // Add popup to marker
+                    marker.bindPopup(popupContent, {
+                        maxWidth: 300,
+                        className: 'property-popup'
+                    });
+
+                    // Add hover functionality
+                    marker.on('mouseover', function (e) {
+                        this.openPopup();
+                    });
+
+                    // Add click functionality
+                    marker.on('click', function(e) {
+                        window.location.href = `listing.html?id=${property.id}`;
+                    });
                 });
             } catch (error) {
                 console.error("Error initializing map:", error);

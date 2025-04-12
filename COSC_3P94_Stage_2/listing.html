@@ -18,8 +18,8 @@
             Estate-10
         </a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
             <a href="buy.html">Buy</a>
+            <a href="rent.html">Rent</a>
             <a href="sell.html">Sell</a>
         </div>
         <div class="right-section">
@@ -668,6 +668,14 @@
             'https://picsum.photos/800/500?random=3'
         ];
 
+        // Preload images
+        window.addEventListener('load', () => {
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+
         function previousImage() {
             currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
             updateMainImage();
@@ -682,9 +690,15 @@
 
         function updateMainImage() {
             const mainImage = document.querySelector('.main-image');
+            mainImage.style.transition = 'none';
             mainImage.src = images[currentImageIndex];
             mainImage.classList.add('active');
             document.querySelector('.video-container').style.display = 'none';
+            
+            // Force browser to acknowledge the transition removal
+            mainImage.offsetHeight;
+            
+            // No transition restore - keeps it snappy
         }
 
         function updateIndicators() {

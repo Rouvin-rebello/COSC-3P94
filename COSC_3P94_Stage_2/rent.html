@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estate-10</title>
+
+    <!-- Link to your custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index-styles.css">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Add Leaflet CSS and JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #propertyMap {
+            height: 100%;
+            width: 100%;
+            min-height: 400px;
+        }
+        /* Add these new styles */
+        .advanced-filters {
+            position: relative;
+        }
+        .advanced-filters-content {
+            position: absolute;
+            z-index: 1000;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .property-popup .leaflet-popup-content {
+            margin: 0;
+            padding: 10px;
+        }
+        .map-info-window {
+            padding: 5px;
+        }
+        .map-info-window h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        .map-info-window .price {
+            color: #5A4B60;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .map-info-window .property-details {
+            display: flex;
+            gap: 10px;
+            margin: 5px 0;
+        }
+        .map-info-window .features {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        .map-info-window .features span {
+            display: block;
+            margin: 2px 0;
+        }
+        .view-listing {
+            background: #5A4B60;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .view-listing:hover {
+            background: #1a365d;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-house"></i>
+            Estate-10
+        </a>
+        <div class="nav-links">
+            <a href="buy.html">Buy</a>
+            <a href="rent.html">Rent</a>
+            <a href="sell.html">Sell</a>
+        </div>
+        <div class="right-section">
+            <a href="#" class="signup-login" onclick="toggleModal(); return false;" id="loginButton">Signup / Login</a>
+            <a href="#" class="profile-icon" style="display: none;" id="profileButton">
+                <i class="fas fa-user-circle"></i>
+            </a>
+            <div class="options">
+                <i class="fas fa-bars options-icon"></i>
+                <div class="dropdown">
+                    <div class="dropdown-section">
+                        <h3>Tools</h3>
+                        <a href="#" onclick="toggleMarketTrends()"><i class="fas fa-chart-line"></i> Market Trends</a>
+                        <a href="#" onclick="toggleMortgage()"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+                        <a href="#" onclick="toggleLoan()"><i class="fas fa-home"></i> Home Loan Calculator</a>
+                        <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <h3>Accessibility</h3>
+                        <a href="#" onclick="toggleTextSize()"><i class="fas fa-text-height"></i> Text Scaling</a>
+                        <a href="#" onclick="toggleContrast()"><i class="fas fa-adjust"></i> High Contrast</a>
+                        <a href="#" onclick="toggleVoiceNav()"><i class="fas fa-microphone"></i> Voice Navigation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">        
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-bar" placeholder="Enter Address or City" id="searchInput" placeholder="Enter Address or City" onkeypress="handleKeyPress(event)">
+            </div>
+            <div class="filters-container">
+                <select class="filter-select">
+                    <option value="">Property Type</option>
+                    <option value="house">House</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="condo">Condo</option>
+                    <option value="townhouse">Townhouse</option>
+                    <option value="duplex">Duplex</option>
+                    <option value="land">Land</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Beds</option>
+                    <option value="1">1 Bed</option>
+                    <option value="2">2 Beds</option>
+                    <option value="3">3 Beds</option>
+                    <option value="4">4+ Beds</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Baths</option>
+                    <option value="1">1 Bath</option>
+                    <option value="2">2 Baths</option>
+                    <option value="3">3+ Baths</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Square Feet</option>
+                    <option value="0-1000">Under 1,000</option>
+                    <option value="1000-1500">1,000 - 1,500</option>
+                    <option value="1500-2000">1,500 - 2,000</option>
+                    <option value="2000-2500">2,000 - 2,500</option>
+                    <option value="2500+">2,500+</option>
+                </select>
+                <div class="filter-select price-range-group">
+                    <div class="price-inputs">
+                        <div class="price-input-wrapper">
+                            <span class="currency">$</span>
+                            <input type="text" placeholder="Min" class="price-input">
+                        </div>
+                        <span class="price-separator">-</span>
+                        <div class="price-input-wrapper">
+                            <span class="currency">$</span>
+                            <input type="text" placeholder="Max" class="price-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="advanced-filters">
+                    <button class="filter-select">Advanced Filters</button>
+                    <div class="advanced-filters-content">
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="garage">
+                            <label for="garage">Garage</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="pool">
+                            <label for="pool">Pool</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="furnished">
+                            <label for="furnished">Furnished</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="garden">
+                            <label for="garden">Garden</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="schools">
+                            <label for="schools">Near schools</label>
+                        </div>
+                        <div class="advanced-filter-item">
+                            <input type="checkbox" id="busStops">
+                            <label for="busStops">Near bus stops</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="search-button" onclick="location.reload()">Search</button>
+            </div>
+        </div>
+
+        <!-- Map and Listings Container -->
+        <div class="map-listings-container">
+            <div class="listings-sidebar">
+                <div class="sort-container">
+                    <select class="filter-select" onchange="location.reload()">
+                        <option value="">Sort By</option>
+                        <option value="price-asc">Most Popular</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="date-new">Newest First</option>
+                        <option value="date-old">Oldest First</option>
+                    </select>
+                </div>
+                <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=1500&beds=2&baths=1&sqft=1200&address=123 Main St, St. Catharines&type=For Rent&img=https://picsum.photos/400/300'">
+                    <img src="https://picsum.photos/400/300" alt="Modern Apartment" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Modern Apartment</h3>
+                        <p class="listing-price">$1,500/month</p>
+                        <p class="listing-address">123 Main St, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 2</span>
+                            <span><i class="fas fa-bath"></i> 1</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1,200 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
+                    <img src="https://picsum.photos/400/301" alt="Family House" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Family House</h3>
+                        <p class="listing-price">$2,200/month</p>
+                        <p class="listing-address">456 Oak Ave, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 3</span>
+                            <span><i class="fas fa-bath"></i> 2</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1,800 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
+                    <img src="https://picsum.photos/400/302" alt="Downtown Condo" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Downtown Condo</h3>
+                        <p class="listing-price">$1,800/month</p>
+                        <p class="listing-address">789 Pine St, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 2</span>
+                            <span><i class="fas fa-bath"></i> 2</span>
+                            <span><i class="fas fa-ruler-combined"></i> 1,400 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
+                    <img src="https://picsum.photos/400/303" alt="Spacious House" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Spacious House</h3>
+                        <p class="listing-price">$2,500/month</p>
+                        <p class="listing-address">321 Elm St, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 4</span>
+                            <span><i class="fas fa-bath"></i> 3</span>
+                            <span><i class="fas fa-ruler-combined"></i> 2,200 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
+                    <img src="https://picsum.photos/400/304" alt="Studio Apartment" class="listing-image">
+                    <div class="listing-info">
+                        <h3>Studio Apartment</h3>
+                        <p class="listing-price">$1,600/month</p>
+                        <p class="listing-address">567 Lake St, St. Catharines</p>
+                        <div class="listing-details">
+                            <span><i class="fas fa-bed"></i> 1</span>
+                            <span><i class="fas fa-bath"></i> 1</span>
+                            <span><i class="fas fa-ruler-combined"></i> 900 sq ft</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="map-container">
+                <div id="propertyMap"></div>
+            </div>
+        </div>     
+    </div>
+
+
+    <div class="footer">
+        <div class="contact-info">
+            <div><i class="fas fa-envelope"></i> estate10support@gmail.com</div>
+            <div><i class="fas fa-phone"></i> 905-444-ESTATE</div>
+        </div>
+    
+        <div class="footer-content">
+            <div>© Estate-10. All rights reserved</div>
+        </div>
+    
+        <div class="social-links">
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2>Login to Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Continue with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Continue with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="login-buttons">
+                    <button type="button" class="login-close" onclick="toggleModal()">Close</button>
+                    <button type="submit" class="login-submit">Login</button>
+                </div>
+            </form>
+            <div class="signup-link">
+                <span>Don't have an account? <a href="#" onclick="toggleSignupModal()">Sign Up</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="signup-modal" id="signupModal">
+        <div class="signup-content">
+            <h2>Sign Up for Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Sign up with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Sign up with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Sign up with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
+            <form class="signup-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Re-enter Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="signup-buttons">
+                    <button type="button" class="signup-close" onclick="toggleSignupModal()">Close</button>
+                    <button type="submit" class="signup-submit">Sign Up</button>
+                </div>
+            </form>
+            <div class="signup-link">
+                <span>Already have an account? <a href="#" onclick="toggleModal()">Login</a></span>
+            </div>
+        </div>
+    </div>
+    
+   <!-- Chat Buttons (Fixed Bottom Right) -->
+   <div class="chat-buttons">
+    <button class="chat-btn" onclick="toggleChat('chatbotWindow')">
+        <i class="fas fa-user-tie"></i> Chat with a Realtor
+    </button>
+
+</div>
+
+    <!-- Chatbot Window -->
+    <div class="chat-window" id="chatbotWindow">
+        <div class="chat-header">
+            <span>Realtor Chat</span>
+            <i class="fas fa-times" onclick="toggleChat('chatbotWindow')"></i>
+        </div>
+        <div class="chat-messages" id="chatbotMessages"></div>
+        <div class="chat-input">
+            <input type="text" placeholder="Ask me anything..." id="chatbotInput">
+            <button onclick="sendChatbotMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Backdrop for Blur Effect -->
+    <div class="backdrop" id="backdrop" onclick="closeAllChats()"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const menuButton = document.querySelector(".options-icon");
+        const dropdownMenu = document.querySelector(".dropdown");
+        const body = document.body;
+
+        menuButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevent immediate close
+            dropdownMenu.classList.toggle("show");
+            body.classList.toggle("menu-open");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove("show");
+                body.classList.remove("menu-open");
+            }
+        });
+
+        
+        });
+
+
+        function toggleChat(chatId) {
+            const chatWindow = document.getElementById(chatId);
+            if (chatWindow.classList.contains("show")) {
+                chatWindow.classList.remove("show");
+            } else {
+                closeAllChats(); // Close any other open chats first
+                chatWindow.classList.add("show");
+            }
+        }
+
+    function closeAllChats() {
+        document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+    }
+
+    function sendChatbotMessage() {
+        const input = document.getElementById("chatbotInput");
+        const messages = document.getElementById("chatbotMessages");
+        if (input.value.trim()) {
+            messages.innerHTML += `<p>You: ${input.value}</p>`;
+            input.value = "";
+            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
+        }
+    }
+
+    function sendRealtorMessage() {
+        const input = document.getElementById("realtorInput");
+        if (input.value.trim()) {
+            alert("Message sent to Realtor: " + input.value);
+            input.value = "";
+        }
+    }
+
+
+        function toggleModal() {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close signup modal if open
+            signupModal.classList.remove('show-modal');
+
+            // Toggle login modal
+            if (loginModal.classList.contains('show-modal')) {
+                loginModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                loginModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function toggleSignupModal() {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close login modal if open
+            loginModal.classList.remove('show-modal');
+
+            // Toggle signup modal
+            if (signupModal.classList.contains('show-modal')) {
+                signupModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                signupModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('loginModal').classList.remove('show-modal');
+            document.getElementById('signupModal').classList.remove('show-modal');
+            document.getElementById('backdrop').classList.remove('show-backdrop');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === 'cosc3p94@gmail.com' && password === '12345') {
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('profileButton').style.display = 'block';
+                closeAllModals();
+                event.target.reset();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('Sign-up successful!');
+            closeAllModals();
+            event.target.reset();
+        }
+
+        function toggleMarketTrends() {
+            alert('Market Trends feature coming soon!');
+        }
+
+        function toggleMortgage() {
+            alert('Mortgage Calculator feature coming soon!');
+        }
+        
+        function toggleLoan() {
+            alert('Home Loan feature coming soon!');
+        }
+
+        function toggleROI() {
+            alert('ROI Calculator feature coming soon!');
+        }
+
+        function toggleTextSize() {
+            alert('Text scaling feature coming soon!');
+        }
+
+        function toggleContrast() {
+            alert('High contrast feature coming soon!');
+        }
+
+        function toggleVoiceNav() {
+            alert('Voice navigation feature coming soon!');
+        }
+
+        function handleSignout() {
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('profileButton').style.display = 'none';
+        }
+        
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('searchInput').value;
+            if (searchQuery.trim()) {
+                window.location.href = 'buy.html';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const searchQuery = document.getElementById('searchInput').value;
+                if (searchQuery.trim()) {
+                    window.location.href = 'buy.html';
+                }
+            }
+        }
+    </script>
+    <!-- Remove the Google Maps script and replace with this new script -->
+    <script>
+        // Initialize the map
+        function initMap() {
+            try {
+                const map = L.map('propertyMap').setView([43.1167, -79.2494], 13);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                // Example property markers
+                const properties = [
+                    {
+                        position: [43.1157, -79.2496],
+                        title: "Modern Apartment",
+                        price: "$250,000",
+                        type: "For Sale",
+                        beds: 2,
+                        baths: 1,
+                        sqft: "1,200",
+                        features: ["Central Air", "Hardwood Floors"],
+                        id: 1,
+                        image: "https://picsum.photos/400/300"
+                    },
+                    {
+                        position: [43.1050, -79.2450],
+                        title: "Family House",
+                        price: "$350,000",
+                        type: "For Sale",
+                        beds: 3,
+                        baths: 2,
+                        sqft: "1,800",
+                        features: ["Garage", "Pool"],
+                        id: 2,
+                        image: "https://picsum.photos/400/301"
+                    },
+                    {
+                        position: [43.1197, -79.2810],
+                        title: "Modern Apartment",
+                        price: "$250,000",
+                        type: "For Sale",
+                        beds: 2,
+                        baths: 1,
+                        sqft: "1,200",
+                        features: ["Central Air", "Hardwood Floors"],
+                        id: 3,
+                        image: "https://picsum.photos/400/302"
+                    },
+                    {
+                        position: [43.1299, -79.1956],
+                        title: "Modern Apartment",
+                        price: "$250,000",
+                        type: "For Sale",
+                        beds: 2,
+                        baths: 1,
+                        sqft: "1,200",
+                        features: ["Central Air", "Hardwood Floors"],
+                        id: 4,
+                        image: "https://picsum.photos/400/303"
+                    },
+                    {
+                        position: [43.1399, -79.2910],
+                        title: "Modern Apartment",
+                        price: "$250,000",
+                        type: "For Sale",
+                        beds: 2,
+                        baths: 1,
+                        sqft: "1,200",
+                        features: ["Central Air", "Hardwood Floors"],
+                        id: 5,
+                        image: "https://picsum.photos/400/304"
+                    }
+                ];
+
+                // Add markers for each property
+                properties.forEach(property => {
+                    const marker = L.marker(property.position).addTo(map);
+                    
+                    // Create popup content with property details
+                    const popupContent = `
+                        <div class="map-info-window">
+                            <img src="${property.image}" alt="${property.title}" style="width:100%;max-width:200px;display:block;margin-bottom:8px;">
+                            <h3>${property.title}</h3>
+                            <p class="price">${property.price}</p>
+                            <div class="property-details">
+                                <span><i class="fas fa-bed"></i> ${property.beds}</span>
+                                <span><i class="fas fa-bath"></i> ${property.baths}</span>
+                                <span><i class="fas fa-ruler-combined"></i> ${property.sqft} sq ft</span>
+                            </div>
+                            <div class="features">
+                                ${property.features.map(f => `<span><i class="fas fa-check"></i> ${f}</span>`).join('')}
+                            </div>
+                            <button onclick="window.location.href='listing.html?id=${property.id}'" class="view-listing">View Listing</button>
+                        </div>
+                    `;
+
+                    // Add popup to marker
+                    marker.bindPopup(popupContent, {
+                        maxWidth: 300,
+                        className: 'property-popup'
+                    });
+
+                    // Add hover functionality
+                    marker.on('mouseover', function (e) {
+                        this.openPopup();
+                    });
+
+                    // Add click functionality
+                    marker.on('click', function(e) {
+                        window.location.href = `listing.html?id=${property.id}`;
+                    });
+                });
+            } catch (error) {
+                console.error("Error initializing map:", error);
+                document.getElementById("propertyMap").innerHTML = 
+                    '<div style="text-align: center; padding: 20px;">Unable to load map. Please try again later.</div>';
+            }
+        }
+
+        // Call initMap when the document is ready
+        document.addEventListener('DOMContentLoaded', initMap);
+
+        function socialLogin(provider) {
+            alert(`${provider} login coming soon!`);
+        }
+    </script>
+</body>
+</html>
