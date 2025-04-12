@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estate-10</title>
+
+    <!-- Link to your custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index-styles.css">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-house"></i>
+            Estate-10
+        </a>
+        <div class="nav-links">
+            <a href="buy.html">Buy</a>
+            <a href="rent.html">Rent</a>
+            <a href="sell.html">Sell</a>
+        </div>
+        <div class="right-section">
+            <a href="#" class="signup-login" onclick="toggleModal(); return false;" id="loginButton" style="display: none;">Signup / Login</a>
+            <a href="#" class="profile-icon" style="display: block; color: #5A4B60;" id="profileButton" onclick="toggleProfileDropdown(event); return false;">
+                <i class="fas fa-user-circle"></i>
+                <div class="profile-dropdown" id="profileDropdown" style="display: none; position: absolute; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 4px; padding: 10px; right: 45px; top: 40px;">
+                    <div style="padding: 8px; cursor: pointer;" onclick="document.getElementById('savedListingsSection').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-heart"></i> Saved Listings
+                    </div>
+                    <div style="padding: 8px; cursor: pointer;" onclick="document.getElementById('collectionsSection').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-folder"></i> Collections
+                    </div>
+                    <div style="padding: 8px; cursor: pointer;" onclick="handleSignout()">
+                        <i class="fas fa-sign-out-alt"></i> Sign Out
+                    </div>
+                </div>
+            </a>
+            <div class="options">
+                <i class="fas fa-bars options-icon"></i>
+                <div class="dropdown">
+                    <div class="dropdown-section">
+                        <h3>Tools</h3>
+                        <a href="#" onclick="toggleMarketTrends()"><i class="fas fa-chart-line"></i> Market Trends</a>
+                        <a href="#" onclick="toggleMortgage()"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+                        <a href="#" onclick="toggleLoan()"><i class="fas fa-home"></i> Home Loan Calculator</a>
+                        <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <h3>Accessibility</h3>
+                        <a href="#" onclick="toggleTextSize()"><i class="fas fa-text-height"></i> Text Scaling</a>
+                        <a href="#" onclick="toggleContrast()"><i class="fas fa-adjust"></i> High Contrast</a>
+                        <a href="#" onclick="toggleVoiceNav()"><i class="fas fa-microphone"></i> Voice Navigation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <button onclick="window.location.href='index.html'" style="margin: 20px; padding: 10px 20px; background-color: #5A4B60; color: white; border: none; border-radius: 5px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+    
+    <h2 style="color: #5A4B60; text-align: center;">Dream Homes</h2>
+    
+    <div class="listings-container">
+        <div class="listings-grid">
+            <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=599000&beds=3&baths=2&sqft=2100&address=123 Main Street, Toronto, ON&type=For Sale&img=https://picsum.photos/400/300'">
+                <img src="https://picsum.photos/400/310" alt="House" class="listing-image">
+                <div class="listing-info">
+                    <div class="listing-price">$599,000</div>
+                    <div class="listing-details">
+                        <span><i class="fas fa-bed"></i> 3 beds</span>
+                        <span><i class="fas fa-bath"></i> 2 baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 2,100 sqft</span>
+                    </div>
+                    <div class="listing-address">123 Main Street, Toronto, ON</div>
+                    <div class="listing-type">For Sale</div>
+                </div>
+            </div>
+
+            <div class="listing-card" onclick="window.location.href='listing.html?id=3&price=899000&beds=4&baths=3&sqft=2800&address=789 Lake Drive, Ottawa, ON&type=For Sale&img=https://picsum.photos/400/302'">
+                <img src="https://picsum.photos/400/302" alt="House" class="listing-image">
+                <div class="listing-info">
+                    <div class="listing-price">$899,000</div>
+                    <div class="listing-details">
+                        <span><i class="fas fa-bed"></i> 4 beds</span>
+                        <span><i class="fas fa-bath"></i> 3 baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 2,800 sqft</span>
+                    </div>
+                    <div class="listing-address">789 Lake Drive, Ottawa, ON</div>
+                    <div class="listing-type">For Sale</div>
+                </div>
+            </div>     
+            <div class="listing-card" onclick="window.location.href='listing.html?id=3&price=899000&beds=4&baths=3&sqft=2800&address=789 Lake Drive, Ottawa, ON&type=For Sale&img=https://picsum.photos/400/302'">
+                <img src="https://picsum.photos/400/304" alt="House" class="listing-image">
+                <div class="listing-info">
+                    <div class="listing-price">$699,000</div>
+                    <div class="listing-details">
+                        <span><i class="fas fa-bed"></i> 2 beds</span>
+                        <span><i class="fas fa-bath"></i> 2.5 baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 1,800 sqft</span>
+                    </div>
+                    <div class="listing-address">723 Edenwood Drive, Hamilton, ON</div>
+                    <div class="listing-type">For Sale</div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+
+    <div class="footer">
+        <div class="contact-info">
+            <div><i class="fas fa-envelope"></i> estate10support@gmail.com</div>
+            <div><i class="fas fa-phone"></i> 905-444-ESTATE</div>
+        </div>
+    
+        <div class="footer-content">
+            <div>© Estate-10. All rights reserved</div>
+        </div>
+    
+        <div class="social-links">
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2>Login to Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Continue with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Continue with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="login-buttons">
+                    <button type="button" class="login-close" onclick="toggleModal()">Close</button>
+                    <button type="submit" class="login-submit">Login</button>
+                </div>
+            </form>
+            <div class="signup-link">
+                <span>Don't have an account? <a href="#" onclick="toggleSignupModal()">Sign Up</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="signup-modal" id="signupModal">
+        <div class="signup-content">
+            <h2>Sign Up for Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Sign up with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Sign up with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Sign up with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
+            <form class="signup-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Re-enter Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="signup-buttons">
+                    <button type="button" class="signup-close" onclick="toggleSignupModal()">Close</button>
+                    <button type="submit" class="signup-submit">Sign Up</button>
+                </div>
+            </form>
+            <div class="signup-link">
+                <span>Already have an account? <a href="#" onclick="toggleModal()">Login</a></span>
+            </div>
+        </div>
+    </div>
+    
+   <!-- Chat Buttons (Fixed Bottom Right) -->
+   <div class="chat-buttons">
+    <button class="chat-btn" onclick="toggleChat('chatbotWindow')">
+        <i class="fas fa-user-tie"></i> Chat with a Realtor
+    </button>
+
+</div>
+
+    <!-- Chatbot Window -->
+    <div class="chat-window" id="chatbotWindow">
+        <div class="chat-header">
+            <span>Realtor Chat</span>
+            <i class="fas fa-times" onclick="toggleChat('chatbotWindow')"></i>
+        </div>
+        <div class="chat-messages" id="chatbotMessages"></div>
+        <div class="chat-input">
+            <input type="text" placeholder="Ask me anything..." id="chatbotInput">
+            <button onclick="sendChatbotMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuButton = document.querySelector(".options-icon");
+            const dropdownMenu = document.querySelector(".dropdown");
+            const body = document.body;
+
+            function closeAllDropdowns() {
+                document.getElementById('profileDropdown').style.display = 'none';
+                dropdownMenu.style.display = 'none';
+                body.classList.remove("menu-open");
+            }
+
+            menuButton.addEventListener("click", function (event) {
+                event.stopPropagation();
+                const isOpen = dropdownMenu.style.display === 'block';
+                closeAllDropdowns();
+                if (!isOpen) {
+                    dropdownMenu.style.display = 'block';
+                    body.classList.add("menu-open");
+                }
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    closeAllDropdowns();
+                }
+            });
+        });
+
+        function toggleChat(chatId) {
+            const chatWindow = document.getElementById(chatId);
+            if (chatWindow.classList.contains("show")) {
+                chatWindow.classList.remove("show");
+            } else {
+                closeAllChats(); // Close any other open chats first
+                chatWindow.classList.add("show");
+            }
+        }
+
+        function closeAllChats() {
+            document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+        }
+
+    function sendChatbotMessage() {
+        const input = document.getElementById("chatbotInput");
+        const messages = document.getElementById("chatbotMessages");
+        if (input.value.trim()) {
+            messages.innerHTML += `<p>You: ${input.value}</p>`;
+            input.value = "";
+            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
+        }
+    }
+
+    function sendRealtorMessage() {
+        const input = document.getElementById("realtorInput");
+        if (input.value.trim()) {
+            alert("Message sent to Realtor: " + input.value);
+            input.value = "";
+        }
+    }
+
+
+        function toggleModal() {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close signup modal if open
+            signupModal.classList.remove('show-modal');
+
+            // Toggle login modal
+            if (loginModal.classList.contains('show-modal')) {
+                loginModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                loginModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function toggleSignupModal() {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close login modal if open
+            loginModal.classList.remove('show-modal');
+
+            // Toggle signup modal
+            if (signupModal.classList.contains('show-modal')) {
+                signupModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                signupModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('loginModal').classList.remove('show-modal');
+            document.getElementById('signupModal').classList.remove('show-modal');
+            document.getElementById('backdrop').classList.remove('show-backdrop');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === 'cosc3p94@gmail.com' && password === '12345') {
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('profileButton').style.display = 'block';
+                document.getElementById('collectionsSection').style.display = 'block';
+                document.getElementById('savedListingsSection').style.display = 'block';
+                closeAllModals();
+                event.target.reset();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('Sign-up successful!');
+            closeAllModals();
+            event.target.reset();
+        }
+
+        function toggleMarketTrends() {
+            alert('Market Trends feature coming soon!');
+        }
+
+        function toggleMortgage() {
+            alert('Mortgage Calculator feature coming soon!');
+        }
+        
+        function toggleLoan() {
+            alert('Home Loan feature coming soon!');
+        }
+
+        function toggleROI() {
+            alert('ROI Calculator feature coming soon!');
+        }
+
+        function toggleTextSize() {
+            alert('Text scaling feature coming soon!');
+        }
+
+        function toggleContrast() {
+            alert('High contrast feature coming soon!');
+        }
+
+        function toggleVoiceNav() {
+            alert('Voice navigation feature coming soon!');
+        }
+
+        function handleSignout() {
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('profileButton').style.display = 'none';
+            document.getElementById('collectionsSection').style.display = 'none';
+            document.getElementById('savedListingsSection').style.display = 'none';
+        }
+        
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('searchInput').value;
+            if (searchQuery.trim()) {
+                window.location.href = 'buy.html';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const searchQuery = document.getElementById('searchInput').value;
+                if (searchQuery.trim()) {
+                    window.location.href = 'buy.html';
+                }
+            }
+        }
+        function showCollectionAlert(collectionName) {
+            alert(`No listings in "${collectionName}" collection.`);
+        }
+
+        function socialLogin(provider) {
+            alert(`${provider} login coming soon!`);
+        }
+
+        function toggleProfileDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('profileDropdown');
+            const dropdownMenu = document.querySelector(".dropdown");
+            const isOpen = dropdown.style.display === 'block';
+            
+            // Close both dropdowns
+            dropdown.style.display = 'none';
+            dropdownMenu.style.display = 'none';
+            document.body.classList.remove("menu-open");
+            
+            // Open profile dropdown if it was closed
+            if (!isOpen) {
+                dropdown.style.display = 'block';
+            }
+        }
+
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown && !event.target.closest('.profile-icon')) {
+                dropdown.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
