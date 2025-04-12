@@ -64,7 +64,7 @@
 .listings-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 80px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -76,6 +76,7 @@
     overflow: hidden;
     transition: transform 0.2s;
     cursor: pointer;
+    width: 120%;
 }
 
 .listing-card:hover {
@@ -153,4 +154,73 @@
 /* Saved State */
 .save-btn.saved i {
     color: red; /* Red when saved */
+}
+
+/* Social Login Buttons */
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.social-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.social-btn.google {
+    color: #DB4437;
+}
+
+.social-btn.apple {
+    color: #000000;
+}
+
+.social-btn.facebook {
+    color: #4267B2;
+}
+
+.divider {
+    text-align: center;
+    position: relative;
+    margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: #ddd;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.divider span {
+    background-color: white;
+    padding: 0 10px;
+    color: #666;
+    font-size: 14px;
 }

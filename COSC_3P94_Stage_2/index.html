@@ -56,83 +56,103 @@
         </div>
     </div>
 
+    
     <!-- Featured Listings -->
-    <div class="section">
-        <h2 class="section-title">Featured Listings</h2>
-        <div class="listings-container">
-            <div class="listings-grid">
-                <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=599000'">
-                    <img src="https://picsum.photos/400/300" alt="House" class="listing-image">
-                    <div class="listing-info">
-                        <div class="listing-price">$599,000</div>
-                        <div class="listing-details">
-                            <span><i class="fas fa-bed"></i> 3 beds</span>
-                            <span><i class="fas fa-bath"></i> 2 baths</span>
-                        </div>
-                        <div class="listing-address">123 Main Street, Toronto, ON</div>
+    <h2 style="color: #5A4B60; text-align: center;">Featured Listings</h2>
+    <div class="listings-container">
+        <div class="listings-grid">
+            <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=599000&beds=3&baths=2&sqft=2100&address=123 Main Street, Toronto, ON&type=For Sale&img=https://picsum.photos/400/300'">
+                <img src="https://picsum.photos/400/300" alt="House" class="listing-image">
+                <div class="listing-info">
+                    <div class="listing-price">$599,000</div>
+                    <div class="listing-details">
+                        <span><i class="fas fa-bed"></i> 3 beds</span>
+                        <span><i class="fas fa-bath"></i> 2 baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 2,100 sqft</span>
                     </div>
-                </div>
-
-                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=899000'">
-                    <img src="https://picsum.photos/400/301" alt="House" class="listing-image">
-                    <div class="listing-info">
-                        <div class="listing-price">$899,000</div>
-                        <div class="listing-details">
-                            <span><i class="fas fa-bed"></i> 4 beds</span>
-                            <span><i class="fas fa-bath"></i> 3 baths</span>
-                        </div>
-                        <div class="listing-address">789 Lake Drive, Ottawa, ON</div>
-                    </div>
+                    <div class="listing-address">123 Main Street, Toronto, ON</div>
+                    <div class="listing-type">For Sale</div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Saved Listings -->
-    <div class="section">
-        <h2 class="section-title">Saved Listings</h2>
-        <div class="listings-container">
-            <div class="listings-grid">
-                <div class="listing-card" onclick="window.location.href='listing.html?id=3&price=750000'">
-                    <img src="https://picsum.photos/400/302" alt="House" class="listing-image">
-                    <div class="listing-info">
-                        <div class="listing-price">$750,000</div>
-                        <div class="listing-details">
-                            <span><i class="fas fa-bed"></i> 3 beds</span>
-                            <span><i class="fas fa-bath"></i> 2 baths</span>
-                        </div>
-                        <div class="listing-address">890 Beach Avenue, Halifax, NS</div>
+            <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2400&beds=2&baths=1&sqft=1200&address=456 Park Ave, Vancouver, BC&type=For Rent&img=https://picsum.photos/400/301'">
+                <img src="https://picsum.photos/400/301" alt="House" class="listing-image">
+                <div class="listing-info">
+                    <div class="listing-price">$2,400/mo</div>
+                    <div class="listing-details">
+                        <span><i class="fas fa-bed"></i> 2 beds</span>
+                        <span><i class="fas fa-bath"></i> 1 bath</span>
+                        <span><i class="fas fa-ruler-combined"></i> 1,200 sqft</span>
                     </div>
-                </div>
-
-                <div class="listing-card" onclick="window.location.href='listing.html?id=4&price=3200'">
-                    <img src="https://picsum.photos/400/303" alt="House" class="listing-image">
-                    <div class="listing-info">
-                        <div class="listing-price">$3,200/mo</div>
-                        <div class="listing-details">
-                            <span><i class="fas fa-bed"></i> 3 beds</span>
-                            <span><i class="fas fa-bath"></i> 2 baths</span>
-                        </div>
-                        <div class="listing-address">567 King Road, Calgary, AB</div>
-                    </div>
+                    <div class="listing-address">456 Park Ave, Vancouver, BC</div>
+                    <div class="listing-type">For Rent</div>
                 </div>
             </div>
+
+            <div class="listing-card" onclick="window.location.href='listing.html?id=3&price=899000&beds=4&baths=3&sqft=2800&address=789 Lake Drive, Ottawa, ON&type=For Sale&img=https://picsum.photos/400/302'">
+                <img src="https://picsum.photos/400/302" alt="House" class="listing-image">
+                <div class="listing-info">
+                    <div class="listing-price">$899,000</div>
+                    <div class="listing-details">
+                        <span><i class="fas fa-bed"></i> 4 beds</span>
+                        <span><i class="fas fa-bath"></i> 3 baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 2,800 sqft</span>
+                    </div>
+                    <div class="listing-address">789 Lake Drive, Ottawa, ON</div>
+                    <div class="listing-type">For Sale</div>
+                </div>
+            </div>      
         </div>
     </div>
 
     <!-- Collections -->
     <div class="section">
-        <h2 class="section-title">Collections</h2>
+        <h2 class="section-title" style="color: #5A4B60;">Collections</h2>
+        <br>
         <div class="collections-container">
             <div class="collection-card" onclick="showCollectionAlert('Favorites')">Favorites</div>
             <div class="collection-card" onclick="showCollectionAlert('Investment Properties')">Investment Properties</div>
             <div class="collection-card" onclick="showCollectionAlert('Dream Homes')">Dream Homes</div>
             <div class="collection-card" onclick="showCollectionAlert('Watchlist')">Watchlist</div>
         </div>
-        
+    </div>
+    <div><br><br></div>
+
+    <!-- Saved Listings -->
+    <h2 style="color: #5A4B60; text-align: center;">Saved Listings</h2>
+    <div class="listings-container">
+        <div class="listings-grid">
+            <div class="listing-card" onclick="window.location.href='listing.html?id=6&price=750000&beds=3&baths=2&sqft=2200&address=890 Beach Avenue, Halifax, NS&type=For Sale&img=https://picsum.photos/400/305'">
+                <img src="https://picsum.photos/400/305" alt="House" class="listing-image">
+                <div class="listing-info">
+                    <div class="listing-price">$750,000</div>
+                    <div class="listing-details">
+                        <span><i class="fas fa-bed"></i> 3 beds</span>
+                        <span><i class="fas fa-bath"></i> 2 baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 2,200 sqft</span>
+                    </div>
+                    <div class="listing-address">890 Beach Avenue, Halifax, NS</div>
+                    <div class="listing-type">For Sale</div>
+                </div>
+            </div>
+
+            <div class="listing-card" onclick="window.location.href='listing.html?id=5&price=3200&beds=3&baths=2&sqft=1800&address=567 King Road, Calgary, AB&type=For Rent&img=https://picsum.photos/400/304'">
+                <img src="https://picsum.photos/400/304" alt="House" class="listing-image">
+                <div class="listing-info">
+                    <div class="listing-price">$3,200/mo</div>
+                    <div class="listing-details">
+                        <span><i class="fas fa-bed"></i> 3 beds</span>
+                        <span><i class="fas fa-bath"></i> 2 baths</span>
+                        <span><i class="fas fa-ruler-combined"></i> 1,800 sqft</span>
+                    </div>
+                    <div class="listing-address">567 King Road, Calgary, AB</div>
+                    <div class="listing-type">For Rent</div>
+                </div>
+            </div>    
         </div>
     </div>
 </div>
+
 
     <div class="footer">
         <div class="contact-info">
@@ -158,6 +178,20 @@
     <div class="login-modal" id="loginModal">
         <div class="login-content">
             <h2>Login to Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Continue with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Continue with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
             <form class="login-form" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -170,7 +204,6 @@
                 <div class="login-buttons">
                     <button type="button" class="login-close" onclick="toggleModal()">Close</button>
                     <button type="submit" class="login-submit">Login</button>
-
                 </div>
             </form>
             <div class="signup-link">
@@ -182,6 +215,20 @@
     <div class="signup-modal" id="signupModal">
         <div class="signup-content">
             <h2>Sign Up for Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Sign up with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Sign up with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Sign up with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
             <form class="signup-form" onsubmit="handleSignup(event)">
                 <div class="form-group">
                     <label for="signup-email">Email</label>
@@ -191,12 +238,18 @@
                     <label for="signup-password">Password</label>
                     <input type="password" id="signup-password" required>
                 </div>
+                <div class="form-group">
+                    <label for="signup-password">Re-enter Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
                 <div class="signup-buttons">
                     <button type="button" class="signup-close" onclick="toggleSignupModal()">Close</button>
-
                     <button type="submit" class="signup-submit">Sign Up</button>
                 </div>
             </form>
+            <div class="signup-link">
+                <span>Already have an account? <a href="#" onclick="toggleModal()">Login</a></span>
+            </div>
         </div>
     </div>
     
@@ -393,9 +446,12 @@
             }
         }
         function showCollectionAlert(collectionName) {
-    alert(`No listings in "${collectionName}" collection.`);
-}
+            alert(`No listings in "${collectionName}" collection.`);
+        }
 
+        function socialLogin(provider) {
+            alert(`${provider} login coming soon!`);
+        }
     </script>
 </body>
 </html>

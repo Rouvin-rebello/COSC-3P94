@@ -7,6 +7,7 @@
 
     <!-- Link to your custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index-styles.css">
     <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -123,6 +124,9 @@
                     <button class="contact-btn primary" onclick="emailRealtor()">
                         <i class="fas fa-envelope"></i> Email Realtor
                     </button>
+                    <button class="contact-btn secondary" onclick="openBookingModal()">
+                        <i class="fas fa-calendar-alt"></i> Book a Viewing
+                    </button>
                 </div>
             </div>
         </div>
@@ -130,44 +134,44 @@
 
         <div class="right-column">
             <div class="property-header">
-                <div class="header-main">
-                    <div class="listing-actions">
-                        <!-- Save Listing Button -->
-                        <button id="saveListingBtn" class="save-listing-btn" onclick="toggleSaveListing()">
-                            <i class="far fa-heart"></i> Save Listing
-                        </button>
-                    
-                        <!-- Add to Collection Dropdown -->
-                        <div class="collection-dropdown">
-                            <button class="collection-btn" onclick="toggleCollectionDropdown()">
-                                <i class="fas fa-folder-plus"></i> Add to Collection
-                            </button>
-                            <div id="collectionMenu" class="collection-menu">
-                                <p>Select a collection:</p>
-                                <ul>
-                                    <li onclick="addToCollection('Favorites')">Favorites</li>
-                                    <li onclick="addToCollection('Investment Properties')">Investment Properties</li>
-                                    <li onclick="addToCollection('Dream Homes')">Dream Homes</li>
-                                    <li onclick="addToCollection('Watchlist')">Watchlist</li>
-                                </ul>
-                            </div>
+                <div class="header-content">
+                    <div class="header-main">
+                        <h1 class="address">123 Lakeside Avenue</h1>
+                        <p class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            St. Catharines, ON L2T 1A1
+                        </p>
+                    </div>
+                    <div class="header-price">
+                        <div class="price-tag">
+                            <span class="currency">$</span>
+                            <span class="amount">849,999</span>
+                            <i class="fas fa-info-circle" title="Market Value"></i>
+                        </div>
+                        <div class="price-details">
+                            <span class="detail-item"><i class="fas fa-chart-area"></i>$340/sqft</span>
+                            <span class="detail-item"><i class="fas fa-clock"></i>Listed 2 weeks ago</span>
                         </div>
                     </div>
-                   
-                    <h1 class="address">123 Lakeside Avenue</h1>
-                    <p class="location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        St. Catharines, ON L2T 1A1
-                    </p>
                 </div>
-                <div class="header-price">
-                    <div class="price-tag">
-                        $849,999
-                        <i class="fas fa-info-circle" title="Market Value"></i>
-                    </div>
-                    <div class="price-details">
-                        <span><i class="fas fa-chart-area"></i>$340/sqft</span>
-                        <span><i class="fas fa-clock"></i>Listed 2 weeks ago</span>
+                <div class="listing-actions">
+                    <button id="saveListingBtn" class="save-listing-btn" onclick="toggleSaveListing()">
+                        <i class="far fa-heart"></i> Save Listing
+                    </button>
+                
+                    <div class="collection-dropdown">
+                        <button class="collection-btn" onclick="toggleCollectionDropdown()">
+                            <i class="fas fa-folder-plus"></i> Add to Collection
+                        </button>
+                        <div id="collectionMenu" class="collection-menu">
+                            <p>Select a collection:</p>
+                            <ul>
+                                <li onclick="addToCollection('Favorites')">Favorites</li>
+                                <li onclick="addToCollection('Investment Properties')">Investment Properties</li>
+                                <li onclick="addToCollection('Dream Homes')">Dream Homes</li>
+                                <li onclick="addToCollection('Watchlist')">Watchlist</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -289,6 +293,20 @@
     <div class="login-modal" id="loginModal">
         <div class="login-content">
             <h2>Login to Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Continue with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Continue with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
             <form class="login-form" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -301,7 +319,6 @@
                 <div class="login-buttons">
                     <button type="button" class="login-close" onclick="toggleModal()">Close</button>
                     <button type="submit" class="login-submit">Login</button>
-
                 </div>
             </form>
             <div class="signup-link">
@@ -313,6 +330,20 @@
     <div class="signup-modal" id="signupModal">
         <div class="signup-content">
             <h2>Sign Up for Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Sign up with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Sign up with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Sign up with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
             <form class="signup-form" onsubmit="handleSignup(event)">
                 <div class="form-group">
                     <label for="signup-email">Email</label>
@@ -322,12 +353,18 @@
                     <label for="signup-password">Password</label>
                     <input type="password" id="signup-password" required>
                 </div>
+                <div class="form-group">
+                    <label for="signup-password">Re-enter Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
                 <div class="signup-buttons">
                     <button type="button" class="signup-close" onclick="toggleSignupModal()">Close</button>
-
                     <button type="submit" class="signup-submit">Sign Up</button>
                 </div>
             </form>
+            <div class="signup-link">
+                <span>Already have an account? <a href="#" onclick="toggleModal()">Login</a></span>
+            </div>
         </div>
     </div>
     
@@ -349,6 +386,43 @@
         <div class="chat-input">
             <input type="text" placeholder="Ask me anything..." id="chatbotInput">
             <button onclick="sendChatbotMessage()">Send</button>
+        </div>
+    </div>
+
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-content">
+            <div class="booking-header">
+                <h2>Book a Viewing</h2>
+                <button class="close-modal" onclick="closeBookingModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button onclick="previousMonth()"><i class="fas fa-chevron-left"></i></button>
+                    <h3 id="monthDisplay"></h3>
+                    <button onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="weekdays">
+                    <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div>
+                    <div>Thu</div><div>Fri</div><div>Sat</div>
+                </div>
+                <div class="calendar" id="calendar"></div>
+            </div>
+            <div class="time-slots" id="timeSlots" style="display: none;">
+                <h3>Available Times</h3>
+                <div class="time-grid">
+                    <button onclick="selectTime(this)">10:00 AM</button>
+                    <button onclick="selectTime(this)">11:00 AM</button>
+                    <button onclick="selectTime(this)">1:00 PM</button>
+                    <button onclick="selectTime(this)">2:00 PM</button>
+                    <button onclick="selectTime(this)">3:00 PM</button>
+                    <button onclick="selectTime(this)">4:00 PM</button>
+                </div>
+                <button class="confirm-booking" onclick="confirmBooking()" disabled>
+                    Confirm Booking
+                </button>
+            </div>
         </div>
     </div>
 
@@ -708,7 +782,105 @@ document.addEventListener("click", function (event) {
 });
 
 
+function socialLogin(provider) {
+            alert(`${provider} login coming soon!`);
+        }
 
+    let selectedDate = null;
+    let selectedTime = null;
+
+    function openBookingModal() {
+        document.getElementById('bookingModal').classList.add('show-modal');
+        document.getElementById('backdrop').classList.add('show-backdrop');
+        initCalendar();
+    }
+
+    function closeBookingModal() {
+        document.getElementById('bookingModal').classList.remove('show-modal');
+        document.getElementById('backdrop').classList.remove('show-backdrop');
+    }
+
+    function initCalendar() {
+        const calendar = document.getElementById('calendar');
+        const monthDisplay = document.getElementById('monthDisplay');
+        const now = new Date();
+        
+        let currentMonth = now.getMonth();
+        let currentYear = now.getFullYear();
+
+        function renderCalendar() {
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            
+            monthDisplay.textContent = `${firstDay.toLocaleString('default', { month: 'long' })} ${currentYear}`;
+            calendar.innerHTML = '';
+
+            // Add empty cells for days before first of month
+            for(let i = 0; i < firstDay.getDay(); i++) {
+                calendar.appendChild(document.createElement('div'));
+            }
+
+            // Add days of month
+            for(let day = 1; day <= lastDay.getDate(); day++) {
+                const dateDiv = document.createElement('div');
+                dateDiv.textContent = day;
+                dateDiv.classList.add('day');
+                
+                const dateObj = new Date(currentYear, currentMonth, day);
+                if(dateObj < now) {
+                    dateDiv.classList.add('disabled');
+                } else {
+                    dateDiv.onclick = () => selectDate(dateObj, dateDiv);
+                }
+                
+                calendar.appendChild(dateDiv);
+            }
+        }
+
+        renderCalendar();
+
+        window.previousMonth = function() {
+            if(currentMonth === 0) {
+                currentYear--;
+                currentMonth = 11;
+            } else {
+                currentMonth--;
+            }
+            renderCalendar();
+        };
+
+        window.nextMonth = function() {
+            if(currentMonth === 11) {
+                currentYear++;
+                currentMonth = 0;
+            } else {
+                currentMonth++;
+            }
+            renderCalendar();
+        };
+    }
+
+    function selectDate(date, element) {
+        document.querySelectorAll('.day').forEach(day => day.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedDate = date;
+        document.getElementById('timeSlots').style.display = 'block';
+    }
+
+    function selectTime(element) {
+        document.querySelectorAll('.time-grid button').forEach(btn => btn.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedTime = element.textContent;
+        document.querySelector('.confirm-booking').disabled = false;
+    }
+
+    function confirmBooking() {
+        if(selectedDate && selectedTime) {
+            const formattedDate = selectedDate.toLocaleDateString();
+            alert(`Viewing booked for ${formattedDate} at ${selectedTime}`);
+            closeBookingModal();
+        }
+    }
     </script>
 </body>
 </html>

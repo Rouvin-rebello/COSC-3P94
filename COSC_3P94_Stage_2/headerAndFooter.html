@@ -7,6 +7,7 @@
 
     <!-- Link to your custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index-styles.css">
     <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -74,6 +75,20 @@
     <div class="login-modal" id="loginModal">
         <div class="login-content">
             <h2>Login to Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Continue with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Continue with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Continue with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
             <form class="login-form" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -86,7 +101,6 @@
                 <div class="login-buttons">
                     <button type="button" class="login-close" onclick="toggleModal()">Close</button>
                     <button type="submit" class="login-submit">Login</button>
-
                 </div>
             </form>
             <div class="signup-link">
@@ -98,6 +112,20 @@
     <div class="signup-modal" id="signupModal">
         <div class="signup-content">
             <h2>Sign Up for Estate-10</h2>
+            <div class="social-login">
+                <button class="social-btn google" onclick="socialLogin('google')">
+                    <i class="fab fa-google"></i> Sign up with Google
+                </button>
+                <button class="social-btn apple" onclick="socialLogin('apple')">
+                    <i class="fab fa-apple"></i> Sign up with Apple
+                </button>
+                <button class="social-btn facebook" onclick="socialLogin('facebook')">
+                    <i class="fab fa-facebook"></i> Sign up with Facebook
+                </button>
+            </div>
+            <div class="divider">
+                <span>or</span>
+            </div>
             <form class="signup-form" onsubmit="handleSignup(event)">
                 <div class="form-group">
                     <label for="signup-email">Email</label>
@@ -107,12 +135,18 @@
                     <label for="signup-password">Password</label>
                     <input type="password" id="signup-password" required>
                 </div>
+                <div class="form-group">
+                    <label for="signup-password">Re-enter Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
                 <div class="signup-buttons">
                     <button type="button" class="signup-close" onclick="toggleSignupModal()">Close</button>
-
                     <button type="submit" class="signup-submit">Sign Up</button>
                 </div>
             </form>
+            <div class="signup-link">
+                <span>Already have an account? <a href="#" onclick="toggleModal()">Login</a></span>
+            </div>
         </div>
     </div>
     
@@ -288,6 +322,10 @@
         function handleSignout() {
             document.getElementById('loginButton').style.display = 'block';
             document.getElementById('profileButton').style.display = 'none';
+        }
+
+        function socialLogin(provider) {
+            alert(`${provider} login coming soon!`);
         }
     </script>
 </body>

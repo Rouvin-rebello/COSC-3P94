@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estate-10</title>
+
+    <!-- Link to your custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Add these styles inline for the form theme */
+        .listing-form-container {
+            background: #f8f5fb;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #5A4B60;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(90, 75, 96, 0.1);
+        }
+
+        .submit-listing {
+            background-color: #5A4B60 !important;
+        }
+
+        .submit-listing:hover {
+            background-color: #453C4F !important;
+        }
+
+        .save-draft {
+            background-color: #C4B1E5;
+            color: #5A4B60;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .save-draft:hover {
+            background-color: #B29ED9;
+        }
+
+        .amenities-category {
+            background: white;
+        }
+
+        .seller-info-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(90, 75, 96, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .seller-info-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #5A4B60, #C4B1E5);
+        }
+
+        .seller-info-section h3 {
+            color: #5A4B60;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .seller-info-section h3::before {
+            content: '\f007';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: #C4B1E5;
+        }
+
+        .seller-info-section .form-row {
+            gap: 25px;  /* Increased from 20px */
+            margin-bottom: 30px;  /* Increased from 20px */
+        }
+
+        .seller-info-section .form-group {
+            position: relative;
+            margin-bottom: 5px;
+        }
+
+        .seller-info-section .form-group input,
+        .seller-info-section .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #E0D5E8;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #FDFBFE;
+        }
+
+        .seller-info-section .form-group input:focus,
+        .seller-info-section .form-group select:focus {
+            border-color: #5A4B60;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(90, 75, 96, 0.1);
+        }
+
+        .seller-info-section .form-group label {
+            position: absolute;
+            left: 10px;
+            top: -10px;
+            background: white;
+            padding: 0 5px;
+            color: #5A4B60;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 1;
+        }
+
+        .contact-preference-group {
+            background: #F8F5FB;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .contact-preference-group h4 {
+            color: #5A4B60;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .media-preview {
+            background: white;
+        }
+
+        /* Add these additional styles for modern file inputs */
+        .file-input-container {
+            border: 2px dashed #C4B1E5;
+            padding: 35px;  /* Increased from 30px */
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+            margin-top: 8px;
+            cursor: pointer;
+            margin-bottom: 35px;  /* Increased from 25px */
+        }
+
+        .file-input-container:hover {
+            border-color: #5A4B60;
+            background: #f8f5fb;
+        }
+
+        .file-input-container i {
+            font-size: 2em;
+            color: #5A4B60;
+            margin-bottom: 10px;
+        }
+
+        .file-input-container p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .file-input-container input[type="file"] {
+            display: none;
+        }
+
+        .file-input-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .upload-btn {
+            background: #5A4B60;
+            color: white !important;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .file-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .file-preview-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .file-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .file-preview-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-file {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* Add these additional styles */
+        .listing-form {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .left-column, .right-column {
+            display: block;
+            gap: 0;
+        }
+
+        .form-section-card {
+            width: 100%;
+            background: white;
+            padding: 35px; /* Increased from 25px */
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(90, 75, 96, 0.1);
+            margin-bottom: 40px;  /* Increased from 30px */
+        }
+
+        .form-section-card h3 {
+            color: #5A4B60;
+            font-size: 1.4rem; /* Increased from 1.2rem */
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #E0D5E8;
+        }
+
+        @media (max-width: 768px) {
+            .listing-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Update existing form styles */
+        .listing-form-container {
+            max-width: 1600px; /* Increased from 1200px */
+            margin: 2rem auto;
+            padding: 0 40px; /* Increased from 20px */
+        }
+
+        .listing-form-container h2 {
+            font-size: 1.8rem;
+            color: #5A4B60;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            width: 100%;
+        }
+
+        .basic-info-section .form-group,
+        .property-details-section .form-group,
+        .seller-info-section .form-group {
+            margin-bottom: 35px;
+        }
+
+        .basic-info-section .form-group input,
+        .basic-info-section .form-group select,
+        .basic-info-section .form-group textarea,
+        .property-details-section .form-group input,
+        .property-details-section .form-group select,
+        .seller-info-section .form-group input {
+            width: 100%;
+            padding: 15px;  /* Increased padding */
+            height: auto;   /* Ensure consistent height */
+            font-size: 1rem;
+        }
+
+        .amenities-grid {
+            grid-template-columns: repeat(3, 1fr); /* Changed to always show 3 columns */
+            gap: 25px; /* Increased from previous value */
+        }
+
+        .amenities-category {
+            padding: 25px;
+        }
+
+        .file-input-container {
+            padding: 35px;  /* Increased from 30px */
+            margin-bottom: 35px;  /* Increased from 25px */
+        }
+
+        .file-preview-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Increased thumbnail size */
+            gap: 15px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1400px) {
+            .listing-form {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .listing-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .listing-form-container {
+                padding: 0 20px;
+            }
+        }
+
+        /* Add these styles for basic info and property details sections */
+        .basic-info-section,
+        .property-details-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(90, 75, 96, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .basic-info-section::before,
+        .property-details-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #5A4B60, #C4B1E5);
+        }
+
+        .basic-info-section .form-group,
+        .property-details-section .form-group {
+            position: relative;
+            margin-bottom: 30px;  /* Increased from 20px */
+        }
+
+        .basic-info-section .form-group input,
+        .basic-info-section .form-group select,
+        .basic-info-section .form-group textarea,
+        .property-details-section .form-group input,
+        .property-details-section .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #E0D5E8;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .basic-info-section .form-group label,
+        .property-details-section .form-group label {
+            position: absolute;
+            left: 10px;
+            top: -12px;
+            background: white;
+            padding: 2px 8px;
+            color: #5A4B60;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 1;
+        }
+
+        .basic-info-section textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+
+        /* Update form container width */
+        .listing-form-container {
+            max-width: 1000px; /* Increased from 800px */
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        /* Update section padding */
+        .form-section-card {
+            padding: 35px 40px; /* Increased horizontal padding */
+        }
+
+        /* Ensure form fields don't overflow */
+        .form-group {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        /* Adjust section margins */
+        .basic-info-section,
+        .property-details-section,
+        .seller-info-section {
+            padding: 30px 35px; /* Increased horizontal padding */
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        /* Ensure floating labels don't get cut off */
+        .basic-info-section .form-group label,
+        .property-details-section .form-group label,
+        .seller-info-section .form-group label {
+            left: 10px;
+            top: -12px;
+            padding: 2px 8px;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        /* Media queries for smaller screens */
+        @media (max-width: 768px) {
+            .listing-form-container {
+                padding: 0 15px;
+            }
+
+            .form-section-card {
+                padding: 25px 20px;
+            }
+
+            .basic-info-section,
+            .property-details-section,
+            .seller-info-section {
+                padding: 25px 20px;
+            }
+        }
+
+        .view-drafts {
+            background-color: #8A7B99;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .view-drafts:hover {
+            background-color: #6B5D77;
+        }
+
+        .drafts-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .drafts-modal.show-modal {
+            display: block;
+        }
+
+        .drafts-list {
+            margin-top: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .draft-item {
+            padding: 1rem;
+            border: 1px solid #E0D5E8;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .draft-item:hover {
+            background: #f8f5fb;
+        }
+
+        /* Update form buttons layout */
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .form-buttons button {
+            min-width: 120px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .view-drafts {
+            margin-right: auto;  /* Push other buttons to the right */
+            background-color: #8A7B99;
+            color: white;
+            border: none;
+        }
+
+        .save-draft {
+            background-color: #C4B1E5;
+            color: #5A4B60;
+            border: 1px solid #B29ED9;
+        }
+
+        .submit-listing {
+            background-color: #5A4B60 !important;
+            color: white !important;
+            border: none;
+            font-weight: 500;
+        }
+
+        .view-drafts:hover {
+            background-color: #776888;
+            transform: translateY(-1px);
+        }
+
+        .save-draft:hover {
+            background-color: #B29ED9;
+            transform: translateY(-1px);
+        }
+
+        .submit-listing:hover {
+            background-color: #453C4F !important;
+            transform: translateY(-1px);
+        }
+
+        /* Add icons to buttons */
+        .view-drafts::before {
+            content: '\f07c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        .save-draft::before {
+            content: '\f0c7';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        .submit-listing::before {
+            content: '\f061';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
+        /* Add required field indicator styles */
+        label[for]::after {
+            content: "*";
+            color: #e32;
+            font-weight: bold;
+        }
+        
+        label[for="virtualTour"]::after {
+            content: " (Optional)";
+            color: #666;
+            font-weight: normal;
+        }
+        
+        .form-section-card h3::after {
+            content: " (* Required fields)";
+            font-size: 0.8em;
+            color: #666;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html" class="logo">
+            <i class="fas fa-house"></i>
+            Estate-10
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="buy.html">Buy</a>
+            <a href="sell.html">Sell</a>
+        </div>
+        <div class="right-section">
+            <a href="#" class="signup-login" onclick="toggleModal(); return false;" id="loginButton">Signup / Login</a>
+            <a href="#" class="profile-icon" style="display: none;" id="profileButton">
+                <i class="fas fa-user-circle"></i>
+            </a>
+            <div class="options">
+                <i class="fas fa-bars options-icon"></i>
+                <div class="dropdown">
+                    <div class="dropdown-section">
+                        <h3>Tools</h3>
+                        <a href="#" onclick="toggleMarketTrends()"><i class="fas fa-chart-line"></i> Market Trends</a>
+                        <a href="#" onclick="toggleMortgage()"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+                        <a href="#" onclick="toggleLoan()"><i class="fas fa-home"></i> Home Loan Calculator</a>
+                        <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+                    </div>
+                    <div class="dropdown-section">
+                        <h3>Accessibility</h3>
+                        <a href="#" onclick="toggleTextSize()"><i class="fas fa-text-height"></i> Text Scaling</a>
+                        <a href="#" onclick="toggleContrast()"><i class="fas fa-adjust"></i> High Contrast</a>
+                        <a href="#" onclick="toggleVoiceNav()"><i class="fas fa-microphone"></i> Voice Navigation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="listing-form-container">
+            <br>
+            <h2>List Your Property</h2>
+            <form class="listing-form" onsubmit="handleListingSubmit(event)">
+                <!-- Basic Information -->
+                <div class="form-section-card">
+                    <h3>Basic Information</h3>
+                    <div class="basic-info-section">
+                        <div class="form-group">
+                            <label for="title">Property Title </label>
+                            <input type="text" id="title" required placeholder="e.g., Modern Apartment">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="propertyType">Property Type </label>
+                            <select id="propertyType" required>
+                                <option value="">Select Type</option>
+                                <option value="house">House</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="condo">Condo</option>
+                                <option value="townhouse">Townhouse</option>
+                                <option value="duplex">Duplex</option>
+                                <option value="land">Land</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="purpose">Purpose </label>
+                            <select id="purpose" required>
+                                <option value="">Select Purpose</option>
+                                <option value="sale">For Sale</option>
+                                <option value="rent">For Rent</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Property Description </label>
+                            <textarea id="description" rows="4" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property Details -->
+                <div class="form-section-card">
+                    <h3>Property Details</h3>
+                    <div class="property-details-section">
+                        <div class="form-group">
+                            <label for="price">Price ($) </label>
+                            <input type="number" id="price" required min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sqft">Square Footage </label>
+                            <input type="number" id="sqft" required min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bedrooms">Bedrooms </label>
+                            <input type="number" id="bedrooms" required min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bathrooms">Bathrooms </label>
+                            <input type="number" id="bathrooms" required min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Address </label>
+                            <input type="text" id="address" required placeholder="Street address">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Media Upload -->
+                <div class="form-section-card">
+                    <h3>Media</h3>
+                    <div class="form-group">
+                        <label for="images">Property Images </label>
+                        <div class="file-input-container" onclick="document.getElementById('images').click()">
+                            <label class="file-input-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop your images here or click to browse</p>
+                                <p class="upload-btn">Choose Files</p>
+                                <input type="file" id="images" multiple accept="image/*" required onchange="previewImages(event)">
+                            </label>
+                            <div id="imagePreview" class="file-preview-grid"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="propertyVideo">Property Video </label>
+                        <div class="file-input-container" onclick="document.getElementById('propertyVideo').click()">
+                            <label class="file-input-label">
+                                <i class="fas fa-video"></i>
+                                <p>Upload a video walkthrough of your property</p>
+                                <p class="upload-btn">Upload Video</p>
+                                <input type="file" id="propertyVideo" accept="video/*" required onchange="previewVideo(event)">
+                            </label>
+                            <div id="videoPreview" class="media-preview"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="virtualTour">360° Virtual Tour</label>
+                        <div class="file-input-container" onclick="document.getElementById('virtualTour').click()">
+                            <label class="file-input-label">
+                                <i class="fas fa-vr-cardboard"></i>
+                                <p>Upload 360° panoramic images for virtual tour</p>
+                                <p class="upload-btn">Upload 360° Images</p>
+                                <input type="file" id="virtualTour" accept=".jpg,.png" onchange="preview360Tour(event)">
+                            </label>
+                            <div id="tourPreview" class="media-preview"></div>
+                        </div>
+                        <small style="display: block; margin-top: 8px; color: #666;">
+                            <i class="fas fa-info-circle"></i> You can create 360° panoramic images using <a href="https://planner5d.com/" target="_blank">Planner5D</a>
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Amenities -->
+                <div class="form-section-card">
+                    <h3>Amenities</h3>
+                    <div class="amenities-grid">
+                        <div class="amenities-category">
+                            <h4>Interior</h4>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="ac"> Air Conditioning
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="heating"> Heating
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="washer"> Washer
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="dryer"> Dryer
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="fireplace"> Fireplace
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="fireplace"> None
+                            </label>
+                        </div>
+                        
+                        <div class="amenities-category">
+                            <h4>Exterior</h4>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="patio"> Patio/Balcony
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="parking"> Parking
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="garage"> Garage
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="security"> Security System
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="yard"> Fenced Yard
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="fireplace"> None
+                            </label>
+                        </div>
+                        
+                        <div class="amenities-category">
+                            <h4>Community</h4>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="gym"> Gym
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="pool"> Pool
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="playground"> Playground
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="tennis"> Tennis Court
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="clubhouse"> Clubhouse
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="amenities" value="fireplace"> None
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="form-section-card">
+                    <h3>Contact Information</h3>
+                    <div class="seller-info-section">
+                        <div class="form-group">
+                            <label for="sellerName">Full Name </label>
+                            <input type="text" id="sellerName" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerPhone">Phone Number </label>
+                            <input type="tel" id="sellerPhone" required placeholder="(123) 456-7890">
+                        </div>
+                        <div class="form-group">
+                            <label for="sellerEmail">Email Address </label>
+                            <input type="email" id="sellerEmail" required placeholder="your.email@example.com">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="form-section-card">
+                    <div class="form-buttons">
+                        <button type="button" class="view-drafts" onclick="viewDrafts()">View Drafts</button>
+                        <button type="button" class="save-draft" onclick="saveDraft()">Save Draft</button>
+                        <button type="submit" class="submit-listing">List Property</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Drafts Modal -->
+    <div class="drafts-modal" id="draftsModal">
+        <h3>Saved Drafts</h3>
+        <div class="drafts-list" id="draftsList">
+            <!-- Drafts will be loaded here -->
+        </div>
+        <div class="form-buttons">
+            <button type="button" class="save-draft" onclick="closeDraftsModal()">Close</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="contact-info">
+            <div><i class="fas fa-envelope"></i> estate10support@gmail.com</div>
+            <div><i class="fas fa-phone"></i> 905-444-ESTATE</div>
+        </div>
+    
+        <div class="footer-content">
+            <div>© Estate-10. All rights reserved</div>
+        </div>
+    
+        <div class="social-links">
+            <a href="https://www.instagram.com" target="_blank">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com" target="_blank">
+                <i class="fab fa-facebook"></i>
+            </a>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <h2>Login to Estate-10</h2>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="login-buttons">
+                    <button type="button" class="login-close" onclick="toggleModal()">Close</button>
+                    <button type="submit" class="login-submit">Login</button>
+
+                </div>
+            </form>
+            <div class="signup-link">
+                <span>Don't have an account? <a href="#" onclick="toggleSignupModal()">Sign Up</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="backdrop" id="backdrop"></div>
+    <div class="signup-modal" id="signupModal">
+        <div class="signup-content">
+            <h2>Sign Up for Estate-10</h2>
+            <form class="signup-form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="signup-buttons">
+                    <button type="button" class="signup-close" onclick="toggleSignupModal()">Close</button>
+
+                    <button type="submit" class="signup-submit">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+   <!-- Chat Buttons (Fixed Bottom Right) -->
+   <div class="chat-buttons">
+    <button class="chat-btn" onclick="toggleChat('chatbotWindow')">
+        <i class="fas fa-user-tie"></i> Chat with a Realtor
+    </button>
+
+</div>
+
+    <!-- Chatbot Window -->
+    <div class="chat-window" id="chatbotWindow">
+        <div class="chat-header">
+            <span>Realtor Chat</span>
+            <i class="fas fa-times" onclick="toggleChat('chatbotWindow')"></i>
+        </div>
+        <div class="chat-messages" id="chatbotMessages"></div>
+        <div class="chat-input">
+            <input type="text" placeholder="Ask me anything..." id="chatbotInput">
+            <button onclick="sendChatbotMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const menuButton = document.querySelector(".options-icon");
+        const dropdownMenu = document.querySelector(".dropdown");
+        const body = document.body;
+
+        menuButton.addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevent immediate close
+            dropdownMenu.classList.toggle("show");
+            body.classList.toggle("menu-open");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", function (event) {
+            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove("show");
+                body.classList.remove("menu-open");
+            }
+        });
+
+        
+        });
+
+        function toggleChat(chatId) {
+            const chatWindow = document.getElementById(chatId);
+            if (chatWindow.classList.contains("show")) {
+                chatWindow.classList.remove("show");
+            } else {
+                closeAllChats(); // Close any other open chats first
+                chatWindow.classList.add("show");
+            }
+        }
+
+        function closeAllChats() {
+            document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+        }
+
+    function sendChatbotMessage() {
+        const input = document.getElementById("chatbotInput");
+        const messages = document.getElementById("chatbotMessages");
+        if (input.value.trim()) {
+            messages.innerHTML += `<p>You: ${input.value}</p>`;
+            input.value = "";
+            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
+        }
+    }
+
+    function sendRealtorMessage() {
+        const input = document.getElementById("realtorInput");
+        if (input.value.trim()) {
+            alert("Message sent to Realtor: " + input.value);
+            input.value = "";
+        }
+    }
+
+
+        function toggleModal() {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close signup modal if open
+            signupModal.classList.remove('show-modal');
+
+            // Toggle login modal
+            if (loginModal.classList.contains('show-modal')) {
+                loginModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                loginModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function toggleSignupModal() {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close login modal if open
+            loginModal.classList.remove('show-modal');
+
+            // Toggle signup modal
+            if (signupModal.classList.contains('show-modal')) {
+                signupModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                signupModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('loginModal').classList.remove('show-modal');
+            document.getElementById('signupModal').classList.remove('show-modal');
+            document.getElementById('backdrop').classList.remove('show-backdrop');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === 'cosc3p94@gmail.com' && password === '12345') {
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('profileButton').style.display = 'block';
+                closeAllModals();
+                event.target.reset();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('Sign-up successful!');
+            closeAllModals();
+            event.target.reset();
+        }
+
+        function toggleMarketTrends() {
+            alert('Market Trends feature coming soon!');
+        }
+
+        function toggleMortgage() {
+            alert('Mortgage Calculator feature coming soon!');
+        }
+        
+        function toggleLoan() {
+            alert('Home Loan feature coming soon!');
+        }
+
+        function toggleROI() {
+            alert('ROI Calculator feature coming soon!');
+        }
+
+        function toggleTextSize() {
+            alert('Text scaling feature coming soon!');
+        }
+
+        function toggleContrast() {
+            alert('High contrast feature coming soon!');
+        }
+
+        function toggleVoiceNav() {
+            alert('Voice navigation feature coming soon!');
+        }
+
+        function handleSignout() {
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('profileButton').style.display = 'none';
+        }
+
+    function handleListingSubmit(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        
+        // Add video and 360 tour files to formData
+        const videoFile = document.getElementById('propertyVideo').files[0];
+        const tourFile = document.getElementById('virtualTour').files[0];
+        
+        if (videoFile) formData.append('video', videoFile);
+        if (tourFile) formData.append('virtualTour', tourFile);
+
+        // In a real application, this would send the data to a server
+        alert('Thank you! Your property listing has been submitted for review.');
+        event.target.reset();
+        
+        // Clear previews
+        document.getElementById('videoPreview').innerHTML = '';
+        document.getElementById('tourPreview').innerHTML = '';
+    }
+
+    function previewImages(event) {
+        const files = event.target.files;
+        const preview = document.getElementById('imagePreview');
+        preview.innerHTML = '';
+
+        for (const file of files) {
+            if (file.type.startsWith('image/')) {
+                const div = document.createElement('div');
+                div.className = 'file-preview-item';
+                
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-file';
+                removeBtn.innerHTML = '×';
+                removeBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    div.remove();
+                };
+                
+                div.appendChild(img);
+                div.appendChild(removeBtn);
+                preview.appendChild(div);
+            }
+        }
+    }
+
+    function previewVideo(event) {
+        const video = event.target.files[0];
+        const preview = document.getElementById('videoPreview');
+        preview.innerHTML = '';
+
+        if (video) {
+            const div = document.createElement('div');
+            div.className = 'file-preview-item';
+            
+            const videoElement = document.createElement('video');
+            videoElement.src = URL.createObjectURL(video);
+            videoElement.controls = true;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-file';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = function(e) {
+                e.stopPropagation();
+                div.remove();
+                document.getElementById('propertyVideo').value = '';
+            };
+            
+            div.appendChild(videoElement);
+            div.appendChild(removeBtn);
+            preview.appendChild(div);
+        }
+    }
+
+    function preview360Tour(event) {
+        const tourImage = event.target.files[0];
+        const preview = document.getElementById('tourPreview');
+        preview.innerHTML = '';
+
+        if (tourImage) {
+            const div = document.createElement('div');
+            div.className = 'file-preview-item';
+            
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(tourImage);
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-file';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = function(e) {
+                e.stopPropagation();
+                div.remove();
+                document.getElementById('virtualTour').value = '';
+            };
+            
+            div.appendChild(img);
+            div.appendChild(removeBtn);
+            preview.appendChild(div);
+        }
+    }
+
+    function saveDraft() {
+        const formData = {
+            title: document.getElementById('title').value,
+            propertyType: document.getElementById('propertyType').value,
+            purpose: document.getElementById('purpose').value,
+            price: document.getElementById('price').value,
+            sqft: document.getElementById('sqft').value,
+            bedrooms: document.getElementById('bedrooms').value,
+            bathrooms: document.getElementById('bathrooms').value,
+            address: document.getElementById('address').value,
+            description: document.getElementById('description').value,
+            sellerName: document.getElementById('sellerName').value,
+            sellerPhone: document.getElementById('sellerPhone').value,
+            sellerEmail: document.getElementById('sellerEmail').value
+        };
+
+        const draftKey = `propertyDraft_${Date.now()}`;
+        localStorage.setItem(draftKey, JSON.stringify(formData));
+        alert('Draft saved successfully!');
+    }
+
+    function viewDrafts() {
+        const draftsModal = document.getElementById('draftsModal');
+        const draftsList = document.getElementById('draftsList');
+        const backdrop = document.getElementById('backdrop');
+        
+        // Clear existing drafts
+        draftsList.innerHTML = '';
+        
+        // Load all drafts from localStorage
+        const drafts = getAllDrafts();
+        
+        if (drafts.length === 0) {
+            draftsList.innerHTML = '<p>No saved drafts found.</p>';
+        } else {
+            drafts.forEach((draft, index) => {
+                const draftItem = document.createElement('div');
+                draftItem.className = 'draft-item';
+                draftItem.innerHTML = `
+                    <div>
+                        <strong>${draft.title || 'Untitled Draft'}</strong><br>
+                        <small>Property Type: ${draft.propertyType || 'Not specified'}</small>
+                    </div>
+                    <div>
+                        <button onclick="loadDraft(${index})" class="save-draft">Load</button>
+                        <button onclick="deleteDraft(${index})" class="view-drafts">Delete</button>
+                    </div>
+                `;
+                draftsList.appendChild(draftItem);
+            });
+        }
+        
+        draftsModal.classList.add('show-modal');
+        backdrop.classList.add('show-backdrop');
+    }
+
+    function closeDraftsModal() {
+        const draftsModal = document.getElementById('draftsModal');
+        const backdrop = document.getElementById('backdrop');
+        draftsModal.classList.remove('show-modal');
+        backdrop.classList.remove('show-backdrop');
+    }
+
+    function getAllDrafts() {
+        const drafts = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('propertyDraft_')) {
+                try {
+                    drafts.push(JSON.parse(localStorage.getItem(key)));
+                } catch (e) {
+                    console.error('Error parsing draft:', e);
+                }
+            }
+        }
+        return drafts;
+    }
+
+    function loadDraft(index) {
+        const drafts = getAllDrafts();
+        if (drafts[index]) {
+            const formData = drafts[index];
+            Object.keys(formData).forEach(key => {
+                if (document.getElementById(key)) {
+                    document.getElementById(key).value = formData[key];
+                }
+            });
+            closeDraftsModal();
+        }
+    }
+
+    function deleteDraft(index) {
+        if (confirm('Are you sure you want to delete this draft?')) {
+            const drafts = getAllDrafts();
+            if (drafts[index]) {
+                const keys = Object.keys(localStorage).filter(key => key.startsWith('propertyDraft_'));
+                localStorage.removeItem(keys[index]);
+                viewDrafts(); // Refresh the drafts list
+            }
+        }
+    }
+    </script>
+</body>
+</html>
