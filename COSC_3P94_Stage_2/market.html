@@ -73,56 +73,9 @@
             <i class="fas fa-arrow-left"></i> Back
         </button>
     
-    <h2 style="color: #5A4B60; text-align: center;">my listings</h2>
+    <h2 style="color: #5A4B60; text-align: center;">Market Trends</h2>
     
-    <div class="listings-container">
-        <div class="listings-grid">
-            <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=599000&beds=3&baths=2&sqft=2100&address=123 Main Street, Toronto, ON&type=For Sale&img=https://picsum.photos/400/300'">
-                <img src="https://picsum.photos/400/310" alt="House" class="listing-image">
-                <div class="listing-info">
-                    <div class="listing-price">$599,000</div>
-                    <div class="listing-details">
-                        <span><i class="fas fa-bed"></i> 3 beds</span>
-                        <span><i class="fas fa-bath"></i> 2 baths</span>
-                        <span><i class="fas fa-ruler-combined"></i> 2,100 sqft</span>
-                    </div>
-                    <div class="listing-address">123 Main Street, Toronto, ON</div>
-                    <div class="listing-type">For Sale</div>
-                    <div style="margin-top: 10px; display: flex; gap: 10px; justify-content: center;">
-                        <button onclick="event.stopPropagation(); handleEdit('123 Main Street, Toronto, ON')" style="padding: 8px 15px; background-color: #5A4B60; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button onclick="event.stopPropagation(); handleDelete('123 Main Street, Toronto, ON')" style="padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="listing-card" onclick="window.location.href='listing.html?id=3&price=899000&beds=4&baths=3&sqft=2800&address=789 Lake Drive, Ottawa, ON&type=For Sale&img=https://picsum.photos/400/302'">
-                <img src="https://picsum.photos/400/302" alt="House" class="listing-image">
-                <div class="listing-info">
-                    <div class="listing-price">$899,000</div>
-                    <div class="listing-details">
-                        <span><i class="fas fa-bed"></i> 4 beds</span>
-                        <span><i class="fas fa-bath"></i> 3 baths</span>
-                        <span><i class="fas fa-ruler-combined"></i> 2,800 sqft</span>
-                    </div>
-                    <div class="listing-address">789 Lake Drive, Ottawa, ON</div>
-                    <div class="listing-type">For Sale</div>
-                    <div style="margin-top: 10px; display: flex; gap: 10px; justify-content: center;">
-                        <button onclick="event.stopPropagation(); handleEdit('789 Lake Drive, Ottawa, ON')" style="padding: 8px 15px; background-color: #5A4B60; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button onclick="event.stopPropagation(); handleDelete('789 Lake Drive, Ottawa, ON')" style="padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                    </div>
-                </div>
-            </div>     
-        </div>
-    </div>
-</div>
+  </div>  
 
 
     <div class="footer">
@@ -146,7 +99,7 @@
     </div>
     <div class="backdrop" id="backdrop"></div>
 
-    <div class="login-modal" id="loginModal">
+   <div class="login-modal" id="loginModal">
         <div class="login-content">
             <h2>Login to Estate-10</h2>
             <div class="social-login">
@@ -349,224 +302,212 @@
     </style>
 
     <script>
+            // Initialize menu elements
+            const menuButton = document.querySelector('.options-icon');
+            const dropdownMenu = document.querySelector('.dropdown');
+            const body = document.body;
 
-        function handleEdit(address) {
-            alert(`Edit listing at ${address}\nFeature coming soon: You'll be able to modify price, description, and other details.`);
+            function closeAllDropdowns() {
+                document.getElementById('profileDropdown').style.display = 'none';
+                if (dropdownMenu) dropdownMenu.style.display = 'none';
+                body.classList.remove("menu-open");
+            }
+
+            // Options menu toggle
+            menuButton.addEventListener("click", function (event) {
+                event.stopPropagation();
+                const isOpen = dropdownMenu.style.display === 'block';
+                closeAllDropdowns();
+                if (!isOpen) {
+                    dropdownMenu.style.display = 'block';
+                    body.classList.add("menu-open");
+                }
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener("click", function (event) {
+                const profileDropdown = document.getElementById('profileDropdown');
+                if (!event.target.closest('.options') && !event.target.closest('.profile-icon')) {
+                    closeAllDropdowns();
+                }
+            });
+
+            function toggleChat(chatId) {
+                const chatWindow = document.getElementById(chatId);
+                if (chatWindow.classList.contains("show")) {
+                    chatWindow.classList.remove("show");
+                } else {
+                    closeAllChats(); // Close any other open chats first
+                    chatWindow.classList.add("show");
+                }
+            }
+
+            function closeAllChats() {
+                document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+            }
+
+    function sendChatbotMessage() {
+        const input = document.getElementById("chatbotInput");
+        const messages = document.getElementById("chatbotMessages");
+        if (input.value.trim()) {
+            messages.innerHTML += `<p>You: ${input.value}</p>`;
+            input.value = "";
+            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
         }
+    }
 
-        function handleDelete(address) {
-            if (confirm(`Are you sure you want to delete the listing at ${address}?`)) {
-                alert('Listing deleted successfully!');
+    function sendRealtorMessage() {
+        const input = document.getElementById("realtorInput");
+        if (input.value.trim()) {
+            alert("Message sent to Realtor: " + input.value);
+            input.value = "";
+        }
+    }
+
+
+        function toggleModal() {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close signup modal if open
+            signupModal.classList.remove('show-modal');
+
+            // Toggle login modal
+            if (loginModal.classList.contains('show-modal')) {
+                loginModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                loginModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
             }
         }
+
+        function toggleSignupModal() {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close login modal if open
+            loginModal.classList.remove('show-modal');
+
+            // Toggle signup modal
+            if (signupModal.classList.contains('show-modal')) {
+                signupModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                signupModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('loginModal').classList.remove('show-modal');
+            document.getElementById('signupModal').classList.remove('show-modal');
+            document.getElementById('backdrop').classList.remove('show-backdrop');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === 'cosc3p94@gmail.com' && password === '12345') {
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('profileButton').style.display = 'block';
+                document.getElementById('collectionsSection').style.display = 'block';
+                document.getElementById('savedListingsSection').style.display = 'block';
+                closeAllModals();
+                event.target.reset();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('Sign-up successful!');
+            closeAllModals();
+            event.target.reset();
+        }
+
+        function toggleMarketTrends() {
+            alert('Market Trends feature coming soon!');
+        }
+
+        function toggleMortgage() {
+            alert('Mortgage Calculator feature coming soon!');
+        }
         
-            // Initialize menu elements
-    const menuButton = document.querySelector('.options-icon');
-    const dropdownMenu = document.querySelector('.dropdown');
-    const body = document.body;
-
-    function closeAllDropdowns() {
-        document.getElementById('profileDropdown').style.display = 'none';
-        if (dropdownMenu) dropdownMenu.style.display = 'none';
-        body.classList.remove("menu-open");
-    }
-
-    // Options menu toggle
-    menuButton.addEventListener("click", function (event) {
-        event.stopPropagation();
-        const isOpen = dropdownMenu.style.display === 'block';
-        closeAllDropdowns();
-        if (!isOpen) {
-            dropdownMenu.style.display = 'block';
-            body.classList.add("menu-open");
+        function toggleLoan() {
+            alert('Home Loan feature coming soon!');
         }
-    });
 
-    // Close dropdowns when clicking outside
-    document.addEventListener("click", function (event) {
-        const profileDropdown = document.getElementById('profileDropdown');
-        if (!event.target.closest('.options') && !event.target.closest('.profile-icon')) {
+        function toggleROI() {
+            alert('ROI Calculator feature coming soon!');
+        }
+
+        function toggleTextSize() {
+            alert('Text scaling feature coming soon!');
+        }
+
+        function toggleContrast() {
+            alert('High contrast feature coming soon!');
+        }
+
+        function toggleVoiceNav() {
+            alert('Voice navigation feature coming soon!');
+        }
+
+        function handleSignout() {
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('profileButton').style.display = 'none';
+            document.getElementById('collectionsSection').style.display = 'none';
+            document.getElementById('savedListingsSection').style.display = 'none';
+        }
+        
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('searchInput').value;
+            if (searchQuery.trim()) {
+                window.location.href = 'buy.html';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const searchQuery = document.getElementById('searchInput').value;
+                if (searchQuery.trim()) {
+                    window.location.href = 'buy.html';
+                }
+            }
+        }
+        function showCollectionAlert(collectionName) {
+            alert(`No listings in "${collectionName}" collection.`);
+        }
+
+        function socialLogin(provider) {
+            alert(`${provider} login coming soon!`);
+        }
+
+        function toggleProfileDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('profileDropdown');
+            const isOpen = dropdown.style.display === 'block';
             closeAllDropdowns();
+            if (!isOpen) {
+                dropdown.style.display = 'block';
+            }
         }
-    });
 
-    function toggleChat(chatId) {
-        const chatWindow = document.getElementById(chatId);
-        if (chatWindow.classList.contains("show")) {
-            chatWindow.classList.remove("show");
-        } else {
-            closeAllChats(); // Close any other open chats first
-            chatWindow.classList.add("show");
-        }
-    }
-
-    function closeAllChats() {
-        document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
-    }
-
-function sendChatbotMessage() {
-const input = document.getElementById("chatbotInput");
-const messages = document.getElementById("chatbotMessages");
-if (input.value.trim()) {
-    messages.innerHTML += `<p>You: ${input.value}</p>`;
-    input.value = "";
-    setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
-}
-}
-
-function sendRealtorMessage() {
-const input = document.getElementById("realtorInput");
-if (input.value.trim()) {
-    alert("Message sent to Realtor: " + input.value);
-    input.value = "";
-}
-}
-
-
-function toggleModal() {
-    const loginModal = document.getElementById('loginModal');
-    const signupModal = document.getElementById('signupModal');
-    const backdrop = document.getElementById('backdrop');
-
-    // Close signup modal if open
-    signupModal.classList.remove('show-modal');
-
-    // Toggle login modal
-    if (loginModal.classList.contains('show-modal')) {
-        loginModal.classList.remove('show-modal');
-        backdrop.classList.remove('show-backdrop');
-    } else {
-        loginModal.classList.add('show-modal');
-        backdrop.classList.add('show-backdrop');
-    }
-}
-
-function toggleSignupModal() {
-    const signupModal = document.getElementById('signupModal');
-    const loginModal = document.getElementById('loginModal');
-    const backdrop = document.getElementById('backdrop');
-
-    // Close login modal if open
-    loginModal.classList.remove('show-modal');
-
-    // Toggle signup modal
-    if (signupModal.classList.contains('show-modal')) {
-        signupModal.classList.remove('show-modal');
-        backdrop.classList.remove('show-backdrop');
-    } else {
-        signupModal.classList.add('show-modal');
-        backdrop.classList.add('show-backdrop');
-    }
-}
-
-function closeAllModals() {
-    document.getElementById('loginModal').classList.remove('show-modal');
-    document.getElementById('signupModal').classList.remove('show-modal');
-    document.getElementById('backdrop').classList.remove('show-backdrop');
-}
-
-function handleLogin(event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    if (email === 'cosc3p94@gmail.com' && password === '12345') {
-        document.getElementById('loginButton').style.display = 'none';
-        document.getElementById('profileButton').style.display = 'block';
-        document.getElementById('collectionsSection').style.display = 'block';
-        document.getElementById('savedListingsSection').style.display = 'block';
-        closeAllModals();
-        event.target.reset();
-    } else {
-        alert('Invalid credentials!');
-    }
-}
-
-function handleSignup(event) {
-    event.preventDefault();
-    alert('Sign-up successful!');
-    closeAllModals();
-    event.target.reset();
-}
-
-function toggleMarketTrends() {
-    alert('Market Trends feature coming soon!');
-}
-
-function toggleMortgage() {
-    alert('Mortgage Calculator feature coming soon!');
-}
-
-function toggleLoan() {
-    alert('Home Loan feature coming soon!');
-}
-
-function toggleROI() {
-    alert('ROI Calculator feature coming soon!');
-}
-
-function toggleTextSize() {
-    alert('Text scaling feature coming soon!');
-}
-
-function toggleContrast() {
-    alert('High contrast feature coming soon!');
-}
-
-function toggleVoiceNav() {
-    alert('Voice navigation feature coming soon!');
-}
-
-function handleSignout() {
-    document.getElementById('loginButton').style.display = 'block';
-    document.getElementById('profileButton').style.display = 'none';
-    document.getElementById('collectionsSection').style.display = 'none';
-    document.getElementById('savedListingsSection').style.display = 'none';
-}
-
-function handleSearch(event) {
-    event.preventDefault();
-    const searchQuery = document.getElementById('searchInput').value;
-    if (searchQuery.trim()) {
-        window.location.href = 'buy.html';
-    }
-}
-
-function handleKeyPress(event) {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        const searchQuery = document.getElementById('searchInput').value;
-        if (searchQuery.trim()) {
-            window.location.href = 'buy.html';
-        }
-    }
-}
-function showCollectionAlert(collectionName) {
-    alert(`No listings in "${collectionName}" collection.`);
-}
-
-function socialLogin(provider) {
-    alert(`${provider} login coming soon!`);
-}
-
-function toggleProfileDropdown(event) {
-    event.stopPropagation();
-    const dropdown = document.getElementById('profileDropdown');
-    const isOpen = dropdown.style.display === 'block';
-    closeAllDropdowns();
-    if (!isOpen) {
-        dropdown.style.display = 'block';
-    }
-}
-
-// Close profile dropdown when clicking outside
-document.addEventListener('click', function(event) {
-    const dropdown = document.getElementById('profileDropdown');
-    if (dropdown && !event.target.closest('.profile-icon')) {
-        dropdown.style.display = 'none';
-    }
-});
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown && !event.target.closest('.profile-icon')) {
+                dropdown.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
-

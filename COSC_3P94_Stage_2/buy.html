@@ -10,17 +10,15 @@
     <link rel="stylesheet" href="index-styles.css">
     <!-- Link to Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Link to your custom CSS -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="index-styles.css">
-    <!-- Link to Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Add Leaflet CSS and JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
+        .nav-links a.active {
+            text-decoration: underline;
+            text-underline-offset: 5px;
+        }
         #propertyMap {
             height: 100%;
             width: 100%;
@@ -79,7 +77,65 @@
             width: 100%;
         }
         .view-listing:hover {
-            background: #1a365d;
+            background: #453C4F;
+            color: white;
+        }
+        .listing-type {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: inline-block;
+            background: #C4B1E5;
+            color: #5A4B60;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            z-index: 1;
+        }
+        .listing-info {
+            position: relative;
+            padding: 15px;
+        }
+        .listing-card {
+            position: relative;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .search-type select {
+            padding: 10px;
+            border: 2px solid #5A4B60;
+            background-color: #D9D0DC;
+            border-radius: 5px;
+            color: #333;
+            cursor: pointer;
+            min-width: 30px;
+            font-size: 18px;
+        }
+
+        .search-type {
+            margin-right: 15px;
+        }
+
+        .search-type select option:checked {
+            background-color: #D9D0DC;
+            color: #5A4B60;
+            font-weight: bold;
+        }
+        
+        .search-type select option {
+            background-color: #D9D0DC;
+            color: #5A4B60;
         }
     </style>
 </head>
@@ -90,15 +146,15 @@
             Estate-10
         </a>
         <div class="nav-links">
-            <a href="buy.html">Buy</a>
-            <a href="rent.html">Rent</a>
+            <a href="index.html">Home</a>
+            <a href="buy.html" class="active">Properties</a>
             <a href="sell.html">Sell</a>
         </div>
         <div class="right-section">
             <a href="#" class="signup-login" onclick="toggleModal(); return false;" id="loginButton">Signup / Login</a>
             <a href="#" class="profile-icon" style="display: none; color: #5A4B60;" id="profileButton" onclick="toggleProfileDropdown(event); return false;">
                 <i class="fas fa-user-circle"></i>
-                <div class="profile-dropdown" id="profileDropdown" style="display: none; position: absolute; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 4px; padding: 10px; right: 45px; top: 40px;">
+                <div class="profile-dropdown" id="profileDropdown" style="display: none; position: absolute; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 4px; padding: 10px; right: 0; top: 100%; margin-top: 5px;">
                     <div style="padding: 8px; cursor: pointer;" onclick="document.getElementById('savedListingsSection').scrollIntoView({behavior: 'smooth'})">
                         <i class="fas fa-heart"></i> Saved Listings
                     </div>
@@ -118,10 +174,11 @@
                 <div class="dropdown">
                     <div class="dropdown-section">
                         <h3>Tools</h3>
-                        <a href="#" onclick="toggleMarketTrends()"><i class="fas fa-chart-line"></i> Market Trends</a>
-                        <a href="#" onclick="toggleMortgage()"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
-                        <a href="#" onclick="toggleLoan()"><i class="fas fa-home"></i> Home Loan Calculator</a>
-                        <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+                        <a href="market.html"><i class="fas fa-chart-line"></i> Market Trends</a>
+                        <a href="mortgage.html"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+                        <a href="loan.html"><i class="fas fa-home"></i> Home Loan Calculator</a>
+                        <a href="roi.html"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+
                     </div>
                     <div class="dropdown-section">
                         <h3>More information</h3>
@@ -138,22 +195,34 @@
             </div>
         </div>
     </div>
-    <div class="main-content">        
+    <div class="main-content">       
+        <!-- Search Bar -->
         <div class="search-container">
             <div class="search-wrapper">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" class="search-bar" placeholder="Enter Address or City" id="searchInput" placeholder="Enter Address or City" onkeypress="handleKeyPress(event)">
+                <div class="search-type">
+                    <select id="searchType" style="border: none; background: transparent; color: #5A4B60; padding: 10px; outline: none; cursor: pointer;">
+                        <option value="buy">Buy</option>
+                        <option value="rent">Rent</option>
+                    </select>
+                </div>
+                <input type="text" class="search-bar" placeholder="Enter Address or City" id="searchInput" onkeypress="handleKeyPress(event)">
             </div>
+
+
             <div class="filters-container">
-                <select class="filter-select">
-                    <option value="">Property Type</option>
-                    <option value="house">House</option>
-                    <option value="apartment">Apartment</option>
-                    <option value="condo">Condo</option>
-                    <option value="townhouse">Townhouse</option>
-                    <option value="duplex">Duplex</option>
-                    <option value="land">Land</option>
-                </select>
+                <div class="filter-select price-range-group">
+                    <div class="price-inputs">
+                        <div class="price-input-wrapper">
+                            <span class="currency">$</span>
+                            <input type="text" placeholder="Min" class="price-input">
+                        </div>
+                        <span class="price-separator">-</span>
+                        <div class="price-input-wrapper">
+                            <span class="currency">$</span>
+                            <input type="text" placeholder="Max" class="price-input">
+                        </div>
+                    </div>
+                </div>
                 <select class="filter-select">
                     <option value="">Beds</option>
                     <option value="1">1 Bed</option>
@@ -175,19 +244,16 @@
                     <option value="2000-2500">2,000 - 2,500</option>
                     <option value="2500+">2,500+</option>
                 </select>
-                <div class="filter-select price-range-group">
-                    <div class="price-inputs">
-                        <div class="price-input-wrapper">
-                            <span class="currency">$</span>
-                            <input type="text" placeholder="Min" class="price-input">
-                        </div>
-                        <span class="price-separator">-</span>
-                        <div class="price-input-wrapper">
-                            <span class="currency">$</span>
-                            <input type="text" placeholder="Max" class="price-input">
-                        </div>
-                    </div>
-                </div>
+                <select class="filter-select">
+                    <option value="">Property Type</option>
+                    <option value="house">House</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="condo">Condo</option>
+                    <option value="townhouse">Townhouse</option>
+                    <option value="duplex">Duplex</option>
+                    <option value="land">Land</option>
+                </select>
+
                 <div class="advanced-filters">
                     <button class="filter-select">Advanced Filters</button>
                     <div class="advanced-filters-content">
@@ -234,69 +300,74 @@
                         <option value="date-old">Oldest First</option>
                     </select>
                 </div>
-                <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=1500&beds=2&baths=1&sqft=1200&address=123 Main St, St. Catharines&type=For Rent&img=https://picsum.photos/400/300'">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=1&price=1500&beds=2&baths=1&sqft=1200&address=123 Main St, St. Catharines&type=For Sale&img=https://picsum.photos/400/300'">
                     <img src="https://picsum.photos/400/300" alt="Modern Apartment" class="listing-image">
                     <div class="listing-info">
-                        <h3>Modern Apartment</h3>
-                        <p class="listing-price">$1,500/month</p>
-                        <p class="listing-address">123 Main St, St. Catharines</p>
+                        <h3>123 Main St, St. Catharines</h3>
+                        <p class="listing-price">$450,000</p>
+                        <p class="listing-address">Apartment</p>
                         <div class="listing-details">
                             <span><i class="fas fa-bed"></i> 2</span>
                             <span><i class="fas fa-bath"></i> 1</span>
                             <span><i class="fas fa-ruler-combined"></i> 1,200 sq ft</span>
                         </div>
+                        <div class="listing-type">For Sale</div>
                     </div>
                 </div>
                 <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
                     <img src="https://picsum.photos/400/301" alt="Family House" class="listing-image">
                     <div class="listing-info">
-                        <h3>Family House</h3>
+                        <h3>456 Oak Ave, St. Catharines</h3>
                         <p class="listing-price">$2,200/month</p>
-                        <p class="listing-address">456 Oak Ave, St. Catharines</p>
+                        <p class="listing-address">House</p>
                         <div class="listing-details">
                             <span><i class="fas fa-bed"></i> 3</span>
                             <span><i class="fas fa-bath"></i> 2</span>
                             <span><i class="fas fa-ruler-combined"></i> 1,800 sq ft</span>
                         </div>
+                        <div class="listing-type">For Rent</div>
                     </div>
                 </div>
-                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=3&price=550000&beds=2&baths=2&sqft=1400&address=789 Pine St, St. Catharines&type=For Sale&img=https://picsum.photos/400/302'">
                     <img src="https://picsum.photos/400/302" alt="Downtown Condo" class="listing-image">
                     <div class="listing-info">
-                        <h3>Downtown Condo</h3>
-                        <p class="listing-price">$1,800/month</p>
-                        <p class="listing-address">789 Pine St, St. Catharines</p>
+                        <h3>789 Pine St, St. Catharines</h3>
+                        <p class="listing-price">$550,000</p>
+                        <p class="listing-address">Condo</p>
                         <div class="listing-details">
                             <span><i class="fas fa-bed"></i> 2</span>
                             <span><i class="fas fa-bath"></i> 2</span>
                             <span><i class="fas fa-ruler-combined"></i> 1,400 sq ft</span>
                         </div>
+                        <div class="listing-type">For Sale</div>
                     </div>
                 </div>
-                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=4&price=2500&beds=4&baths=3&sqft=2200&address=321 Elm St, St. Catharines&type=For Rent&img=https://picsum.photos/400/303'">
                     <img src="https://picsum.photos/400/303" alt="Spacious House" class="listing-image">
                     <div class="listing-info">
-                        <h3>Spacious House</h3>
+                        <h3>321 Elm St, St. Catharines</h3>
                         <p class="listing-price">$2,500/month</p>
-                        <p class="listing-address">321 Elm St, St. Catharines</p>
+                        <p class="listing-address">Townhouse</p>
                         <div class="listing-details">
                             <span><i class="fas fa-bed"></i> 4</span>
                             <span><i class="fas fa-bath"></i> 3</span>
                             <span><i class="fas fa-ruler-combined"></i> 2,200 sq ft</span>
                         </div>
+                        <div class="listing-type">For Rent</div>
                     </div>
                 </div>
-                <div class="listing-card" onclick="window.location.href='listing.html?id=2&price=2200&beds=3&baths=2&sqft=1800&address=456 Oak Ave, St. Catharines&type=For Rent&img=https://picsum.photos/400/301'">
+                <div class="listing-card" onclick="window.location.href='listing.html?id=5&price=375000&beds=1&baths=1&sqft=900&address=567 Lake St, St. Catharines&type=For Sale&img=https://picsum.photos/400/304'">
                     <img src="https://picsum.photos/400/304" alt="Studio Apartment" class="listing-image">
                     <div class="listing-info">
-                        <h3>Studio Apartment</h3>
-                        <p class="listing-price">$1,600/month</p>
-                        <p class="listing-address">567 Lake St, St. Catharines</p>
+                        <h3>567 Lake St, St. Catharines</h3>
+                        <p class="listing-price">$375,000</p>
+                        <p class="listing-address">Apartment</p>
                         <div class="listing-details">
                             <span><i class="fas fa-bed"></i> 1</span>
                             <span><i class="fas fa-bath"></i> 1</span>
                             <span><i class="fas fa-ruler-combined"></i> 900 sq ft</span>
                         </div>
+                        <div class="listing-type">For Sale</div>
                     </div>
                 </div>
             </div>
@@ -328,7 +399,9 @@
     </div>
     <div class="backdrop" id="backdrop"></div>
 
-    <div class="login-modal" id="loginModal">
+
+
+     <div class="login-modal" id="loginModal">
         <div class="login-content">
             <h2>Login to Estate-10</h2>
             <div class="social-login">
@@ -364,6 +437,8 @@
             </div>
         </div>
     </div>
+    
+
     <div class="backdrop" id="backdrop"></div>
     <div class="signup-modal" id="signupModal">
         <div class="signup-content">
@@ -427,183 +502,153 @@
         </div>
     </div>
 
-    <!-- Backdrop for Blur Effect -->
-    <div class="backdrop" id="backdrop" onclick="closeAllChats()"></div>
+    <style>
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .search-type select {
+            padding: 10px;
+            border: 2px solid #5A4B60;
+            background-color: #D9D0DC;
+            border-radius: 5px;
+            color: #333;
+            cursor: pointer;
+            min-width: 30px;
+            font-size: 18px;
+        }
+
+        .search-type {
+            margin-right: 15px;
+        }
+
+        .search-type select option:checked {
+            background-color: #D9D0DC;
+            color: #5A4B60;
+            font-weight: bold;
+        }
+        
+        .search-type select option {
+            background-color: #D9D0DC;
+            color: #5A4B60;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: -10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            padding: 15px;
+            z-index: 1000;
+            min-width: 250px;
+        }
+
+        .options {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .options-icon {
+            padding: 10px;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            min-width: 200px;
+            margin-top: 5px;
+        }
+
+        .dropdown-section {
+            padding: 10px 0;
+        }
+
+        .dropdown-section a {
+            display: block;
+            padding: 8px 15px;
+            color: #5A4B60;
+            text-decoration: none;
+        }
+
+        .dropdown-section a:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-        const menuButton = document.querySelector(".options-icon");
-        const dropdownMenu = document.querySelector(".dropdown");
-        const body = document.body;
-
-        menuButton.addEventListener("click", function (event) {
-            event.stopPropagation(); // Prevent immediate close
-            dropdownMenu.classList.toggle("show");
-            body.classList.toggle("menu-open");
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener("click", function (event) {
-            if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.remove("show");
-                body.classList.remove("menu-open");
-            }
-        });
-
-        
-        });
-
-
-        function toggleChat(chatId) {
-            const chatWindow = document.getElementById(chatId);
-            if (chatWindow.classList.contains("show")) {
-                chatWindow.classList.remove("show");
-            } else {
-                closeAllChats(); // Close any other open chats first
-                chatWindow.classList.add("show");
-            }
-        }
-
-    function closeAllChats() {
-        document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
-    }
-
-    function sendChatbotMessage() {
-        const input = document.getElementById("chatbotInput");
-        const messages = document.getElementById("chatbotMessages");
-        if (input.value.trim()) {
-            messages.innerHTML += `<p>You: ${input.value}</p>`;
-            input.value = "";
-            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
-        }
-    }
-
-    function sendRealtorMessage() {
-        const input = document.getElementById("realtorInput");
-        if (input.value.trim()) {
-            alert("Message sent to Realtor: " + input.value);
-            input.value = "";
-        }
-    }
-
-
-        function toggleModal() {
-            const loginModal = document.getElementById('loginModal');
-            const signupModal = document.getElementById('signupModal');
-            const backdrop = document.getElementById('backdrop');
-
-            // Close signup modal if open
-            signupModal.classList.remove('show-modal');
-
-            // Toggle login modal
-            if (loginModal.classList.contains('show-modal')) {
-                loginModal.classList.remove('show-modal');
-                backdrop.classList.remove('show-backdrop');
-            } else {
-                loginModal.classList.add('show-modal');
-                backdrop.classList.add('show-backdrop');
-            }
-        }
-
-        function toggleSignupModal() {
-            const signupModal = document.getElementById('signupModal');
-            const loginModal = document.getElementById('loginModal');
-            const backdrop = document.getElementById('backdrop');
-
-            // Close login modal if open
-            loginModal.classList.remove('show-modal');
-
-            // Toggle signup modal
-            if (signupModal.classList.contains('show-modal')) {
-                signupModal.classList.remove('show-modal');
-                backdrop.classList.remove('show-backdrop');
-            } else {
-                signupModal.classList.add('show-modal');
-                backdrop.classList.add('show-backdrop');
-            }
-        }
-
-        function closeAllModals() {
-            document.getElementById('loginModal').classList.remove('show-modal');
-            document.getElementById('signupModal').classList.remove('show-modal');
-            document.getElementById('backdrop').classList.remove('show-backdrop');
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            if (email === 'cosc3p94@gmail.com' && password === '12345') {
-                document.getElementById('loginButton').style.display = 'none';
-                document.getElementById('profileButton').style.display = 'block';
-                closeAllModals();
-                event.target.reset();
-            } else {
-                alert('Invalid credentials!');
-            }
-        }
-
-        function handleSignup(event) {
-            event.preventDefault();
-            alert('Sign-up successful!');
-            closeAllModals();
-            event.target.reset();
-        }
-
-        function toggleMarketTrends() {
-            alert('Market Trends feature coming soon!');
-        }
-
-        function toggleMortgage() {
-            alert('Mortgage Calculator feature coming soon!');
-        }
-        
-        function toggleLoan() {
-            alert('Home Loan feature coming soon!');
-        }
-
-        function toggleROI() {
-            alert('ROI Calculator feature coming soon!');
-        }
-
-        function toggleTextSize() {
-            alert('Text scaling feature coming soon!');
-        }
-
-        function toggleContrast() {
-            alert('High contrast feature coming soon!');
-        }
-
-        function toggleVoiceNav() {
-            alert('Voice navigation feature coming soon!');
-        }
-
-        function handleSignout() {
-            document.getElementById('loginButton').style.display = 'block';
-            document.getElementById('profileButton').style.display = 'none';
-        }
-        
-        function handleSearch(event) {
-            event.preventDefault();
-            const searchQuery = document.getElementById('searchInput').value;
-            if (searchQuery.trim()) {
-                window.location.href = 'buy.html';
-            }
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                const searchQuery = document.getElementById('searchInput').value;
-                if (searchQuery.trim()) {
-                    window.location.href = 'buy.html';
+        // Define filterListings function first
+        function filterListings(searchType) {
+            const listings = document.querySelectorAll('.listing-card');
+            listings.forEach(listing => {
+                const listingType = listing.querySelector('.listing-type').textContent;
+                if (searchType === 'buy' && listingType === 'For Sale') {
+                    listing.style.display = '';  // Use default display instead of 'block'
+                } else if (searchType === 'rent' && listingType === 'For Rent') {
+                    listing.style.display = '';  // Use default display instead of 'block'
+                } else {
+                    listing.style.display = 'none';
                 }
-            }
+            });
         }
-    </script>
-    <!-- Remove the Google Maps script and replace with this new script -->
-    <script>
+
+        // Single DOMContentLoaded event listener
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuButton = document.querySelector(".options-icon");
+            const dropdownMenu = document.querySelector(".dropdown");
+            const body = document.body;
+
+            // First initialize the map
+            initMap();
+            
+            // Then apply initial filtering
+            filterListings(document.getElementById('searchType').value);
+
+            // Add change event listener to search type dropdown
+            document.getElementById('searchType').addEventListener('change', function() {
+                filterListings(this.value);
+            });
+
+            menuButton.addEventListener("click", function (event) {
+                event.stopPropagation(); // Prevent immediate close
+                dropdownMenu.classList.toggle("show");
+                body.classList.toggle("menu-open");
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener("click", function (event) {
+                if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.remove("show");
+                    body.classList.remove("menu-open");
+                }
+            });
+        });
+
         // Initialize the map
         function initMap() {
             try {
@@ -617,7 +662,7 @@
                 const properties = [
                     {
                         position: [43.1157, -79.2496],
-                        title: "Modern Apartment",
+                        title: "123 Main St, St. Catharines",
                         price: "$250,000",
                         type: "For Sale",
                         beds: 2,
@@ -629,7 +674,7 @@
                     },
                     {
                         position: [43.1050, -79.2450],
-                        title: "Family House",
+                        title: "789 Pine St, St. Catharines",
                         price: "$350,000",
                         type: "For Sale",
                         beds: 3,
@@ -641,7 +686,7 @@
                     },
                     {
                         position: [43.1197, -79.2810],
-                        title: "Modern Apartment",
+                        title: "567 Lake St, St. Catharines",
                         price: "$250,000",
                         type: "For Sale",
                         beds: 2,
@@ -653,7 +698,7 @@
                     },
                     {
                         position: [43.1299, -79.1956],
-                        title: "Modern Apartment",
+                        title: "456 Oak Ave, St. Catharines",
                         price: "$250,000",
                         type: "For Sale",
                         beds: 2,
@@ -665,7 +710,7 @@
                     },
                     {
                         position: [43.1399, -79.2910],
-                        title: "Modern Apartment",
+                        title: "321 Elm St, St. Catharines",
                         price: "$250,000",
                         type: "For Sale",
                         beds: 2,
@@ -722,39 +767,9 @@
             }
         }
 
-        // Call initMap when the document is ready
-        document.addEventListener('DOMContentLoaded', initMap);
-
         function socialLogin(provider) {
             alert(`${provider} login coming soon!`);
         }
-        document.addEventListener("DOMContentLoaded", function () {
-            const menuButton = document.querySelector(".options-icon");
-            const dropdownMenu = document.querySelector(".dropdown");
-            const body = document.body;
-
-            function closeAllDropdowns() {
-                document.getElementById('profileDropdown').style.display = 'none';
-                dropdownMenu.style.display = 'none';
-                body.classList.remove("menu-open");
-            }
-
-            menuButton.addEventListener("click", function (event) {
-                event.stopPropagation();
-                const isOpen = dropdownMenu.style.display === 'block';
-                closeAllDropdowns();
-                if (!isOpen) {
-                    dropdownMenu.style.display = 'block';
-                    body.classList.add("menu-open");
-                }
-            });
-
-            document.addEventListener("click", function (event) {
-                if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    closeAllDropdowns();
-                }
-            });
-        });
 
         function toggleChat(chatId) {
             const chatWindow = document.getElementById(chatId);
@@ -769,6 +784,216 @@
         function closeAllChats() {
             document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
         }
+
+        function sendChatbotMessage() {
+            const input = document.getElementById("chatbotInput");
+            const messages = document.getElementById("chatbotMessages");
+            if (input.value.trim()) {
+                messages.innerHTML += `<p>You: ${input.value}</p>`;
+                input.value = "";
+                setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
+            }
+        }
+
+        function sendRealtorMessage() {
+            const input = document.getElementById("realtorInput");
+            if (input.value.trim()) {
+                alert("Message sent to Realtor: " + input.value);
+                input.value = "";
+            }
+        }
+
+        function toggleModal() {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close signup modal if open
+            signupModal.classList.remove('show-modal');
+
+            // Toggle login modal
+            if (loginModal.classList.contains('show-modal')) {
+                loginModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                loginModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function toggleSignupModal() {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close login modal if open
+            loginModal.classList.remove('show-modal');
+
+            // Toggle signup modal
+            if (signupModal.classList.contains('show-modal')) {
+                signupModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                signupModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('loginModal').classList.remove('show-modal');
+            document.getElementById('signupModal').classList.remove('show-modal');
+            document.getElementById('backdrop').classList.remove('show-backdrop');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === 'cosc3p94@gmail.com' && password === '12345') {
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('profileButton').style.display = 'block';
+                document.getElementById('collectionsSection').style.display = 'block';
+                document.getElementById('savedListingsSection').style.display = 'block';
+                closeAllModals();
+                event.target.reset();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('Sign-up successful!');
+            closeAllModals();
+            event.target.reset();
+        }
+
+        function toggleMarketTrends() {
+            alert('Market Trends feature coming soon!');
+        }
+
+        function toggleMortgage() {
+            alert('Mortgage Calculator feature coming soon!');
+        }
+        
+        function toggleLoan() {
+            alert('Home Loan feature coming soon!');
+        }
+
+        function toggleROI() {
+            alert('ROI Calculator feature coming soon!');
+        }
+
+        function toggleTextSize() {
+            alert('Text scaling feature coming soon!');
+        }
+
+        function toggleContrast() {
+            alert('High contrast feature coming soon!');
+        }
+
+        function toggleVoiceNav() {
+            alert('Voice navigation feature coming soon!');
+        }
+
+        function handleSignout() {
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('profileButton').style.display = 'none';
+            document.getElementById('collectionsSection').style.display = 'none';
+            document.getElementById('savedListingsSection').style.display = 'none';
+        }
+        
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('searchInput').value;
+            if (searchQuery.trim()) {
+                window.location.href = 'buy.html';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const searchQuery = document.getElementById('searchInput').value;
+                if (searchQuery.trim()) {
+                    window.location.href = 'buy.html';
+                }
+            }
+        }
+
+        function showCollectionAlert(collectionName) {
+            alert(`No listings in "${collectionName}" collection.`);
+        }
+
+        function toggleProfileDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('profileDropdown');
+            const dropdownMenu = document.querySelector(".dropdown");
+            const isOpen = dropdown.style.display === 'block';
+            
+            // Close both dropdowns
+            dropdown.style.display = 'none';
+            dropdownMenu.style.display = 'none';
+            document.body.classList.remove("menu-open");
+            
+            // Open profile dropdown if it was closed
+            if (!isOpen) {
+                dropdown.style.display = 'block';
+            }
+        }
+
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown && !event.target.closest('.profile-icon')) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Initialize menu elements
+        const menuButton = document.querySelector('.options-icon');
+            const dropdownMenu = document.querySelector('.dropdown');
+            const body = document.body;
+
+            function closeAllDropdowns() {
+                document.getElementById('profileDropdown').style.display = 'none';
+                if (dropdownMenu) dropdownMenu.style.display = 'none';
+                body.classList.remove("menu-open");
+            }
+
+            // Options menu toggle
+            menuButton.addEventListener("click", function (event) {
+                event.stopPropagation();
+                const isOpen = dropdownMenu.style.display === 'block';
+                closeAllDropdowns();
+                if (!isOpen) {
+                    dropdownMenu.style.display = 'block';
+                    body.classList.add("menu-open");
+                }
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener("click", function (event) {
+                const profileDropdown = document.getElementById('profileDropdown');
+                if (!event.target.closest('.options') && !event.target.closest('.profile-icon')) {
+                    closeAllDropdowns();
+                }
+            });
+
+            function toggleChat(chatId) {
+                const chatWindow = document.getElementById(chatId);
+                if (chatWindow.classList.contains("show")) {
+                    chatWindow.classList.remove("show");
+                } else {
+                    closeAllChats(); // Close any other open chats first
+                    chatWindow.classList.add("show");
+                }
+            }
+
+            function closeAllChats() {
+                document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+            }
 
     function sendChatbotMessage() {
         const input = document.getElementById("chatbotInput");
@@ -918,15 +1143,8 @@
         function toggleProfileDropdown(event) {
             event.stopPropagation();
             const dropdown = document.getElementById('profileDropdown');
-            const dropdownMenu = document.querySelector(".dropdown");
             const isOpen = dropdown.style.display === 'block';
-            
-            // Close both dropdowns
-            dropdown.style.display = 'none';
-            dropdownMenu.style.display = 'none';
-            document.body.classList.remove("menu-open");
-            
-            // Open profile dropdown if it was closed
+            closeAllDropdowns();
             if (!isOpen) {
                 dropdown.style.display = 'block';
             }

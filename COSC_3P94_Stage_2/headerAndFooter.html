@@ -18,15 +18,15 @@
             Estate-10
         </a>
         <div class="nav-links">
-            <a href="buy.html">Buy</a>
-            <a href="rent.html">Rent</a>
+            <a href="index.html">Home</a>
+            <a href="buy.html">Properties</a>
             <a href="sell.html">Sell</a>
         </div>
         <div class="right-section">
             <a href="#" class="signup-login" onclick="toggleModal(); return false;" id="loginButton">Signup / Login</a>
             <a href="#" class="profile-icon" style="display: none; color: #5A4B60;" id="profileButton" onclick="toggleProfileDropdown(event); return false;">
                 <i class="fas fa-user-circle"></i>
-                <div class="profile-dropdown" id="profileDropdown" style="display: none; position: absolute; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 4px; padding: 10px; right: 45px; top: 40px;">
+                <div class="profile-dropdown" id="profileDropdown" style="display: none; position: absolute; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 4px; padding: 10px; right: 0; top: 100%; margin-top: 5px;">
                     <div style="padding: 8px; cursor: pointer;" onclick="document.getElementById('savedListingsSection').scrollIntoView({behavior: 'smooth'})">
                         <i class="fas fa-heart"></i> Saved Listings
                     </div>
@@ -46,10 +46,11 @@
                 <div class="dropdown">
                     <div class="dropdown-section">
                         <h3>Tools</h3>
-                        <a href="#" onclick="toggleMarketTrends()"><i class="fas fa-chart-line"></i> Market Trends</a>
-                        <a href="#" onclick="toggleMortgage()"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
-                        <a href="#" onclick="toggleLoan()"><i class="fas fa-home"></i> Home Loan Calculator</a>
-                        <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+                        <a href="market.html"><i class="fas fa-chart-line"></i> Market Trends</a>
+                        <a href="mortgage.html"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+                        <a href="loan.html"><i class="fas fa-home"></i> Home Loan Calculator</a>
+                        <a href="roi.html"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+
                     </div>
                     <div class="dropdown-section">
                         <h3>More information</h3>
@@ -66,23 +67,6 @@
             </div>
         </div>
     </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -111,6 +95,21 @@
         </div>
     </div>
     <div class="backdrop" id="backdrop"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <div class="login-modal" id="loginModal">
         <div class="login-content">
@@ -148,6 +147,11 @@
             </div>
         </div>
     </div>
+
+
+
+
+
     <div class="backdrop" id="backdrop"></div>
     <div class="signup-modal" id="signupModal">
         <div class="signup-content">
@@ -211,18 +215,117 @@
         </div>
     </div>
 
+    <style>
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .search-type select {
+            padding: 10px;
+            border: 2px solid #5A4B60;
+            background-color: #D9D0DC;
+            border-radius: 5px;
+            color: #333;
+            cursor: pointer;
+            min-width: 30px;
+            font-size: 18px;
+        }
+
+        .search-type {
+            margin-right: 15px;
+        }
+
+        .search-type select option:checked {
+            background-color: #D9D0DC;
+            color: #5A4B60;
+            font-weight: bold;
+        }
+        
+        .search-type select option {
+            background-color: #D9D0DC;
+            color: #5A4B60;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: -10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            padding: 15px;
+            z-index: 1000;
+            min-width: 250px;
+        }
+
+        .options {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .options-icon {
+            padding: 10px;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            min-width: 200px;
+            margin-top: 5px;
+        }
+
+        .dropdown-section {
+            padding: 10px 0;
+        }
+
+        .dropdown-section a {
+            display: block;
+            padding: 8px 15px;
+            color: #5A4B60;
+            text-decoration: none;
+        }
+
+        .dropdown-section a:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const menuButton = document.querySelector(".options-icon");
-            const dropdownMenu = document.querySelector(".dropdown");
+            // Initialize menu elements
+            const menuButton = document.querySelector('.options-icon');
+            const dropdownMenu = document.querySelector('.dropdown');
             const body = document.body;
 
             function closeAllDropdowns() {
                 document.getElementById('profileDropdown').style.display = 'none';
-                dropdownMenu.style.display = 'none';
+                if (dropdownMenu) dropdownMenu.style.display = 'none';
                 body.classList.remove("menu-open");
             }
 
+            // Options menu toggle
             menuButton.addEventListener("click", function (event) {
                 event.stopPropagation();
                 const isOpen = dropdownMenu.style.display === 'block';
@@ -233,26 +336,27 @@
                 }
             });
 
+            // Close dropdowns when clicking outside
             document.addEventListener("click", function (event) {
-                if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                const profileDropdown = document.getElementById('profileDropdown');
+                if (!event.target.closest('.options') && !event.target.closest('.profile-icon')) {
                     closeAllDropdowns();
                 }
             });
-        });
 
-        function toggleChat(chatId) {
-            const chatWindow = document.getElementById(chatId);
-            if (chatWindow.classList.contains("show")) {
-                chatWindow.classList.remove("show");
-            } else {
-                closeAllChats(); // Close any other open chats first
-                chatWindow.classList.add("show");
+            function toggleChat(chatId) {
+                const chatWindow = document.getElementById(chatId);
+                if (chatWindow.classList.contains("show")) {
+                    chatWindow.classList.remove("show");
+                } else {
+                    closeAllChats(); // Close any other open chats first
+                    chatWindow.classList.add("show");
+                }
             }
-        }
 
-        function closeAllChats() {
-            document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
-        }
+            function closeAllChats() {
+                document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+            }
 
     function sendChatbotMessage() {
         const input = document.getElementById("chatbotInput");
@@ -402,15 +506,8 @@
         function toggleProfileDropdown(event) {
             event.stopPropagation();
             const dropdown = document.getElementById('profileDropdown');
-            const dropdownMenu = document.querySelector(".dropdown");
             const isOpen = dropdown.style.display === 'block';
-            
-            // Close both dropdowns
-            dropdown.style.display = 'none';
-            dropdownMenu.style.display = 'none';
-            document.body.classList.remove("menu-open");
-            
-            // Open profile dropdown if it was closed
+            closeAllDropdowns();
             if (!isOpen) {
                 dropdown.style.display = 'block';
             }

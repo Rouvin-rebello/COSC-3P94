@@ -628,6 +628,105 @@
             color: #666;
             font-weight: normal;
         }
+        .search-wrapper {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 25px;
+            padding: 5px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .search-type select {
+            padding: 10px;
+            border: 2px solid #5A4B60;
+            background-color: #D9D0DC;
+            border-radius: 5px;
+            color: #333;
+            cursor: pointer;
+            min-width: 30px;
+            font-size: 18px;
+        }
+
+        .search-type {
+            margin-right: 15px;
+        }
+
+        .search-type select option:checked {
+            background-color: #D9D0DC;
+            color: #5A4B60;
+            font-weight: bold;
+        }
+        
+        .search-type select option {
+            background-color: #D9D0DC;
+            color: #5A4B60;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: -10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            padding: 15px;
+            z-index: 1000;
+            min-width: 250px;
+        }
+
+        .options {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .options-icon {
+            padding: 10px;
+        }
+
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-icon {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1000;
+            min-width: 200px;
+            margin-top: 5px;
+        }
+
+        .dropdown-section {
+            padding: 10px 0;
+        }
+
+        .dropdown-section a {
+            display: block;
+            padding: 8px 15px;
+            color: #5A4B60;
+            text-decoration: none;
+        }
+
+        .dropdown-section a:hover {
+            background-color: #f5f5f5;
+        }
+        .nav-links a.active {
+            text-decoration: underline;
+            text-underline-offset: 5px;
+        }
     </style>
 </head>
 <body>
@@ -637,24 +736,44 @@
             Estate-10
         </a>
         <div class="nav-links">
-            <a href="buy.html">Buy</a>
-            <a href="rent.html">Rent</a>
-            <a href="sell.html">Sell</a>
+            <a href="index.html">Home</a>
+            <a href="buy.html">Properties</a>
+            <a href="sell.html" class="active">Sell</a>
         </div>
         <div class="right-section">
             <a href="#" class="signup-login" onclick="toggleModal(); return false;" id="loginButton">Signup / Login</a>
-            <a href="#" class="profile-icon" style="display: none;" id="profileButton">
+            <a href="#" class="profile-icon" style="display: none; color: #5A4B60;" id="profileButton" onclick="toggleProfileDropdown(event); return false;">
                 <i class="fas fa-user-circle"></i>
+                <div class="profile-dropdown" id="profileDropdown" style="display: none; position: absolute; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 4px; padding: 10px; right: 0; top: 100%; margin-top: 5px;">
+                    <div style="padding: 8px; cursor: pointer;" onclick="document.getElementById('savedListingsSection').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-heart"></i> Saved Listings
+                    </div>
+                    <div style="padding: 8px; cursor: pointer;" onclick="document.getElementById('collectionsSection').scrollIntoView({behavior: 'smooth'})">
+                        <i class="fas fa-folder"></i> Collections
+                    </div>
+                    <div style="padding: 8px; cursor: pointer;" onclick="window.location.href='my-listings.html'">
+                        <i class="fas fa-list"></i> My Listings
+                    </div>
+                    <div style="padding: 8px; cursor: pointer;" onclick="handleSignout()">
+                        <i class="fas fa-sign-out-alt"></i> Sign Out
+                    </div>
+                </div>
             </a>
             <div class="options">
                 <i class="fas fa-bars options-icon"></i>
                 <div class="dropdown">
                     <div class="dropdown-section">
                         <h3>Tools</h3>
-                        <a href="#" onclick="toggleMarketTrends()"><i class="fas fa-chart-line"></i> Market Trends</a>
-                        <a href="#" onclick="toggleMortgage()"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
-                        <a href="#" onclick="toggleLoan()"><i class="fas fa-home"></i> Home Loan Calculator</a>
-                        <a href="#" onclick="toggleROI()"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+                        <a href="market.html"><i class="fas fa-chart-line"></i> Market Trends</a>
+                        <a href="mortgage.html"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
+                        <a href="loan.html"><i class="fas fa-home"></i> Home Loan Calculator</a>
+                        <a href="roi.html"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
+
+                    </div>
+                    <div class="dropdown-section">
+                        <h3>More information</h3>
+                        <a href="realtors.html"><i class="fas fa-user-tie"></i> Realtors</a>
+                        <a href="resources.html"><i class="fas fa-book"></i> Resources</a>
                     </div>
                     <div class="dropdown-section">
                         <h3>Accessibility</h3>
@@ -666,6 +785,8 @@
             </div>
         </div>
     </div>
+
+
     
     <div class="main-content">
         <div class="listing-form-container">
@@ -920,8 +1041,6 @@
             </a>
         </div>
     </div>
-    <div class="backdrop" id="backdrop"></div>
-
     <div class="login-modal" id="loginModal">
         <div class="login-content">
             <h2>Login to Estate-10</h2>
@@ -958,6 +1077,11 @@
             </div>
         </div>
     </div>
+
+
+
+
+
     <div class="backdrop" id="backdrop"></div>
     <div class="signup-modal" id="signupModal">
         <div class="signup-content">
@@ -1382,6 +1506,212 @@
     function socialLogin(provider) {
             alert(`${provider} login coming soon!`);
         }
+        // Initialize menu elements
+        const menuButton = document.querySelector('.options-icon');
+            const dropdownMenu = document.querySelector('.dropdown');
+            const body = document.body;
+
+            function closeAllDropdowns() {
+                document.getElementById('profileDropdown').style.display = 'none';
+                if (dropdownMenu) dropdownMenu.style.display = 'none';
+                body.classList.remove("menu-open");
+            }
+
+            // Options menu toggle
+            menuButton.addEventListener("click", function (event) {
+                event.stopPropagation();
+                const isOpen = dropdownMenu.style.display === 'block';
+                closeAllDropdowns();
+                if (!isOpen) {
+                    dropdownMenu.style.display = 'block';
+                    body.classList.add("menu-open");
+                }
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener("click", function (event) {
+                const profileDropdown = document.getElementById('profileDropdown');
+                if (!event.target.closest('.options') && !event.target.closest('.profile-icon')) {
+                    closeAllDropdowns();
+                }
+            });
+
+            function toggleChat(chatId) {
+                const chatWindow = document.getElementById(chatId);
+                if (chatWindow.classList.contains("show")) {
+                    chatWindow.classList.remove("show");
+                } else {
+                    closeAllChats(); // Close any other open chats first
+                    chatWindow.classList.add("show");
+                }
+            }
+
+            function closeAllChats() {
+                document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
+            }
+
+    function sendChatbotMessage() {
+        const input = document.getElementById("chatbotInput");
+        const messages = document.getElementById("chatbotMessages");
+        if (input.value.trim()) {
+            messages.innerHTML += `<p>You: ${input.value}</p>`;
+            input.value = "";
+            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
+        }
+    }
+
+    function sendRealtorMessage() {
+        const input = document.getElementById("realtorInput");
+        if (input.value.trim()) {
+            alert("Message sent to Realtor: " + input.value);
+            input.value = "";
+        }
+    }
+
+
+        function toggleModal() {
+            const loginModal = document.getElementById('loginModal');
+            const signupModal = document.getElementById('signupModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close signup modal if open
+            signupModal.classList.remove('show-modal');
+
+            // Toggle login modal
+            if (loginModal.classList.contains('show-modal')) {
+                loginModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                loginModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function toggleSignupModal() {
+            const signupModal = document.getElementById('signupModal');
+            const loginModal = document.getElementById('loginModal');
+            const backdrop = document.getElementById('backdrop');
+
+            // Close login modal if open
+            loginModal.classList.remove('show-modal');
+
+            // Toggle signup modal
+            if (signupModal.classList.contains('show-modal')) {
+                signupModal.classList.remove('show-modal');
+                backdrop.classList.remove('show-backdrop');
+            } else {
+                signupModal.classList.add('show-modal');
+                backdrop.classList.add('show-backdrop');
+            }
+        }
+
+        function closeAllModals() {
+            document.getElementById('loginModal').classList.remove('show-modal');
+            document.getElementById('signupModal').classList.remove('show-modal');
+            document.getElementById('backdrop').classList.remove('show-backdrop');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (email === 'cosc3p94@gmail.com' && password === '12345') {
+                document.getElementById('loginButton').style.display = 'none';
+                document.getElementById('profileButton').style.display = 'block';
+                document.getElementById('collectionsSection').style.display = 'block';
+                document.getElementById('savedListingsSection').style.display = 'block';
+                closeAllModals();
+                event.target.reset();
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            alert('Sign-up successful!');
+            closeAllModals();
+            event.target.reset();
+        }
+
+        function toggleMarketTrends() {
+            alert('Market Trends feature coming soon!');
+        }
+
+        function toggleMortgage() {
+            alert('Mortgage Calculator feature coming soon!');
+        }
+        
+        function toggleLoan() {
+            alert('Home Loan feature coming soon!');
+        }
+
+        function toggleROI() {
+            alert('ROI Calculator feature coming soon!');
+        }
+
+        function toggleTextSize() {
+            alert('Text scaling feature coming soon!');
+        }
+
+        function toggleContrast() {
+            alert('High contrast feature coming soon!');
+        }
+
+        function toggleVoiceNav() {
+            alert('Voice navigation feature coming soon!');
+        }
+
+        function handleSignout() {
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('profileButton').style.display = 'none';
+            document.getElementById('collectionsSection').style.display = 'none';
+            document.getElementById('savedListingsSection').style.display = 'none';
+        }
+        
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('searchInput').value;
+            if (searchQuery.trim()) {
+                window.location.href = 'buy.html';
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const searchQuery = document.getElementById('searchInput').value;
+                if (searchQuery.trim()) {
+                    window.location.href = 'buy.html';
+                }
+            }
+        }
+        function showCollectionAlert(collectionName) {
+            alert(`No listings in "${collectionName}" collection.`);
+        }
+
+        function socialLogin(provider) {
+            alert(`${provider} login coming soon!`);
+        }
+
+        function toggleProfileDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('profileDropdown');
+            const isOpen = dropdown.style.display === 'block';
+            closeAllDropdowns();
+            if (!isOpen) {
+                dropdown.style.display = 'block';
+            }
+        }
+
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown && !event.target.closest('.profile-icon')) {
+                dropdown.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
