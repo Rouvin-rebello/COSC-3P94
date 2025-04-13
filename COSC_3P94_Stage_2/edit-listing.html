@@ -413,6 +413,9 @@
     </div>
 
     <style>
+        
+        
+        
         /* Add these styles inline for the form theme */
         .listing-form-container {
             background: #f8f5fb;
@@ -456,10 +459,19 @@
         .seller-info-section {
             background: white;
             border-radius: 15px;
-            padding: 30px;
+            padding: 40px;  /* Increased padding */
             box-shadow: 0 4px 15px rgba(90, 75, 96, 0.1);
             position: relative;
             overflow: hidden;
+        }
+
+        .seller-info-section .form-group {
+            position: relative;
+            margin-bottom: 45px;  /* Increased spacing between fields */
+        }
+
+        .seller-info-section .form-group:last-child {
+            margin-bottom: 20px;  /* Less margin for last field */
         }
 
         .seller-info-section::before {
@@ -531,7 +543,7 @@
 
         .contact-preference-group {
             background: #F8F5FB;
-            padding: 20px;
+            padding: 40px;
             border-radius: 10px;
             margin-top: 20px;
         }
@@ -539,7 +551,7 @@
         .contact-preference-group h4 {
             color: #5A4B60;
             font-size: 1.1rem;
-            margin-bottom: 15px;
+            margin-bottom: 45px;
         }
 
         .media-preview {
@@ -761,7 +773,7 @@
         .property-details-section {
             background: white;
             border-radius: 15px;
-            padding: 30px;
+            padding: 40px;  /* Increase overall section padding */
             box-shadow: 0 4px 15px rgba(90, 75, 96, 0.1);
             position: relative;
             overflow: hidden;
@@ -781,7 +793,11 @@
         .basic-info-section .form-group,
         .property-details-section .form-group {
             position: relative;
-            margin-bottom: 30px;  /* Increased from 20px */
+            margin-bottom: 45px;  /* Increase space between form groups */
+        }
+
+        .basic-info-section .form-group:last-child {
+            margin-bottom: 20px;  /* Less margin for last item */
         }
 
         .basic-info-section .form-group input,
@@ -811,7 +827,7 @@
 
         .basic-info-section textarea {
             min-height: 120px;
-            resize: vertical;
+            margin-top: 10px;  /* Add space above textarea */
         }
 
 

@@ -188,7 +188,6 @@
                                 <li onclick="addToCollection('Favorites')">Favorites</li>
                                 <li onclick="addToCollection('Investment Properties')">Investment Properties</li>
                                 <li onclick="addToCollection('Dream Homes')">Dream Homes</li>
-                                <li onclick="addToCollection('Watchlist')">Watchlist</li>
                             </ul>
                         </div>
                     </div>
@@ -261,8 +260,12 @@
                 </div>
                 <textarea placeholder="Share your experience with this property..." required></textarea>
                 <div class="form-buttons">
-                    <button type="button" onclick="toggleReviewForm()">Cancel</button>
-                    <button type="submit">Submit Review</button>
+                    <button type="button" class="review-btn secondary" onclick="toggleReviewForm()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="review-btn primary">
+                        <i class="fas fa-paper-plane"></i> Submit Review
+                    </button>
                 </div>
             </form>
         </div>
@@ -508,6 +511,45 @@
 
         .dropdown-section a:hover {
             background-color: #f5f5f5;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .review-btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .review-btn.primary {
+            background-color: #5A4B60;
+            color: white;
+        }
+
+        .review-btn.primary:hover {
+            background-color: #453C4F;
+            transform: translateY(-2px);
+        }
+
+        .review-btn.secondary {
+            background-color: #C4B1E5;
+            color: #5A4B60;
+        }
+
+        .review-btn.secondary:hover {
+            background-color: #B29ED9;
+            transform: translateY(-2px);
         }
     </style>
 

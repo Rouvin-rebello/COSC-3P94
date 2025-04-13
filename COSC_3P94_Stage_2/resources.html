@@ -70,7 +70,7 @@
             <i class="fas fa-arrow-left"></i> Back
         </button>
     
-    <h2 style="color: #5A4B60; text-align: center;">Resources</h2> 
+    <h2 style="color: #5A4B60; text-align: center; margin-bottom: 40px; font-size: 2.2rem;">Real Estate Resources</h2> 
 
     <style>
         .resources-container {
@@ -78,60 +78,176 @@
             margin: 0 auto;
             padding: 20px;
         }
+
         .resource-section {
             background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(90, 75, 96, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #E0D5E8;
+            position: relative;
+            overflow: hidden;
         }
+
+        .resource-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #5A4B60, #C4B1E5);
+        }
+
         .resource-section:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(90, 75, 96, 0.15);
         }
+
         .resource-section h3 {
             color: #5A4B60;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.5em;
+            gap: 15px;
+            font-size: 1.8em;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #E0D5E8;
         }
+
+        .resource-section h3 i {
+            color: #C4B1E5;
+        }
+
         .resource-item {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
+            padding: 20px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
+            background: #F8F5FB;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
+
         .resource-item:hover {
-            background: #f9f9f9;
+            background: #EFE9F4;
             padding-left: 25px;
         }
+
         .resource-item i {
             color: #5A4B60;
-            margin-right: 10px;
+            font-size: 1.2em;
+            transition: transform 0.3s;
         }
+
+        .resource-item:hover i {
+            transform: rotate(90deg);
+        }
+
+        .resource-title {
+            font-weight: 500;
+            color: #5A4B60;
+            flex-grow: 1;
+        }
+
         .resource-content {
             display: none;
-            padding: 15px;
+            padding: 25px;
             margin: 10px 0;
-            background: #f9f9f9;
-            border-radius: 4px;
-            line-height: 1.6;
+            background: white;
+            border-radius: 8px;
+            line-height: 1.8;
+            border: 1px solid #E0D5E8;
+            box-shadow: 0 2px 10px rgba(90, 75, 96, 0.05);
         }
+
         .resource-content.show {
             display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .resource-content ul {
+            margin: 15px 0;
+            padding-left: 0; /* Remove default padding */
+            list-style: none; /* Remove default bullets */
+        }
+
+        .resource-content li {
+            margin: 10px 0;
+            position: relative;
+            list-style: none;
+            padding-left: 25px;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .resource-content li::before {
+            content: '•';
+            color: #5A4B60;
+            position: absolute;
+            left: 8px;
+            font-size: 1.2em;
+            line-height: 1.2;
+            top: 0;
+        }
+
+        .resources-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .resource-tab {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #E0D5E8;
+            border-radius: 25px;
+            color: #5A4B60;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .resource-tab:hover, .resource-tab.active {
+            background: #5A4B60;
+            color: white;
+            border-color: #5A4B60;
         }
     </style>
 
     <div class="resources-container">
-        <div class="resource-section">
+        <div class="resources-nav">
+            <button class="resource-tab active" onclick="filterResources('all')">All Resources</button>
+            <button class="resource-tab" onclick="filterResources('faq')">FAQs</button>
+            <button class="resource-tab" onclick="filterResources('news')">Market News</button>
+            <button class="resource-tab" onclick="filterResources('guides')">Buyer Guides</button>
+        </div>
+
+        <div class="resource-section" data-type="faq">
             <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
             <div class="resource-item" onclick="toggleContent(this)">
-                <i class="fas fa-chevron-right"></i>What documents do I need for a mortgage application?
+                <i class="fas fa-chevron-right"></i>
+                <span class="resource-title">What documents do I need for a mortgage application?</span>
                 <div class="resource-content">
-                    <ul style="padding-left: 20px;">
+                    <ul>
                         <li>Proof of income (T4s, pay stubs, tax returns)</li>
                         <li>Employment verification</li>
                         <li>Bank statements (last 3 months)</li>
@@ -141,10 +257,11 @@
                 </div>
             </div>
             <div class="resource-item" onclick="toggleContent(this)">
-                <i class="fas fa-chevron-right"></i>How long does the home buying process take?
+                <i class="fas fa-chevron-right"></i>
+                <span class="resource-title">How long does the home buying process take?</span>
                 <div class="resource-content">
                     The typical home buying process takes 2-3 months from start to finish. This includes:
-                    <ul style="padding-left: 20px;">
+                    <ul>
                         <li>House hunting: 1-2 months</li>
                         <li>Mortgage approval: 1-2 weeks</li>
                         <li>Closing process: 30-60 days</li>
@@ -153,13 +270,14 @@
             </div>
         </div>
 
-        <div class="resource-section">
+        <div class="resource-section" data-type="news">
             <h3><i class="fas fa-newspaper"></i> Latest Real Estate News</h3>
             <div class="resource-item" onclick="toggleContent(this)">
-                <i class="fas fa-chevron-right"></i>Canadian Housing Market Trends 2024
+                <i class="fas fa-chevron-right"></i>
+                <span class="resource-title">Canadian Housing Market Trends 2024</span>
                 <div class="resource-content">
                     Key trends in the Canadian housing market:
-                    <ul style="padding-left: 20px;">
+                    <ul>
                         <li>Average home prices up 5.2% year-over-year</li>
                         <li>Increased demand in suburban areas</li>
                         <li>Rising interest in sustainable homes</li>
@@ -168,13 +286,33 @@
                 </div>
             </div>
             <div class="resource-item" onclick="toggleContent(this)">
-                <i class="fas fa-chevron-right"></i>Impact of New Mortgage Rules
+                <i class="fas fa-chevron-right"></i>
+                <span class="resource-title">Impact of New Mortgage Rules</span>
                 <div class="resource-content">
                     Recent changes to mortgage regulations include:
-                    <ul style="padding-left: 20px;">
+                    <ul>
                         <li>Updated stress test requirements</li>
                         <li>New down payment guidelines</li>
                         <li>Changes to mortgage insurance rules</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="resource-section" data-type="guides">
+            <h3><i class="fas fa-book"></i> First-Time Buyer Guides</h3>
+            <div class="resource-item" onclick="toggleContent(this)">
+                <i class="fas fa-chevron-right"></i>
+                <span class="resource-title">Complete Home Buying Checklist</span>
+                <div class="resource-content">
+                    Essential steps for first-time homebuyers:
+                    <ul>
+                        <li>Assess your financial readiness</li>
+                        <li>Get pre-approved for a mortgage</li>
+                        <li>Research neighborhoods and property types</li>
+                        <li>Work with a qualified realtor</li>
+                        <li>Schedule home inspections</li>
+                        <li>Review closing documents</li>
                     </ul>
                 </div>
             </div>
@@ -195,6 +333,22 @@
             
             // Toggle clicked content
             content.classList.toggle('show');
+        }
+
+        function filterResources(type) {
+            const tabs = document.querySelectorAll('.resource-tab');
+            const sections = document.querySelectorAll('.resource-section');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            sections.forEach(section => {
+                if (type === 'all' || section.dataset.type === type) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
         }
     </script>
 </div>

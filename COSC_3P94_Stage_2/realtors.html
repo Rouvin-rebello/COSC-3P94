@@ -75,71 +75,176 @@
     <style>
         .realtor-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 20px;
+            grid-template-columns: repeat(3, minmax(320px, 1fr)); /* Fixed 3 columns */
+            gap: 40px;
+            padding: 40px;
             margin: 0 auto;
-            max-width: 1200px;
-            margin-bottom: 40px;
+            max-width: 1400px;
+            margin-bottom: 60px;
             justify-content: center;
         }
+        
+        @media (max-width: 1200px) {
+            .realtor-grid {
+                grid-template-columns: repeat(2, minmax(320px, 1fr));
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .realtor-grid {
+                grid-template-columns: minmax(320px, 1fr);
+            }
+        }
+        
         .realtor-card {
-            margin: 0 auto;
-            max-width: 300px;
-            width: 100%;
             background: white;
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border: 1px solid #eee;
+            box-shadow: 0 4px 15px rgba(90, 75, 96, 0.1);
+            border: 1px solid #E0D5E8;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 0 auto;  /* Center cards */
+            max-width: 360px; /* Limit card width */
+            width: 100%;
         }
+
+        .realtor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(90, 75, 96, 0.15);
+        }
+
         .realtor-image {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            margin-bottom: 15px;
-            border: 3px solid #5A4B60;
+            margin-bottom: 25px;
+            border: 4px solid #5A4B60;
+            transition: transform 0.3s;
         }
+
+        .realtor-card:hover .realtor-image {
+            transform: scale(1.05);
+        }
+
+        .realtor-name {
+            color: #5A4B60;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .realtor-title {
+            color: #8A7B99;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
         .realtor-stats {
             color: #666;
-            margin: 10px 0;
-            font-size: 0.9em;
+            margin: 20px 0;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .realtor-contact {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #E0D5E8;
+        }
+
+        .realtor-contact a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #5A4B60;
+            text-decoration: none;
+            margin: 8px 15px;
+            transition: color 0.3s;
+        }
+
+        .realtor-contact a:hover {
+            color: #C4B1E5;
+        }
+
+        .specialties {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .specialty-tag {
+            background: #F8F5FB;
+            color: #5A4B60;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
         }
     </style>
 
     <div class="realtor-grid">
         <div class="realtor-card">
-            <img src="https://picsum.photos/150/150?random=1" alt="Sarah Johnson" class="realtor-image">
-            <h3 style="color: #5A4B60;">Sarah Johnson</h3>
+            <img src="https://picsum.photos/180/180?random=1" alt="Sarah Johnson" class="realtor-image">
+            <h3 class="realtor-name">Sarah Johnson</h3>
+            <div class="realtor-title">Senior Real Estate Advisor</div>
             <p class="realtor-stats">
                 <i class="fas fa-award"></i> Top Seller 2023<br>
                 <i class="fas fa-home"></i> 150+ Properties Sold<br>
                 <i class="fas fa-star"></i> 4.9/5 Rating
             </p>
-            <p style="color: #666;">Specializing in luxury homes and waterfront properties</p>
+            <div class="specialties">
+                <span class="specialty-tag">Luxury Homes</span>
+                <span class="specialty-tag">Waterfront</span>
+                <span class="specialty-tag">Investment</span>
+            </div>
+            <p style="color: #666; margin: 15px 0;">15 years of experience in luxury real estate, helping clients find their dream waterfront properties.</p>
+            <div class="realtor-contact">
+                <a href="mailto:sarah.j@estate10.com"><i class="fas fa-envelope"></i> sarah.j@estate10.com</a>
+                <a href="tel:+19055550101"><i class="fas fa-phone"></i> (905) 555-0101</a>
+            </div>
         </div>
 
         <div class="realtor-card">
-            <img src="https://picsum.photos/150/150?random=2" alt="Michael Chen" class="realtor-image">
-            <h3 style="color: #5A4B60;">Michael Chen</h3>
+            <img src="https://picsum.photos/180/180?random=2" alt="Michael Chen" class="realtor-image">
+            <h3 class="realtor-name">Michael Chen</h3>
+            <div class="realtor-title">Commercial Property Specialist</div>
             <p class="realtor-stats">
                 <i class="fas fa-chart-line"></i> 12 Years Experience<br>
                 <i class="fas fa-home"></i> 200+ Properties Sold<br>
                 <i class="fas fa-star"></i> 4.8/5 Rating
             </p>
-            <p style="color: #666;">Expert in commercial real estate and investments</p>
+            <div class="specialties">
+                <span class="specialty-tag">Commercial</span>
+                <span class="specialty-tag">Investment</span>
+                <span class="specialty-tag">Development</span>
+            </div>
+            <p style="color: #666; margin: 15px 0;">Specialized in commercial real estate and helping investors maximize their property portfolios.</p>
+            <div class="realtor-contact">
+                <a href="mailto:michael.c@estate10.com"><i class="fas fa-envelope"></i> michael.c@estate10.com</a>
+                <a href="tel:+19055550102"><i class="fas fa-phone"></i> (905) 555-0102</a>
+            </div>
         </div>
 
         <div class="realtor-card">
-            <img src="https://picsum.photos/150/150?random=3" alt="Emma Rodriguez" class="realtor-image">
-            <h3 style="color: #5A4B60;">Emma Rodriguez</h3>
+            <img src="https://picsum.photos/180/180?random=3" alt="Emma Rodriguez" class="realtor-image">
+            <h3 class="realtor-name">Emma Rodriguez</h3>
+            <div class="realtor-title">First-Time Buyer Specialist</div>
             <p class="realtor-stats">
                 <i class="fas fa-gem"></i> Diamond Agent 2023<br>
                 <i class="fas fa-home"></i> 180+ Properties Sold<br>
                 <i class="fas fa-star"></i> 5.0/5 Rating
             </p>
-            <p style="color: #666;">Specializing in first-time homebuyers and condos</p>
+            <div class="specialties">
+                <span class="specialty-tag">First-Time Buyers</span>
+                <span class="specialty-tag">Condos</span>
+                <span class="specialty-tag">Urban Living</span>
+            </div>
+            <p style="color: #666; margin: 15px 0;">Passionate about helping first-time homebuyers find their perfect starter home or condo.</p>
+            <div class="realtor-contact">
+                <a href="mailto:emma.r@estate10.com"><i class="fas fa-envelope"></i> emma.r@estate10.com</a>
+                <a href="tel:+19055550103"><i class="fas fa-phone"></i> (905) 555-0103</a>
+            </div>
         </div>
     </div>
 </div>

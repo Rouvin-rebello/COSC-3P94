@@ -413,6 +413,36 @@
             resize: vertical;
         }
 
+        /* Update Basic Information section spacing */
+        .basic-info-section {
+            padding: 40px;  /* Increase overall section padding */
+        }
+
+        .basic-info-section .form-group {
+            margin-bottom: 45px;  /* Increase space between form groups */
+        }
+
+        .basic-info-section .form-group:last-child {
+            margin-bottom: 20px;  /* Less margin for last item */
+        }
+
+        .basic-info-section textarea {
+            min-height: 120px;
+            margin-top: 10px;  /* Add space above textarea */
+        }
+
+        /* Update Property Details section spacing */
+        .property-details-section {
+            padding: 40px;  /* Increase overall section padding */
+        }
+
+        .property-details-section .form-group {
+            margin-bottom: 45px;  /* Increase space between form groups */
+        }
+
+        .property-details-section .form-group:last-child {
+            margin-bottom: 20px;  /* Less margin for last item */
+        }
 
         /* Update form container width */
         .listing-form-container {
@@ -477,6 +507,19 @@
             .seller-info-section {
                 padding: 25px 20px;
             }
+        }
+
+        /* Update Contact Information section spacing */
+        .seller-info-section {
+            padding: 40px;  /* Increase overall section padding */
+        }
+
+        .seller-info-section .form-group {
+            margin-bottom: 45px;  /* Increase space between form groups */
+        }
+
+        .seller-info-section .form-group:last-child {
+            margin-bottom: 20px;  /* Less margin for last item */
         }
 
         .view-drafts {
@@ -789,7 +832,7 @@
         <div class="listing-form-container">
             <br>
             <h2>List Your Property</h2>
-            <form class="listing-form" onsubmit="handleListingSubmit(event)">
+            <form class="listing-form" onsubmit="return handleListingSubmit(event)">
                 <!-- Basic Information -->
                 <div class="form-section-card">
                     <h3>Basic Information</h3>
@@ -1001,7 +1044,7 @@
                     <div class="form-buttons">
                         <button type="button" class="view-drafts" onclick="viewDrafts()">View Drafts</button>
                         <button type="button" class="save-draft" onclick="saveDraft()">Save Draft</button>
-                        <button type="submit" class="submit-listing">List Property</button>
+                        <button type="submit" class="submit-listing" onclick="return handleListingSubmit(event)">List Property</button>
                     </div>
                 </div>
             </form>
@@ -1297,22 +1340,24 @@
 
     function handleListingSubmit(event) {
         event.preventDefault();
-        const formData = new FormData(event.target);
         
-        // Add video and 360 tour files to formData
-        const videoFile = document.getElementById('propertyVideo').files[0];
-        const tourFile = document.getElementById('virtualTour').files[0];
+        // Check if user is logged in
+        const isLoggedIn = document.getElementById('profileButton').style.display === 'block';
         
-        if (videoFile) formData.append('video', videoFile);
-        if (tourFile) formData.append('virtualTour', tourFile);
-
-        // In a real application, this would send the data to a server
-        alert('Thank you! Your property listing has been submitted for review.');
-        event.target.reset();
+        // Get form data
+        const propertyTitle = document.getElementById('title').value;
+        const propertyPrice = document.getElementById('price').value;
         
-        // Clear previews
+        // Show success message
+        alert(`Property "${propertyTitle}" ($${propertyPrice}) has been successfully listed!\n\nOur team will review your listing within 24-48 hours.`);
+        
+        // Reset form and clear previews
+        event.target.closest('form').reset();
+        document.getElementById('imagePreview').innerHTML = '';
         document.getElementById('videoPreview').innerHTML = '';
         document.getElementById('tourPreview').innerHTML = '';
+        
+        return false;
     }
 
     function previewImages(event) {

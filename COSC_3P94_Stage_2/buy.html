@@ -173,6 +173,19 @@
             background-color: #D9D0DC;
             color: #5A4B60;
         }
+
+        /* Fix close button position */
+        .leaflet-popup-close-button {
+            position: absolute !important;
+            top: -8px !important;  /* Move button up */
+            right: -8px !important;
+            z-index: 1000 !important;
+            background: white !important;
+            border-radius: 50% !important;
+            width: 20px !important;
+            height: 20px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+        }
     </style>
 </head>
 <body>
@@ -316,7 +329,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="search-button" onclick="location.reload()">Search</button>
+                <button class="search-button" onclick="location.reload()">Apply</button>
             </div>
         </div>
 
