@@ -48,9 +48,6 @@
                         <h3>Tools</h3>
                         <a href="market.html"><i class="fas fa-chart-line"></i> Market Trends</a>
                         <a href="mortgage.html"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
-                        <a href="loan.html"><i class="fas fa-home"></i> Home Loan Calculator</a>
-                        <a href="roi.html"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
-
                     </div>
                     <div class="dropdown-section">
                         <h3>More information</h3>
@@ -73,7 +70,7 @@
             <i class="fas fa-arrow-left"></i> Back
         </button>
     
-    <h2 style="color: #5A4B60; text-align: center;">my listings</h2>
+    <h2 style="color: #5A4B60; text-align: center;">My Listings</h2>
     
     <div class="listings-container">
         <div class="listings-grid">
@@ -89,7 +86,15 @@
                     <div class="listing-address">123 Main Street, Toronto, ON</div>
                     <div class="listing-type">For Sale</div>
                     <div style="margin-top: 10px; display: flex; gap: 10px; justify-content: center;">
-                        <button onclick="event.stopPropagation(); handleEdit('123 Main Street, Toronto, ON')" style="padding: 8px 15px; background-color: #5A4B60; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        <button onclick="event.stopPropagation(); handleEdit({
+                            address: '123 Main Street, Toronto, ON',
+                            price: 599000,
+                            beds: 3,
+                            baths: 2,
+                            sqft: 2100,
+                            type: 'For Sale',
+                            img: 'https://picsum.photos/400/310'
+                        })" style="padding: 8px 15px; background-color: #5A4B60; color: white; border: none; border-radius: 4px; cursor: pointer;">
                             <i class="fas fa-edit"></i> Edit
                         </button>
                         <button onclick="event.stopPropagation(); handleDelete('123 Main Street, Toronto, ON')" style="padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
@@ -111,7 +116,15 @@
                     <div class="listing-address">789 Lake Drive, Ottawa, ON</div>
                     <div class="listing-type">For Sale</div>
                     <div style="margin-top: 10px; display: flex; gap: 10px; justify-content: center;">
-                        <button onclick="event.stopPropagation(); handleEdit('789 Lake Drive, Ottawa, ON')" style="padding: 8px 15px; background-color: #5A4B60; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        <button onclick="event.stopPropagation(); handleEdit({
+                            address: '789 Lake Drive, Ottawa, ON',
+                            price: 899000,
+                            beds: 4,
+                            baths: 3,
+                            sqft: 2800,
+                            type: 'For Sale',
+                            img: 'https://picsum.photos/400/302'
+                        })" style="padding: 8px 15px; background-color: #5A4B60; color: white; border: none; border-radius: 4px; cursor: pointer;">
                             <i class="fas fa-edit"></i> Edit
                         </button>
                         <button onclick="event.stopPropagation(); handleDelete('789 Lake Drive, Ottawa, ON')" style="padding: 8px 15px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
@@ -350,8 +363,17 @@
 
     <script>
 
-        function handleEdit(address) {
-            alert(`Edit listing at ${address}\nFeature coming soon: You'll be able to modify price, description, and other details.`);
+        function handleEdit(listing) {
+            const params = new URLSearchParams({
+                address: listing.address,
+                price: listing.price,
+                beds: listing.beds,
+                baths: listing.baths,
+                sqft: listing.sqft,
+                type: listing.type,
+                img: listing.img
+            });
+            window.location.href = `edit-listing.html?${params.toString()}`;
         }
 
         function handleDelete(address) {

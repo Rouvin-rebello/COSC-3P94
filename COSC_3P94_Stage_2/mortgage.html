@@ -48,9 +48,6 @@
                         <h3>Tools</h3>
                         <a href="market.html"><i class="fas fa-chart-line"></i> Market Trends</a>
                         <a href="mortgage.html"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
-                        <a href="loan.html"><i class="fas fa-home"></i> Home Loan Calculator</a>
-                        <a href="roi.html"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
-
                     </div>
                     <div class="dropdown-section">
                         <h3>More information</h3>
@@ -73,10 +70,59 @@
             <i class="fas fa-arrow-left"></i> Back
         </button>
     
-    <h2 style="color: #5A4B60; text-align: center;">Mortgage Calculator</h2>
-    
-  </div>  
+        <div class="mortgage-container">
+            <h2 class="section-title">Mortgage Calculator</h2>
+            
+            <div class="calculator-grid">
+                <div class="input-section">
+                    <form id="mortgageForm" onsubmit="calculateMortgage(event)">
+                        <div class="form-group">
+                            <label for="homePrice">Home Price ($)</label>
+                            <input type="number" id="homePrice" value="500000" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="downPayment">Down Payment (%)</label>
+                            <input type="number" id="downPayment" value="20" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="interestRate">Interest Rate (%)</label>
+                            <input type="number" id="interestRate" value="5.5" step="0.1" min="0" max="30" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loanTerm">Loan Term (years)</label>
+                            <input type="number" id="loanTerm" value="25" min="1" max="30" required>
+                        </div>
+                        <button type="submit" class="calculate-btn">Calculate</button>
+                    </form>
+                </div>
 
+                <div class="results-section">
+                    <div class="monthly-payment">
+                        <h3>Monthly Payment</h3>
+                        <div class="payment-amount">$2,425</div>
+                    </div>
+                    <div class="payment-breakdown">
+                        <canvas id="paymentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mortgage-details">
+                <div class="detail-card">
+                    <h4>Principal & Interest</h4>
+                    <p id="principalInterest">$2,150</p>
+                </div>
+                <div class="detail-card">
+                    <h4>Property Tax (est.)</h4>
+                    <p id="propertyTax">$175</p>
+                </div>
+                <div class="detail-card">
+                    <h4>Home Insurance (est.)</h4>
+                    <p id="insurance">$100</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="footer">
         <div class="contact-info">
@@ -299,215 +345,178 @@
         .dropdown-section a:hover {
             background-color: #f5f5f5;
         }
+
+        .mortgage-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            color: #5A4B60;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .input-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5A4B60;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 95%;
+            padding: 12px;
+            border: 2px solid #D9D0DC;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #5A4B60;
+            outline: none;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 14px;
+            background: #5A4B60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .calculate-btn:hover {
+            background: #483d4d;
+        }
+
+        .results-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .monthly-payment {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .monthly-payment h3 {
+            color: #5A4B60;
+            margin-bottom: 10px;
+        }
+
+        .payment-amount {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #5A4B60;
+        }
+
+        .payment-breakdown {
+            height: 300px;
+        }
+
+        .mortgage-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .detail-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .detail-card h4 {
+            color: #5A4B60;
+            margin-bottom: 10px;
+        }
+
+        .detail-card p {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #5A4B60;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-            // Initialize menu elements
-            const menuButton = document.querySelector('.options-icon');
-            const dropdownMenu = document.querySelector('.dropdown');
-            const body = document.body;
-
-            function closeAllDropdowns() {
-                document.getElementById('profileDropdown').style.display = 'none';
-                if (dropdownMenu) dropdownMenu.style.display = 'none';
-                body.classList.remove("menu-open");
-            }
-
-            // Options menu toggle
-            menuButton.addEventListener("click", function (event) {
-                event.stopPropagation();
-                const isOpen = dropdownMenu.style.display === 'block';
-                closeAllDropdowns();
-                if (!isOpen) {
-                    dropdownMenu.style.display = 'block';
-                    body.classList.add("menu-open");
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize payment breakdown chart
+            const ctx = document.getElementById('paymentChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Principal & Interest', 'Property Tax', 'Insurance'],
+                    datasets: [{
+                        data: [2150, 175, 100],
+                        backgroundColor: ['#5A4B60', '#8E7B96', '#C4B1E5']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
                 }
             });
-
-            // Close dropdowns when clicking outside
-            document.addEventListener("click", function (event) {
-                const profileDropdown = document.getElementById('profileDropdown');
-                if (!event.target.closest('.options') && !event.target.closest('.profile-icon')) {
-                    closeAllDropdowns();
-                }
-            });
-
-            function toggleChat(chatId) {
-                const chatWindow = document.getElementById(chatId);
-                if (chatWindow.classList.contains("show")) {
-                    chatWindow.classList.remove("show");
-                } else {
-                    closeAllChats(); // Close any other open chats first
-                    chatWindow.classList.add("show");
-                }
-            }
-
-            function closeAllChats() {
-                document.querySelectorAll(".chat-window").forEach(chat => chat.classList.remove("show"));
-            }
-
-    function sendChatbotMessage() {
-        const input = document.getElementById("chatbotInput");
-        const messages = document.getElementById("chatbotMessages");
-        if (input.value.trim()) {
-            messages.innerHTML += `<p>You: ${input.value}</p>`;
-            input.value = "";
-            setTimeout(() => messages.innerHTML += `<p>Bot: How can I assist you?</p>`, 1000);
-        }
-    }
-
-    function sendRealtorMessage() {
-        const input = document.getElementById("realtorInput");
-        if (input.value.trim()) {
-            alert("Message sent to Realtor: " + input.value);
-            input.value = "";
-        }
-    }
-
-
-        function toggleModal() {
-            const loginModal = document.getElementById('loginModal');
-            const signupModal = document.getElementById('signupModal');
-            const backdrop = document.getElementById('backdrop');
-
-            // Close signup modal if open
-            signupModal.classList.remove('show-modal');
-
-            // Toggle login modal
-            if (loginModal.classList.contains('show-modal')) {
-                loginModal.classList.remove('show-modal');
-                backdrop.classList.remove('show-backdrop');
-            } else {
-                loginModal.classList.add('show-modal');
-                backdrop.classList.add('show-backdrop');
-            }
-        }
-
-        function toggleSignupModal() {
-            const signupModal = document.getElementById('signupModal');
-            const loginModal = document.getElementById('loginModal');
-            const backdrop = document.getElementById('backdrop');
-
-            // Close login modal if open
-            loginModal.classList.remove('show-modal');
-
-            // Toggle signup modal
-            if (signupModal.classList.contains('show-modal')) {
-                signupModal.classList.remove('show-modal');
-                backdrop.classList.remove('show-backdrop');
-            } else {
-                signupModal.classList.add('show-modal');
-                backdrop.classList.add('show-backdrop');
-            }
-        }
-
-        function closeAllModals() {
-            document.getElementById('loginModal').classList.remove('show-modal');
-            document.getElementById('signupModal').classList.remove('show-modal');
-            document.getElementById('backdrop').classList.remove('show-backdrop');
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            if (email === 'cosc3p94@gmail.com' && password === '12345') {
-                document.getElementById('loginButton').style.display = 'none';
-                document.getElementById('profileButton').style.display = 'block';
-                document.getElementById('collectionsSection').style.display = 'block';
-                document.getElementById('savedListingsSection').style.display = 'block';
-                closeAllModals();
-                event.target.reset();
-            } else {
-                alert('Invalid credentials!');
-            }
-        }
-
-        function handleSignup(event) {
-            event.preventDefault();
-            alert('Sign-up successful!');
-            closeAllModals();
-            event.target.reset();
-        }
-
-        function toggleMarketTrends() {
-            alert('Market Trends feature coming soon!');
-        }
-
-        function toggleMortgage() {
-            alert('Mortgage Calculator feature coming soon!');
-        }
-        
-        function toggleLoan() {
-            alert('Home Loan feature coming soon!');
-        }
-
-        function toggleROI() {
-            alert('ROI Calculator feature coming soon!');
-        }
-
-        function toggleTextSize() {
-            alert('Text scaling feature coming soon!');
-        }
-
-        function toggleContrast() {
-            alert('High contrast feature coming soon!');
-        }
-
-        function toggleVoiceNav() {
-            alert('Voice navigation feature coming soon!');
-        }
-
-        function handleSignout() {
-            document.getElementById('loginButton').style.display = 'block';
-            document.getElementById('profileButton').style.display = 'none';
-            document.getElementById('collectionsSection').style.display = 'none';
-            document.getElementById('savedListingsSection').style.display = 'none';
-        }
-        
-        function handleSearch(event) {
-            event.preventDefault();
-            const searchQuery = document.getElementById('searchInput').value;
-            if (searchQuery.trim()) {
-                window.location.href = 'buy.html';
-            }
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                const searchQuery = document.getElementById('searchInput').value;
-                if (searchQuery.trim()) {
-                    window.location.href = 'buy.html';
-                }
-            }
-        }
-        function showCollectionAlert(collectionName) {
-            alert(`No listings in "${collectionName}" collection.`);
-        }
-
-        function socialLogin(provider) {
-            alert(`${provider} login coming soon!`);
-        }
-
-        function toggleProfileDropdown(event) {
-            event.stopPropagation();
-            const dropdown = document.getElementById('profileDropdown');
-            const isOpen = dropdown.style.display === 'block';
-            closeAllDropdowns();
-            if (!isOpen) {
-                dropdown.style.display = 'block';
-            }
-        }
-
-        // Close profile dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const dropdown = document.getElementById('profileDropdown');
-            if (dropdown && !event.target.closest('.profile-icon')) {
-                dropdown.style.display = 'none';
-            }
         });
+
+        function calculateMortgage(event) {
+            event.preventDefault();
+            
+            const homePrice = parseFloat(document.getElementById('homePrice').value);
+            const downPaymentPercent = parseFloat(document.getElementById('downPayment').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTerm = parseInt(document.getElementById('loanTerm').value);
+
+            const downPayment = homePrice * (downPaymentPercent / 100);
+            const loanAmount = homePrice - downPayment;
+            const monthlyRate = interestRate / 100 / 12;
+            const numberOfPayments = loanTerm * 12;
+
+            const monthlyPayment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / 
+                                 (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+
+            document.querySelector('.payment-amount').textContent = '$' + monthlyPayment.toFixed(2);
+        }
     </script>
 </body>
 </html>

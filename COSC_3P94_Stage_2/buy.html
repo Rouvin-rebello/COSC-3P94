@@ -37,48 +37,84 @@
             border-radius: 4px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
+        .property-popup .leaflet-popup-content-wrapper {
+            padding: 0;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
         .property-popup .leaflet-popup-content {
             margin: 0;
-            padding: 10px;
+            width: 280px !important;
         }
+
         .map-info-window {
-            padding: 5px;
+            font-family: Arial, sans-serif;
         }
+
+        .map-info-window img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+
+        .map-info-window .content {
+            padding: 12px;
+        }
+
         .map-info-window h3 {
-            margin: 0 0 5px 0;
+            margin: 0 0 8px 0;
             font-size: 16px;
+            color: #333;
         }
+
         .map-info-window .price {
             color: #5A4B60;
             font-weight: bold;
-            margin: 5px 0;
+            font-size: 18px;
+            margin: 0 0 8px 0;
         }
+
         .map-info-window .property-details {
             display: flex;
-            gap: 10px;
-            margin: 5px 0;
+            gap: 15px;
+            margin: 8px 0;
+            color: #666;
         }
+
+        .map-info-window .property-details span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
         .map-info-window .features {
-            margin: 5px 0;
-            font-size: 0.9em;
+            margin: 8px 0;
+            color: #666;
         }
+
         .map-info-window .features span {
-            display: block;
-            margin: 2px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-right: 12px;
         }
-        .view-listing {
+
+        .map-info-window .view-listing {
             background: #5A4B60;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 8px 16px;
             border-radius: 4px;
-            margin-top: 5px;
-            cursor: pointer;
             width: 100%;
+            margin-top: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
-        .view-listing:hover {
+
+        .map-info-window .view-listing:hover {
             background: #453C4F;
-            color: white;
         }
         .listing-type {
             position: absolute;
@@ -176,9 +212,6 @@
                         <h3>Tools</h3>
                         <a href="market.html"><i class="fas fa-chart-line"></i> Market Trends</a>
                         <a href="mortgage.html"><i class="fas fa-calculator"></i> Mortgage Calculator</a>
-                        <a href="loan.html"><i class="fas fa-home"></i> Home Loan Calculator</a>
-                        <a href="roi.html"><i class="fas fa-chart-pie"></i> ROI Calculator</a>
-
                     </div>
                     <div class="dropdown-section">
                         <h3>More information</h3>
@@ -729,18 +762,20 @@
                     // Create popup content with property details
                     const popupContent = `
                         <div class="map-info-window">
-                            <img src="${property.image}" alt="${property.title}" style="width:100%;max-width:200px;display:block;margin-bottom:8px;">
-                            <h3>${property.title}</h3>
-                            <p class="price">${property.price}</p>
-                            <div class="property-details">
-                                <span><i class="fas fa-bed"></i> ${property.beds}</span>
-                                <span><i class="fas fa-bath"></i> ${property.baths}</span>
-                                <span><i class="fas fa-ruler-combined"></i> ${property.sqft} sq ft</span>
+                            <img src="${property.image}" alt="${property.title}">
+                            <div class="content">
+                                <h3>${property.title}</h3>
+                                <p class="price">${property.price}</p>
+                                <div class="property-details">
+                                    <span><i class="fas fa-bed"></i> ${property.beds} beds</span>
+                                    <span><i class="fas fa-bath"></i> ${property.baths} baths</span>
+                                    <span><i class="fas fa-ruler-combined"></i> ${property.sqft}</span>
+                                </div>
+                                <div class="features">
+                                    ${property.features.map(f => `<span><i class="fas fa-check"></i> ${f}</span>`).join('')}
+                                </div>
+                                <button onclick="window.location.href='listing.html?id=${property.id}'" class="view-listing">View Listing</button>
                             </div>
-                            <div class="features">
-                                ${property.features.map(f => `<span><i class="fas fa-check"></i> ${f}</span>`).join('')}
-                            </div>
-                            <button onclick="window.location.href='listing.html?id=${property.id}'" class="view-listing">View Listing</button>
                         </div>
                     `;
 
