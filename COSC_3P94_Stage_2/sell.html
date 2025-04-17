@@ -628,6 +628,13 @@
             transform: translateY(-1px);
         }
 
+        /* Close button icon for drafts modal */
+        .save-draft.close-drafts::before {
+            content: '\f00d';  /* Font Awesome "times" icon */
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        }
+
         .submit-listing:hover {
             background-color: #453C4F !important;
             transform: translateY(-1px);
@@ -1058,7 +1065,7 @@
             <!-- Drafts will be loaded here -->
         </div>
         <div class="form-buttons">
-            <button type="button" class="save-draft" onclick="closeDraftsModal()">Close</button>
+            <button type="button" class="save-draft close-drafts" onclick="closeDraftsModal()">Close</button>
         </div>
     </div>
 
@@ -1487,8 +1494,8 @@
                         <small>Property Type: ${draft.propertyType || 'Not specified'}</small>
                     </div>
                     <div>
-                        <button onclick="loadDraft(${index})" class="save-draft">Load</button>
-                        <button onclick="deleteDraft(${index})" class="view-drafts">Delete</button>
+                        <button onclick="loadDraft(${index})" class="save-draft">     Load</button>
+                        <button onclick="deleteDraft(${index})" class="view-drafts">     Delete</button>
                     </div>
                 `;
                 draftsList.appendChild(draftItem);
